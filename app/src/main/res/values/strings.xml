@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Charitree</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="token"></string>
+    <string name="error_message_email">Please enter a valid email</string>
+    <string name="error_message_password">Please enter a password</string>
+</resources>
