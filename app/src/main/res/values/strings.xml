@@ -7,4 +7,8 @@
     <string name="token"></string>
     <string name="error_message_email">Please enter a valid email</string>
     <string name="error_message_password">Please enter a password</string>
+    <string name="error_message_generic">Please fill up for this field</string>
+    <string name="message_onboard">Donate to grow</string>
+
+    <string name="button_get_started">Get Started</string>
 </resources>

@@ -6,19 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".onboarding.GetStartedFragment">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_marginTop="24dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        android:src="@drawable/charitree_v2"
+        app:layout_constraintBottom_toTopOf="@id/textView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Charitree"
-        android:textSize="15sp"/>
+        android:fontFamily="@font/roboto"
+        android:text="@string/message_onboard"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
     <Button
         style="@style/AppTheme.Button.GetStarted"
         android:id="@+id/getStartedButton"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Get started"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
+        android:padding="20dp"
+        android:textSize="20dp"
+        android:fontFamily="@font/roboto"
+        android:text="@string/button_get_started"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+    
 </android.support.constraint.ConstraintLayout>

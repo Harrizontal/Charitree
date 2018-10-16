@@ -1,32 +1,23 @@
 package com.example.harrisonwjy.charitree.onboarding
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.UserRepositoryImpl
 import com.example.harrisonwjy.charitree.UserViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.util.Observer
 import android.content.Context.MODE_PRIVATE
-import android.R.id.edit
-import android.R.id.input
-import android.content.SharedPreferences
 import com.example.harrisonwjy.charitree.MainActivity
 import android.content.Intent
 import android.support.design.widget.TextInputLayout
 import android.view.WindowManager
-import android.text.Editable
-import android.text.TextWatcher
 import android.widget.EditText
+import com.example.harrisonwjy.charitree.helper.InputValidateShowError
+import com.example.harrisonwjy.charitree.helper.Validation
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(),Validation {
     // TODO: Rename and change types of parameters
     val myViewModel: UserViewModel by viewModel()
 
@@ -58,43 +49,15 @@ class LoginFragment : Fragment() {
 
         myViewModel.sayHello()
 
-
-        // bad code - can be modululize
-        input_email.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                isValidEmail(input_email,layout_email)
-            }
-        })
-
-        input_password.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                isValidInput(input_password,layout_password,R.string.error_message_password)
-            }
-        })
-
+        input_email.addTextChangedListener(InputValidateShowError(input_email,layout_email,getString(R.string.error_message_email)))
+        input_password.addTextChangedListener(InputValidateShowError(input_password,layout_password,getString(R.string.error_message_password)))
 
         loginButton.setOnClickListener{
             val getEmailAddress = input_email.text.toString()
             val getPassword = input_password.text.toString()
+
             isValidEmail(input_email,layout_email)
             isValidInput(input_password,layout_password,R.string.error_message_password)
-
 
 
             myViewModel.authenticate(getEmailAddress,getPassword).observe(this,android.arch.lifecycle.Observer {
@@ -108,7 +71,6 @@ class LoginFragment : Fragment() {
                     val intent = Intent(activity, MainActivity::class.java)
                     activity?.startActivity(intent)
                     activity?.finish()
-
                 }
             })
             //loginButton.text = myViewModel.authenticate(email.text.toString(),password.text.toString())
@@ -170,18 +132,5 @@ class LoginFragment : Fragment() {
 
     }
 
-//    private class MyTextWatcher private constructor(private val view: View) : TextWatcher {
-//
-//        override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-//
-//        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-//
-//        override fun afterTextChanged(editable: Editable) {
-//            when (view.id) {
-//                R.id.input_email -> isValidEmai
-//                R.id.input_password -> validatePassword()
-//            }
-//        }
-//    }
 }
 

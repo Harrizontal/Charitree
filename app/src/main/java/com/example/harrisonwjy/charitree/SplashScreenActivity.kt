@@ -70,9 +70,6 @@ class SplashScreenActivity : AppCompatActivity() {
         // Example routing
 //        val intent = Intent(,MainActivity()::class.java)
 //        intent.putExtra("INTENT_USER_ID",user.id)
-
-
-
         when {
             user.user_token == "" -> startActivity(OnboardingActivity())
             else -> startActivity(MainActivity(user))
