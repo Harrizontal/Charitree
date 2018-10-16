@@ -1,7 +1,7 @@
 Android Charitree (alpha)
 =========================
 
-A android mobile platform for the public to virtualize the process of donating new or
+An android mobile platform for the public to virtualize the process of donating new or
 unwanted items to charity organizations. Personnel from non-government organisations
 (NGO), charities and Institutions of A Public Character (IPC) will be able to use this mobile
 platform to publish donation drive/campaigns to the public, accept donations and assign
