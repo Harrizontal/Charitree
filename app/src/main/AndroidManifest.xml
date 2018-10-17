@@ -19,7 +19,8 @@
         <activity
             android:name=".onboarding.OnboardingActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/Theme.AppCompat.ThemeLight"
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity android:name=".SplashScreenActivity" android:theme="@style/SplashScreenTheme">
             <intent-filter>

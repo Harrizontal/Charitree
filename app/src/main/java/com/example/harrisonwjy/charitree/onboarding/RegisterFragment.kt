@@ -44,7 +44,7 @@ class RegisterFragment : Fragment() {
                 Log.i("RegisterFragment", "nothing on backstack, calling super")
                 val fragmentTransaction = fragmentManager!!.beginTransaction()
                 fragmentTransaction.replace(R.id.fragment_frame, LoginFragment.newInstance())
-                        .addToBackStack("asd")
+                        .addToBackStack("OnboardingStack")
                 fragmentTransaction.commit()
             }
         }

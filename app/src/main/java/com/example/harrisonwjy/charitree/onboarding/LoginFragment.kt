@@ -47,6 +47,8 @@ class LoginFragment : Fragment(),Validation {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //(activity as OnboardingActivity).getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
+
         myViewModel.sayHello()
 
         input_email.addTextChangedListener(InputValidateShowError(input_email,layout_email,getString(R.string.error_message_email)))
@@ -83,7 +85,7 @@ class LoginFragment : Fragment(),Validation {
             val fragmentManager = fragmentManager
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_frame, RegisterFragment.newInstance())
-                    .addToBackStack("asd")
+                    .addToBackStack("OnboardingStack")
             fragmentTransaction.commit()
         }
     }
