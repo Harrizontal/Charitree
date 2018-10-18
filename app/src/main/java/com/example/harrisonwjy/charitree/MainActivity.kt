@@ -19,7 +19,14 @@ import com.example.harrisonwjy.charitree.R.id.toolbar
 import android.support.annotation.NonNull
 import android.R.id.edit
 import android.content.SharedPreferences
+import android.support.v4.app.Fragment
+import com.example.harrisonwjy.charitree.helper.BottomBarAdapter
 import com.example.harrisonwjy.charitree.onboarding.OnboardingActivity
+import android.support.v4.view.ViewPager
+import android.view.MotionEvent
+import android.view.View
+import android.view.View.OnTouchListener
+import com.example.harrisonwjy.charitree.helper.LockableViewPager
 
 
 //fun Context.MainActivity(user: User): Intent {
@@ -41,6 +48,7 @@ private val INTENT_USER_ID = "user_token"
 class MainActivity : AppCompatActivity() {
 
     val myViewModel: UserViewModel by viewModel()
+    //private lateinit var viewPager: LockableViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,55 +57,90 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
+        //viewPager = findViewById(R.id.viewPager)
+
         setSupportActionBar(toolbar)
 
         val navigation = navigationView
 
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+
+//        val adapter = BottomBarAdapter(supportFragmentManager)
+//        adapter.addFragment(CampaignsFragment())
+//        adapter.addFragment(DonationsFragment())
+//        adapter.addFragment(TreeFragment())
+//        adapter.addFragment(SettingFragment())
+//        viewPager.adapter = adapter
+//        //adapter.(adapter)
+//
+//        viewPager.setSwipeable(false)
+
+        navigation.setOnNavigationItemSelectedListener(test)
+
+
+
+        //Manually displaying the first fragment - one time only
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container, CampaignsFragment.newInstance())
+        transaction.commit()
        // val tokenId:String = intent.getStringExtra(INTENT_USER_ID) ?: throw IllegalStateException("field $INTENT_USER_ID missing in Intent")
 
-        button.setOnClickListener {
-
-            val pref = applicationContext.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
-            val editor = pref.edit()
-            editor.remove("token"); // will delete key key_name3
-
-            // Save the changes in SharedPreferences
-            editor.apply();
-
-            startActivity(OnboardingActivity())
-            finish()
-
-        }
-
-//        textview.text = myViewModel.sayHello()
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action ", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
+//        button.setOnClickListener {
+//
+//            val pref = applicationContext.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+//            val editor = pref.edit()
+//            editor.remove("token"); // will delete key key_name3
+//
+//            // Save the changes in SharedPreferences
+//            editor.apply();
+//
+//            startActivity(OnboardingActivity())
+//            finish()
+//
 //        }
+
     }
 
-    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        when (item.itemId) {
-            R.id.campaign -> {
-                toolbar.title = "Campaigns"
-                return@OnNavigationItemSelectedListener true
+//    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+//        when (item.itemId) {
+//            R.id.campaign -> {
+//                toolbar.title = "Campaigns"
+//                viewPager?.setCurrentItem(0)
+//                return@OnNavigationItemSelectedListener true
+//            }
+//            R.id.donation -> {
+//                toolbar.title = "Donations"
+//                viewPager?.setCurrentItem(1)
+//                return@OnNavigationItemSelectedListener true
+//            }
+//            R.id.tree -> {
+//                toolbar.title = "Tree"
+//                viewPager?.setCurrentItem(2)
+//                return@OnNavigationItemSelectedListener true
+//            }
+//            R.id.setting -> {
+//                toolbar.title = "Setting"
+//                viewPager?.setCurrentItem(4)
+//                return@OnNavigationItemSelectedListener true
+//            }
+//        }
+//        false
+//    }
+
+
+    private val test = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            var selectedFragment: Fragment? = null
+            when (item.itemId) {
+                R.id.campaign -> selectedFragment = CampaignsFragment.newInstance()
+                R.id.donation -> selectedFragment = DonationsFragment.newInstance()
+                R.id.tree -> selectedFragment = TreeFragment.newInstance()
+                R.id.setting -> selectedFragment = SettingFragment.newInstance()
             }
-            R.id.donation -> {
-                toolbar.title = "Donations"
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.tree -> {
-                toolbar.title = "Tree"
-                return@OnNavigationItemSelectedListener true
-            }
-            R.id.setting -> {
-                toolbar.title = "Setting"
-                return@OnNavigationItemSelectedListener true
-            }
-        }
-        false
+
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container, selectedFragment!!)
+            transaction.commit()
+        true
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {

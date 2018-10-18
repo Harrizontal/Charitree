@@ -3,7 +3,6 @@ package com.example.harrisonwjy.charitree.onboarding
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import com.example.harrisonwjy.charitree.R
 import android.util.Log
@@ -30,8 +29,8 @@ class OnboardingActivity : AppCompatActivity() {
 //        setSupportActionBar(toolbar)
 //        actionBar.setDisplayHomeAsUpEnabled(true)
 
-        setSupportActionBar(findViewById(R.id.my_toolbar))
-        getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
+        //setSupportActionBar(findViewById(R.id.my_toolbar))
+        //getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
 
         // onboarding
         supportFragmentManager.beginTransaction()

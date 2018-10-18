@@ -1,15 +1,10 @@
 package com.example.harrisonwjy.charitree.helper
 
-import android.content.res.Resources
 import android.support.design.widget.TextInputLayout
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.EditText
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.R.id.input_password
-import com.example.harrisonwjy.charitree.R.id.input_email
-import kotlinx.android.synthetic.main.fragment_login.view.*
 
 
 class InputValidateShowError constructor(private val input_field: EditText, val input_layout :TextInputLayout, val message : CharSequence) : TextWatcher,Validation {

@@ -16,8 +16,8 @@ import android.content.Intent
 import android.support.design.widget.TextInputLayout
 import android.view.WindowManager
 import android.widget.EditText
-import com.example.harrisonwjy.charitree.helper.InputValidateShowError
-import com.example.harrisonwjy.charitree.helper.Validation
+import com.example.harrisonwjy.charitree.helper.*
+import com.example.harrisonwjy.charitree.model.LoginRequest
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,7 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class LoginFragment : Fragment(),Validation {
+class LoginFragment : Fragment(),Validation, HttpException {
     // TODO: Rename and change types of parameters
     val myViewModel: UserViewModel by viewModel()
 
@@ -49,31 +49,82 @@ class LoginFragment : Fragment(),Validation {
 
         //(activity as OnboardingActivity).getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
 
+        // no meaning, just for testing
         myViewModel.sayHello()
 
+        // As user types, it checks whether the inputted value is valid
+        // See InputValidateShowError interface for more information
         input_email.addTextChangedListener(InputValidateShowError(input_email,layout_email,getString(R.string.error_message_email)))
         input_password.addTextChangedListener(InputValidateShowError(input_password,layout_password,getString(R.string.error_message_password)))
 
+
         loginButton.setOnClickListener{
+            indeterminateBar.visibility = View.VISIBLE
+            // retrieve inputted text from the respective Edit Text (or Textfield)
             val getEmailAddress = input_email.text.toString()
             val getPassword = input_password.text.toString()
 
-            isValidEmail(input_email,layout_email)
-            isValidInput(input_password,layout_password,R.string.error_message_password)
+            logo.visibility = View.INVISIBLE
+            tagLineTextView.visibility = View.INVISIBLE
+            layout_email.visibility = View.INVISIBLE
+            input_email.visibility = View.INVISIBLE
+            layout_password.visibility = View.INVISIBLE
+            input_password.visibility = View.INVISIBLE
+            loginButton.visibility = View.INVISIBLE
+            registerButton.visibility = View.INVISIBLE
 
 
-            myViewModel.authenticate(getEmailAddress,getPassword).observe(this,android.arch.lifecycle.Observer {
-                Log.e("LoginFragment","asdasdasdasdasasd "+ it?.user_token)
-                val editor = activity?.getSharedPreferences("PREFERENCE", MODE_PRIVATE)?.edit()
-                editor?.putString("token", it?.user_token)
-                editor?.apply()
+            isValidEmail(input_email,layout_email,"Please enter a valid email")
+            isValidInput(input_password,layout_password,"Please enter a password")
 
-                // bad code
+            // create a LoginRequest object
+            val loginRequest = LoginRequest.create()
+            // stores the email and password into the LoginRequest object
+            loginRequest.email = getEmailAddress
+            loginRequest.password = getPassword
+
+            // ViewModel will call Authenticate method
+            myViewModel.authenticate(loginRequest).observe(this,android.arch.lifecycle.Observer {
+                //Log.e("LoginFragment","LoginFragment received "+ it?.user_token + " " + it?.status)
+
+                // make a fake delay response
+                try {
+                    //set time in mili
+                    Thread.sleep(1500)
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                // If user_token contains something
                 if(it?.user_token != null){
+                    indeterminateBar.visibility = View.INVISIBLE
+                    // Store user_token into SharedPreferences
+                    // What is Shared Preferenes? https://developer.android.com/training/data-storage/shared-preferences
+                    // See: https://stackoverflow.com/questions/40043166/shared-prefrences-to-save-a-authentication-token-in-android
+                    val editor = activity?.getSharedPreferences("PREFERENCE", MODE_PRIVATE)?.edit()
+                    editor?.putString("token", it?.user_token)
+                    editor?.apply()
+
+                    // Open up the MainActivity (Main page for donor)
                     val intent = Intent(activity, MainActivity::class.java)
                     activity?.startActivity(intent)
                     activity?.finish()
+                }else{
+                    logo.visibility = View.VISIBLE
+                    tagLineTextView.visibility = View.VISIBLE
+                    layout_email.visibility = View.VISIBLE
+                    input_email.visibility = View.VISIBLE
+                    layout_password.visibility = View.VISIBLE
+                    input_password.visibility = View.VISIBLE
+                    loginButton.visibility = View.VISIBLE
+                    registerButton.visibility = View.VISIBLE
+                    indeterminateBar.visibility = View.INVISIBLE
+                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",onHttpException(it!!.status))
+                    dialogBox.show(fragmentManager,"fragment_alert")
                 }
+
+
             })
             //loginButton.text = myViewModel.authenticate(email.text.toString(),password.text.toString())
 //            myViewModel.getProjectDetail().observe(this, android.arch.lifecycle.Observer {
@@ -81,6 +132,7 @@ class LoginFragment : Fragment(),Validation {
 //            })
         }
 
+        // When user taps on Register button, goes to Register Screen
         registerButton.setOnClickListener {
             val fragmentManager = fragmentManager
             val fragmentTransaction = fragmentManager!!.beginTransaction()
@@ -90,48 +142,26 @@ class LoginFragment : Fragment(),Validation {
         }
     }
 
-    private fun isValidEmail(textField: EditText, inputLayout: TextInputLayout) : Boolean{
 
-        if (android.util.Patterns.EMAIL_ADDRESS.matcher(textField.text.toString()).matches()){
-            Log.e("LoginFragment","Email is valid")
-            inputLayout.isErrorEnabled = false
-        }else{
-            Log.e("LoginFragment","Email is not valid")
-            inputLayout.error = getString(R.string.error_message_email)
-            requestFocus(textField)
-            return false
-        }
-        return true
+
+
+    // ugly code here. will remove and put it somewhere
+    override fun unauthorized(): String {
+        return "Unauthorized access!!!"
     }
 
-    // just check valid is empty
-    private fun isValidInput(textField: EditText, inputLayout: TextInputLayout,message: Int): Boolean{
-        if(textField.text.toString().isNotEmpty()){
-            Log.e("LoginFragment","Password is not empty")
-            inputLayout.isErrorEnabled = false
-        }else{
-            Log.e("LoginFragment","Password is empty")
-            inputLayout.error = getString(message)
-            requestFocus(textField)
-            return false
-        }
-        return true
+    override fun unprocessableEntity(): String {
+        return "Field missing"
     }
 
-
-    private fun requestFocus(view: View) {
-        if (view.requestFocus()) {
-            activity!!.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE)
-        }
+    override fun badRequest(): String {
+        return "bad request"
     }
-
 
     companion object {
         fun newInstance(): LoginFragment {
             return LoginFragment()
         }
-
-
     }
 
 }
