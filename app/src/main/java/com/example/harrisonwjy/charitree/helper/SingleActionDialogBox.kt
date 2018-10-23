@@ -12,12 +12,18 @@ import android.util.Log
 class SingleActionDialogBox : DialogFragment() {
 
     companion object {
-        fun newInstance(title: String, message: String): SingleActionDialogBox {
+        fun newInstance(title: String, message: ArrayList<String>?): SingleActionDialogBox {
 
+            var allMessage: String = message?.get(0)!!
+            for (i in 1 until message.count()){
+                allMessage += message[i]+"\n"
+            }
+
+            //val allMessage: String = "Testing"
             val frag = SingleActionDialogBox()
             val args = Bundle()
             args.putString("title",title)
-            args.putString("message",message)
+            args.putString("message",allMessage)
             frag.arguments = args
             return frag
         }

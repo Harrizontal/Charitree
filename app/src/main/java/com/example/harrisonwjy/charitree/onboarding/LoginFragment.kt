@@ -2,7 +2,6 @@ package com.example.harrisonwjy.charitree.onboarding
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.Context.MODE_PRIVATE
 import com.example.harrisonwjy.charitree.MainActivity
 import android.content.Intent
-import android.support.design.widget.TextInputLayout
-import android.view.WindowManager
-import android.widget.EditText
+import com.example.harrisonwjy.charitree.CampaignManagerActivity
 import com.example.harrisonwjy.charitree.helper.*
-import com.example.harrisonwjy.charitree.model.LoginRequest
+import com.example.harrisonwjy.charitree.model.Request
+import com.example.harrisonwjy.charitree.repo.TradAuthenticationRepo
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -50,12 +48,12 @@ class LoginFragment : Fragment(),Validation, HttpException {
         //(activity as OnboardingActivity).getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
 
         // no meaning, just for testing
-        myViewModel.sayHello()
+        //myViewModel.sayHello()
 
         // As user types, it checks whether the inputted value is valid
         // See InputValidateShowError interface for more information
-        input_email.addTextChangedListener(InputValidateShowError(input_email,layout_email,getString(R.string.error_message_email)))
-        input_password.addTextChangedListener(InputValidateShowError(input_password,layout_password,getString(R.string.error_message_password)))
+        input_email.addTextChangedListener(InputValidateShowError("email",input_email,layout_email,getString(R.string.error_message_email)))
+        input_password.addTextChangedListener(InputValidateShowError("normal",input_password,layout_password,getString(R.string.error_message_password)))
 
 
         loginButton.setOnClickListener{
@@ -77,14 +75,14 @@ class LoginFragment : Fragment(),Validation, HttpException {
             isValidEmail(input_email,layout_email,"Please enter a valid email")
             isValidInput(input_password,layout_password,"Please enter a password")
 
-            // create a LoginRequest object
-            val loginRequest = LoginRequest.create()
-            // stores the email and password into the LoginRequest object
+            // create a Request object
+            val loginRequest = Request.create()
+            // stores the email and password into the Request object
             loginRequest.email = getEmailAddress
             loginRequest.password = getPassword
 
             // ViewModel will call Authenticate method
-            myViewModel.authenticate(loginRequest).observe(this,android.arch.lifecycle.Observer {
+            myViewModel.authenticate(TradAuthenticationRepo(),loginRequest).observe(this,android.arch.lifecycle.Observer {
                 //Log.e("LoginFragment","LoginFragment received "+ it?.user_token + " " + it?.status)
 
                 // make a fake delay response
@@ -97,19 +95,33 @@ class LoginFragment : Fragment(),Validation, HttpException {
                 }
 
                 // If user_token contains something
-                if(it?.user_token != null){
+                if(it?.isValidResponse == true){
                     indeterminateBar.visibility = View.INVISIBLE
                     // Store user_token into SharedPreferences
                     // What is Shared Preferenes? https://developer.android.com/training/data-storage/shared-preferences
                     // See: https://stackoverflow.com/questions/40043166/shared-prefrences-to-save-a-authentication-token-in-android
-                    val editor = activity?.getSharedPreferences("PREFERENCE", MODE_PRIVATE)?.edit()
-                    editor?.putString("token", it?.user_token)
-                    editor?.apply()
 
-                    // Open up the MainActivity (Main page for donor)
-                    val intent = Intent(activity, MainActivity::class.java)
-                    activity?.startActivity(intent)
-                    activity?.finish()
+                    val prefs = activity?.getSharedPreferences("PREFERENCE", MODE_PRIVATE)
+                    val editor = prefs?.edit()
+                    editor?.putString("token", it?.user_token)
+                    editor?.putString("email",getEmailAddress)
+                    editor?.apply()
+                    val mode = prefs?.getString("mode","user")
+
+                    if(mode == "user"){
+                        val intent = Intent(activity, MainActivity::class.java)
+                        activity?.startActivity(intent)
+                        activity?.finish()
+                    }else if (mode=="campaignmanager"){
+                        val intent = Intent(activity, CampaignManagerActivity::class.java)
+                        activity?.startActivity(intent)
+                        activity?.finish()
+                    }else{
+                        val intent = Intent(activity, MainActivity::class.java)
+                        activity?.startActivity(intent)
+                        activity?.finish()
+                    }
+
                 }else{
                     logo.visibility = View.VISIBLE
                     tagLineTextView.visibility = View.VISIBLE
@@ -120,10 +132,10 @@ class LoginFragment : Fragment(),Validation, HttpException {
                     loginButton.visibility = View.VISIBLE
                     registerButton.visibility = View.VISIBLE
                     indeterminateBar.visibility = View.INVISIBLE
-                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",onHttpException(it!!.status))
+                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",it?.errors)
+                    //val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",onHttpException(it!!.httpStatus))
                     dialogBox.show(fragmentManager,"fragment_alert")
                 }
-
 
             })
             //loginButton.text = myViewModel.authenticate(email.text.toString(),password.text.toString())
@@ -137,7 +149,7 @@ class LoginFragment : Fragment(),Validation, HttpException {
             val fragmentManager = fragmentManager
             val fragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.replace(R.id.fragment_frame, RegisterFragment.newInstance())
-                    .addToBackStack("OnboardingStack")
+                    .addToBackStack("RegisterFragment")
             fragmentTransaction.commit()
         }
     }
@@ -145,7 +157,7 @@ class LoginFragment : Fragment(),Validation, HttpException {
 
 
 
-    // ugly code here. will remove and put it somewhere
+    // ugly code here. will remove and put it somewhere or in the trash
     override fun unauthorized(): String {
         return "Unauthorized access!!!"
     }

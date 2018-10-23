@@ -39,10 +39,11 @@ class SplashScreenActivity : AppCompatActivity() {
                     val user = User.create()
                     val prefs = getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
                     val token = prefs.getString("token", "")//"No name defined" is the default value.
-                    Log.e("SplashScreenActivity","the token is "+token)
+                    val mode = prefs.getString("mode","user")
+                    Log.e("SplashScreenActivity","the token is "+token + " and the mode is "+mode)
                     user.user_token = token
 
-                    routeToAppropriatePage(user)
+                    routeToAppropriatePage(user,mode)
                     finish()
                 },
                 splashScreenDuration
@@ -66,18 +67,22 @@ class SplashScreenActivity : AppCompatActivity() {
         }
     }
 
-    private fun routeToAppropriatePage(user: User) {
+    private fun routeToAppropriatePage(user: User, mode: String) {
         // Example routing
 //        val intent = Intent(,MainActivity()::class.java)
 //        intent.putExtra("INTENT_USER_ID",user.id)
-        when {
-            user.user_token == "" -> startActivity(OnboardingActivity())
-            else -> startActivity(MainActivity(user))
-//            user == null -> OnboardingActivity.start(this)
-//            user.hasPhoneNumber() -> EditProfileActivity.start(this)
-//            user.hasSubscriptionExpired() -> PaymentPlansActivity.start(this)
-//            else -> HomeActivity.start(this)
+
+        if (mode == "user"){
+            when {
+                user.user_token == "" -> startActivity(OnboardingActivity())
+                else -> startActivity(MainActivity(user))
+            }
+        }else if(mode == "campaignmanager"){
+            startActivity(CampaignManagerActivity(user))
+        }else{
+            startActivity(MainActivity(user))
         }
+
     }
 
 

@@ -4,29 +4,21 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.design.widget.Snackbar
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar
-import android.view.Menu
-import android.view.MenuItem
 import com.example.harrisonwjy.charitree.model.User
 
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import com.example.harrisonwjy.charitree.R.id.toolbar
-import android.support.annotation.NonNull
-import android.R.id.edit
-import android.content.SharedPreferences
 import android.support.v4.app.Fragment
+import android.util.Log
 import com.example.harrisonwjy.charitree.helper.BottomBarAdapter
-import com.example.harrisonwjy.charitree.onboarding.OnboardingActivity
-import android.support.v4.view.ViewPager
-import android.view.MotionEvent
-import android.view.View
-import android.view.View.OnTouchListener
 import com.example.harrisonwjy.charitree.helper.LockableViewPager
+import com.example.harrisonwjy.charitree.setting.SettingFragment
+import android.support.v4.view.ViewPager
+
+
 
 
 //fun Context.MainActivity(user: User): Intent {
@@ -43,12 +35,13 @@ fun Context.MainActivity(user: User): Intent {
 }
 
 lateinit var toolbar: ActionBar
+lateinit var mAdapter: BottomBarAdapter
 private val INTENT_USER_ID = "user_token"
 
 class MainActivity : AppCompatActivity() {
 
     val myViewModel: UserViewModel by viewModel()
-    //private lateinit var viewPager: LockableViewPager
+    private lateinit var viewPager: LockableViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,32 +50,30 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
-        //viewPager = findViewById(R.id.viewPager)
+        viewPager = findViewById(R.id.viewPager)
 
         setSupportActionBar(toolbar)
 
         val navigation = navigationView
 
+        mAdapter = BottomBarAdapter(supportFragmentManager)
+        mAdapter.addFragment(CampaignsFragment())
+        mAdapter.addFragment(DonationsFragment())
+        mAdapter.addFragment(TreeFragment())
+        mAdapter.addFragment(SettingFragment())
+        viewPager.adapter = mAdapter
+        //adapter.(adapter)
 
-
-//        val adapter = BottomBarAdapter(supportFragmentManager)
-//        adapter.addFragment(CampaignsFragment())
-//        adapter.addFragment(DonationsFragment())
-//        adapter.addFragment(TreeFragment())
-//        adapter.addFragment(SettingFragment())
-//        viewPager.adapter = adapter
-//        //adapter.(adapter)
-//
-//        viewPager.setSwipeable(false)
+        viewPager.setSwipeable(false)
 
         navigation.setOnNavigationItemSelectedListener(test)
 
 
 
         //Manually displaying the first fragment - one time only
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, CampaignsFragment.newInstance())
-        transaction.commit()
+//        val transaction = supportFragmentManager.beginTransaction()
+//        transaction.replace(R.id.container, CampaignsFragment.newInstance())
+//        transaction.commit()
        // val tokenId:String = intent.getStringExtra(INTENT_USER_ID) ?: throw IllegalStateException("field $INTENT_USER_ID missing in Intent")
 
 //        button.setOnClickListener {
@@ -101,46 +92,68 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-//    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-//        when (item.itemId) {
-//            R.id.campaign -> {
-//                toolbar.title = "Campaigns"
-//                viewPager?.setCurrentItem(0)
-//                return@OnNavigationItemSelectedListener true
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        Log.e("MainActivity","Gained focus "+hasFocus)
+//        val myFragment = supportFragmentManager.findFragmentByTag("SettingFragment")
+//        if (myFragment != null && myFragment!!.isVisible() && hasFocus) {
+//            if(viewPager.currentItem == 3){
+//                // hard code for now....
+//
 //            }
-//            R.id.donation -> {
-//                toolbar.title = "Donations"
-//                viewPager?.setCurrentItem(1)
-//                return@OnNavigationItemSelectedListener true
-//            }
-//            R.id.tree -> {
-//                toolbar.title = "Tree"
-//                viewPager?.setCurrentItem(2)
-//                return@OnNavigationItemSelectedListener true
-//            }
-//            R.id.setting -> {
-//                toolbar.title = "Setting"
-//                viewPager?.setCurrentItem(4)
-//                return@OnNavigationItemSelectedListener true
-//            }
+//            val transaction = supportFragmentManager.beginTransaction()
+//            transaction.replace(R.id.container, SettingFragment.newInstance(),"SettingFragment")
+//            transaction.commit()
 //        }
-//        false
-//    }
 
+        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.currentItem)
+        // based on the current position you can then cast the page to the correct Fragment class and call some method inside that fragment to reload the data:
+        if (viewPager.currentItem == 3) {
+//            supportFragmentManager.beginTransaction().remove(fragment).commit()
+//            adapter.addFragment(SettingFragment())
+            //viewPager.adapter =
+            viewPager.adapter = mAdapter
+            viewPager.setCurrentItem(3)
+            //mAdapter.getItem(3)
+            //mAdapter.getItem(3)
+            Log.e("MainActiivity","Fragment found")
+        }
+    }
 
     private val test = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             var selectedFragment: Fragment? = null
+            var fragmentTag: String? = null
             when (item.itemId) {
-                R.id.campaign -> selectedFragment = CampaignsFragment.newInstance()
-                R.id.donation -> selectedFragment = DonationsFragment.newInstance()
-                R.id.tree -> selectedFragment = TreeFragment.newInstance()
-                R.id.setting -> selectedFragment = SettingFragment.newInstance()
+                R.id.campaign -> {
+                    toolbar.title = "Campaigns"
+                    //selectedFragment = CampaignsFragment.newInstance()
+                    viewPager.setCurrentItem(0)
+                    //fragmentTag = "CampaignsFragment"
+                }
+                R.id.donation ->{
+                    toolbar.title = "Donations"
+                    //selectedFragment = DonationsFragment.newInstance()
+                    viewPager.setCurrentItem(1)
+                    //fragmentTag = "Donations"
+                }
+                R.id.tree -> {
+                    toolbar.title = "Tree"
+                    viewPager.setCurrentItem(2)
+                    //selectedFragment = TreeFragment.newInstance()
+                    //fragmentTag = "TreeFragment"
+                }
+                R.id.setting -> {
+                    toolbar.title = "Setting"
+                    viewPager.setCurrentItem(3)
+                    selectedFragment = SettingFragment.newInstance()
+                    //fragmentTag = "SettingFragment"
+                }
             }
 
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, selectedFragment!!)
-            transaction.commit()
-        true
+//            val transaction = supportFragmentManager.beginTransaction()
+//            transaction.replace(R.id.container, selectedFragment!!,fragmentTag)
+//            transaction.commit()
+true
     }
 
 //    override fun onCreateOptionsMenu(menu: Menu): Boolean {

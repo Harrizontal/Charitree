@@ -1,7 +1,7 @@
 package com.example.harrisonwjy.charitree.helper
 
 interface HttpException {
-    fun onHttpException(code: Int): String{
+    fun onHttpException(code: Int?): String{
         when (code){
             400 -> return badRequest()
             401 -> return unauthorized()

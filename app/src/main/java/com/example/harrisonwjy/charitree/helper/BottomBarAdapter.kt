@@ -2,6 +2,7 @@ package com.example.harrisonwjy.charitree.helper
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.view.PagerAdapter
 
 class BottomBarAdapter(fragmentManager: FragmentManager) : SmartFragmentStatePagerAdapter(fragmentManager) {
     private val fragments = ArrayList<Fragment>()
@@ -18,4 +19,12 @@ class BottomBarAdapter(fragmentManager: FragmentManager) : SmartFragmentStatePag
     override fun getCount(): Int {
         return fragments.size
     }
+
+    fun removeFragment(fragment: Fragment){
+        fragments.remove(fragment)
+    }
+
+//    override fun getItemPosition(`object`: Any): Int {
+//        return PagerAdapter.POSITION_NONE
+//    }
 }

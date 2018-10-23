@@ -7,9 +7,7 @@ import android.widget.EditText
 import com.example.harrisonwjy.charitree.R
 
 
-class InputValidateShowError constructor(private val input_field: EditText, val input_layout :TextInputLayout, val message : CharSequence) : TextWatcher,Validation {
-    //constructor(input_field: EditText,input_layout: TextInputLayout,message: Int) : this(input_field,input_layout)
-
+class InputValidateShowError constructor(private val inputType: String, private val input_field: EditText, private val input_layout :TextInputLayout, private val message : CharSequence) : TextWatcher,Validation {
 
     override fun afterTextChanged(p0: Editable?) {
         return
@@ -20,9 +18,16 @@ class InputValidateShowError constructor(private val input_field: EditText, val 
     }
 
     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        when(input_field.id){
-            R.id.input_email -> isValidEmail(input_field,input_layout,message)
-            R.id.input_password -> isValidInput(input_field,input_layout,message)
+        when(inputType){
+            "email" -> {
+                isValidEmail(input_field,input_layout,message)
+            }
+            "normal"->{
+                isValidInput(input_field,input_layout,message)
+            }
+            "password"->{
+                isValidPassword(input_field,input_layout,message)
+            }
         }
 
     }

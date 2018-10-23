@@ -22,20 +22,20 @@ tools:context=".MainActivity">
     </android.support.design.widget.AppBarLayout>
 
 
-    <com.example.harrisonwjy.charitree.helper.LockableViewPager
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="?attr/actionBarSize"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    <!--<com.example.harrisonwjy.charitree.helper.LockableViewPager-->
+        <!--android:id="@+id/viewPager"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginTop="?attr/actionBarSize"-->
+        <!--app:layout_behavior="@string/appbar_scrolling_view_behavior" />-->
 
-<!--<FrameLayout-->
-    <!--android:id="@+id/container"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--app:layout_behavior="@string/appbar_scrolling_view_behavior"-->
-    <!--android:layout_marginTop="?attr/actionBarSize"/>-->
+<FrameLayout
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_marginTop="?attr/actionBarSize"/>
 
 <!--<include layout="@layout/content_main" />-->
 
@@ -64,7 +64,7 @@ tools:context=".MainActivity">
     app:itemBackground="@color/colorAccent"
     app:itemIconTint="@color/white"
     app:itemTextColor="@color/white"
-    app:menu="@menu/bottom_menu"
+    app:menu="@menu/campaign_manager_bottom_menu"
     app:labelVisibilityMode="labeled"/>
 
 </android.support.constraint.ConstraintLayout>

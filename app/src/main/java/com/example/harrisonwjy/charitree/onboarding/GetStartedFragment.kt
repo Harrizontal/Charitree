@@ -25,7 +25,7 @@ class GetStartedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        myViewModel.sayHello()
+        //myViewModel.sayHello()
 
 
         //loginButton.text = myViewModel.authenticate(email.text.toString(),password.text.toString())
