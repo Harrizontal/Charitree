@@ -1,16 +1,13 @@
-package com.example.harrisonwjy.charitree
+package com.example.harrisonwjy.charitree.user
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.helper.ItemPagerAdapter
-
-import com.example.harrisonwjy.charitree.onboarding.LoginFragment
-import kotlinx.android.synthetic.main.fragment_register.*
 
 // TODO: Rename parameter arguments, choose names that match
 
@@ -37,9 +34,9 @@ class CampaignsFragment : Fragment() {
         // Inflate the layout for this fragment
 
         viewPager = view.findViewById(R.id.viewPager)
-        viewPager.offscreenPageLimit = 3
+        viewPager.offscreenPageLimit = 4
         viewPager.clipToPadding = false
-        viewPager.pageMargin = 20
+        viewPager.pageMargin = 25
         val obj_adapter = ItemPagerAdapter(childFragmentManager,data)
         viewPager.adapter=obj_adapter
 
@@ -50,6 +47,10 @@ class CampaignsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    fun setViewPagerToFirst(){
+        viewPager.setCurrentItem(0)
     }
 
     companion object {

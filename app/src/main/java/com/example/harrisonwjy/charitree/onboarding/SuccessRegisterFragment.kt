@@ -3,13 +3,11 @@ package com.example.harrisonwjy.charitree.onboarding
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.UserViewModel
-import kotlinx.android.synthetic.main.fragment_getstarted.*
+import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_success_register.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

@@ -1,7 +1,6 @@
 package com.example.harrisonwjy.charitree.setting
 
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -12,20 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.CampaignViewModel
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.campaignmanager.RegisterCMActivity
-import com.example.harrisonwjy.charitree.model.LoginResponse
 import com.example.harrisonwjy.charitree.model.Request
-import com.example.harrisonwjy.charitree.model.User
-import com.example.harrisonwjy.charitree.model.request.RegisterCM
 
 import com.example.harrisonwjy.charitree.onboarding.OnboardingActivity
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
-import kotlinx.android.synthetic.main.fragment_cmregister.*
 import kotlinx.android.synthetic.main.fragment_setting.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.widget.ArrayAdapter
-import com.example.harrisonwjy.charitree.CampaignManagerActivity
-import com.example.harrisonwjy.charitree.MainActivity
+import com.example.harrisonwjy.charitree.campaignmanager.CampaignManagerActivity
+import com.example.harrisonwjy.charitree.user.MainActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -87,11 +80,11 @@ class SettingFragment : Fragment() {
 
         //campaignViewModel.verifyCM(CampaignRepo(email,token),request)
         campaignViewModel.getCampaignManagerAccess(CampaignRepo(email,token),request)!!.observe(this, Observer {
-            val isCampaignManager : Boolean? = it?.isValidResponse
+            val isCampaignManager = it?.status
 
             when(mode){
                 "user"->{
-                    if(isCampaignManager == true){
+                    if(isCampaignManager == 1){
                         Log.e("User - SettingFragment","Show button to switch")
                         registerAsCampaignManagerButton.setText("Switch to Campaign Manager mode")
 
@@ -115,7 +108,7 @@ class SettingFragment : Fragment() {
             registerAsCampaignManagerButton.setOnClickListener{
                 when(mode){
                     "user"->{
-                        if(isCampaignManager == true){
+                        if(isCampaignManager == 1){
                             val intent = Intent(activity, CampaignManagerActivity::class.java)
                             val editor = activity?.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)?.edit()
                             activity?.startActivity(intent)
@@ -128,7 +121,7 @@ class SettingFragment : Fragment() {
                         }
                     }
                     "campaignmanager"->{
-                        val intent = Intent(activity,MainActivity::class.java)
+                        val intent = Intent(activity, MainActivity::class.java)
                         activity?.startActivity(intent)
                         editor?.putString("mode","user")
                         editor?.apply()

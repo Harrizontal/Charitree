@@ -1,13 +1,12 @@
-package com.example.harrisonwjy.charitree.model
+package com.example.harrisonwjy.charitree.model.response
 
-class VerifyCMResponse {
+class CMVerify {
     companion object Factory {
-        fun create(): VerifyCMResponse = VerifyCMResponse()
+        fun create(): CMVerify = CMVerify()
     }
     var status: Int? = 0
     var campaign_manager: CampaignManager? = null
-    var errors: ArrayList<String>? = ArrayList()
-    var isValidResponse : Boolean? = null
+    var errors: Errors? = null
 }
 
 class CampaignManager{

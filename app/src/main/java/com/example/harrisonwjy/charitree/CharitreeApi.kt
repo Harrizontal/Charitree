@@ -1,12 +1,8 @@
 package com.example.harrisonwjy.charitree
 
 import com.example.harrisonwjy.charitree.model.Request
-import com.example.harrisonwjy.charitree.model.LoginResponse
-import com.example.harrisonwjy.charitree.model.User
-import com.example.harrisonwjy.charitree.model.VerifyCMResponse
 import com.example.harrisonwjy.charitree.model.request.RegisterCM
-import okhttp3.ResponseBody
-import org.json.JSONObject
+import com.example.harrisonwjy.charitree.model.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -29,7 +25,7 @@ interface CharitreeApi {
     @POST("users")
     @Headers("Content-Type: application/json")
     fun register(@Body request:Request)
-                 : Call<LoginResponse>
+                 : Call<UserRegister>
 
     /*
     Purpose: Send a POST request (http:ipaddress/session) to the respective API with a
@@ -37,19 +33,25 @@ interface CharitreeApi {
     Parameter: Request object
     Return: LoginResponse
      */
+//    @POST("sessions")
+//    @Headers("Content-Type: application/json")
+//    fun login(@Body request: Request)
+//                : Call<LoginResponse>
+
     @POST("sessions")
     @Headers("Content-Type: application/json")
     fun login(@Body request: Request)
-                : Call<LoginResponse>
+            : Call<Login>
+
 
     @POST("users/campaignmanager")
     @Headers("Content-Type: application/json")
     fun registerCM(@Body request: RegisterCM)
-                : Call<LoginResponse>
+                : Call<CMRegister>
 
     @GET("users/campaignmanager")
     @Headers("Content-Type: application/json")
-    fun verifyCM(): Call<VerifyCMResponse>
+    fun verifyCM(): Call<CMVerify>
 
 
     companion object {

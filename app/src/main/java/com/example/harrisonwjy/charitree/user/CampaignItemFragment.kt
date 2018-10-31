@@ -1,11 +1,13 @@
-package com.example.harrisonwjy.charitree
+package com.example.harrisonwjy.charitree.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.CardView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import com.example.harrisonwjy.charitree.R
 
 class CampaignItemFragment : Fragment(){
 
@@ -15,9 +17,16 @@ class CampaignItemFragment : Fragment(){
         val view =  inflater.inflate(R.layout.fragment_campaign_item, container, false)
         val name = arguments?.getString("message") ?: "Ali Connors"
 
-        val button = view.findViewById<Button>(R.id.button2)
+        val cardview = view.findViewById<CardView>(R.id.cardView)
 
-        button.setText(name)
+        cardview.setOnClickListener {
+            val intent = Intent(activity,CampaignDetailActivity::class.java)
+            startActivity(intent)
+        }
+
+        //val button = view.findViewById<Button>(R.id.button2)
+
+        //button.setText(name)
 
 //        button.setOnClickListener{
 //            val bundle = bundleOf("userName" to name)
@@ -26,9 +35,9 @@ class CampaignItemFragment : Fragment(){
 //                    bundle)
 //        }
         //val bundle = bundleOf("userName" to name)
-        button.findViewById<Button>(R.id.button2)?.setOnClickListener {
-            //Navigation.findNavController(it).navigate(R.id.action_do_good_to_detailsFragment, bundle)
-        }
+//        cardView?.setOnClickListener {
+//            //Navigation.findNavController(it).navigate(R.id.action_do_good_to_detailsFragment, bundle)
+//        }
 
         return view
     }

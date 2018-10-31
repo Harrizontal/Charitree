@@ -1,13 +1,12 @@
-package com.example.harrisonwjy.charitree.campaignmanager
+package com.example.harrisonwjy.charitree.setting
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.harrisonwjy.charitree.CampaignManagerActivity
 import com.example.harrisonwjy.charitree.CampaignViewModel
 
 import com.example.harrisonwjy.charitree.R
@@ -34,9 +33,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class RegisterCMFragment : Fragment(),Validation,HttpException {
 
     val campaignViewModel: CampaignViewModel by viewModel()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_cmregister, container, false)
     }
 
@@ -91,21 +92,10 @@ class RegisterCMFragment : Fragment(),Validation,HttpException {
                 }
                 indeterminateBar.visibility = View.INVISIBLE
                 // If user_token contains something
-                if(it?.isValidResponse == true){
+                if(it?.status == 1){
                     animation_view.visibility = View.VISIBLE
                     backToSettingButton.visibility = View.VISIBLE
                     animation_view.playAnimation()
-                    // Store user_token into SharedPreferences
-                    // What is Shared Preferenes? https://developer.android.com/training/data-storage/shared-preferences
-                    // See: https://stackoverflow.com/questions/40043166/shared-prefrences-to-save-a-authentication-token-in-android
-//                    val editor = activity?.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)?.edit()
-//                    editor?.putString("token", it?.user_token)
-//                    editor?.apply()
-
-                    // Open up the MainActivity (Main page for donor)
-//                    val intent = Intent(activity, MainActivity::class.java)
-//                    activity?.startActivity(intent)
-//                    activity?.finish()
                 }else{
                     tagLineTextView.visibility = View.VISIBLE
                     layout_org_name.visibility = View.VISIBLE
@@ -113,7 +103,7 @@ class RegisterCMFragment : Fragment(),Validation,HttpException {
                     layout_uen.visibility = View.VISIBLE
                     input_uen.visibility = View.VISIBLE
                     registerCMButton.visibility = View.VISIBLE
-                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong", it?.errors)
+                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong", it?.errors?.message)
                     dialogBox.show(fragmentManager,"fragment_alert")
                 }
             })

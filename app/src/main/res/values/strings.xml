@@ -28,4 +28,8 @@
     <string name="button_register_cm">Register</string>
     <string name="button_go_to_login">Got an account? Click here to login</string>
     <string name="button_go_to_login2">Back to Login</string>
+    <string name="title_activity_campaign_detail">CampaignDetailActivity</string>
+    <string name="title_activity_create_donation">CreateDonationActivity</string>
+
+    <string name="message_create_donation_choose_item">I want to donate the following items</string>
 </resources>

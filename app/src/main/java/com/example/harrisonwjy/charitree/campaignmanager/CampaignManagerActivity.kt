@@ -1,10 +1,9 @@
-package com.example.harrisonwjy.charitree
+package com.example.harrisonwjy.charitree.campaignmanager
 
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
-import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar
 import com.example.harrisonwjy.charitree.model.User
@@ -13,7 +12,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.support.v4.app.Fragment
 import android.util.Log
+import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.setting.SettingFragment
+import com.example.harrisonwjy.charitree.user.CampaignsFragment
+import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
 
 
 //fun Context.MainActivity(user: User): Intent {

@@ -6,9 +6,9 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity;
 import com.example.harrisonwjy.charitree.model.User
 import com.example.harrisonwjy.charitree.onboarding.OnboardingActivity
-import android.content.Intent
-import android.content.SharedPreferences
 import android.util.Log
+import com.example.harrisonwjy.charitree.campaignmanager.CampaignManagerActivity
+import com.example.harrisonwjy.charitree.user.MainActivity
 
 
 class SplashScreenActivity : AppCompatActivity() {

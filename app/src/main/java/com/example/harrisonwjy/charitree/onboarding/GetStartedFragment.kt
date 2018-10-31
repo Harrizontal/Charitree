@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.UserViewModel
+import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_getstarted.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

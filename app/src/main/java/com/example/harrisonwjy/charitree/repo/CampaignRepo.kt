@@ -3,11 +3,8 @@ package com.example.harrisonwjy.charitree.repo
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.harrisonwjy.charitree.CharitreeApi
-import com.example.harrisonwjy.charitree.model.CampaignManager
-import com.example.harrisonwjy.charitree.model.LoginResponse
-import com.example.harrisonwjy.charitree.model.Request
-import com.example.harrisonwjy.charitree.model.VerifyCMResponse
 import com.example.harrisonwjy.charitree.model.request.RegisterCM
+import com.example.harrisonwjy.charitree.model.response.*
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import retrofit2.Call
@@ -18,13 +15,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import okhttp3.OkHttpClient
 import org.json.JSONObject
 import java.io.IOException
-import com.google.gson.JsonObject
-import okhttp3.ResponseBody
-
-
 
 
 class CampaignRepo(email: String, token: String) : ICampaign{
+
 
     private val api: CharitreeApi
 
@@ -62,100 +56,69 @@ class CampaignRepo(email: String, token: String) : ICampaign{
         Log.e("CampaignRepo","Accessing register method in CampaignRepo")
         val getItem: RegisterCM = item as RegisterCM
 
-        val data = MutableLiveData<LoginResponse>()
+        val data = MutableLiveData<CMRegister>()
         // call login method from CharitreeApi interface
         api.registerCM(getItem).enqueue(
-                object: Callback<LoginResponse> {
-                    val loginResponse = LoginResponse()
-                    override fun onResponse(call: Call<LoginResponse>?, response: Response<LoginResponse>?) {
-                        //val result: JSONObject = response!!.body()
-                        // If response is successful
-                        /*
-                        isSuccessful is a method of Response
-                         */
+                object: Callback<CMRegister> {
+                    val registerResponse = CMRegister()
+                    override fun onResponse(call: Call<CMRegister>?, response: Response<CMRegister>?) {
 
                         if(response!!.isSuccessful){
-                            loginResponse.apply {
-                                httpStatus = response.code()
-                                message = response.body().message
-                                isValidResponse = true
+                            registerResponse.apply {
+                                status = response.body().status
+                                errors = null
                             }
-                            data.value = loginResponse
+                            data.value = registerResponse
 
                             Log.e("RegisterCM","Successful: "+response.body().toString())
                         }else{
                             Log.e("RegisterCM","Not successful. Printing header code: "+response.headers().toString())
                             Log.e("RegisterCM","Not successful. Printing response code: "+response.code())
 
-                            if(response.errorBody() == null){
-                                Log.e("RegisterCM","Not Successful. response.errorBody() is null")
-                            }else{
-                                Log.e("RegisterCM","Not Successful. response.errorBody() is NOT null")
-                                Log.e("RegisterCM","Not Successful. response.errorBody(): " + response.errorBody())
-
-                                loginResponse.apply {
-                                    httpStatus = response.code()
-                                    isValidResponse = false
-                                    message = null
+                            if(response.code() == 500){
+                                registerResponse.apply{
+                                    status = 0
+                                    errors = Errors().apply{
+                                        message = "Server error. Please contact adminstrator"
+                                    }
                                 }
+                            }else{
+                                val jObjError = JSONObject(response.errorBody().string())
 
-                                when(response.code()){
-                                    401 -> {
-                                        loginResponse.apply{
-                                            loginResponse.errors!!.add("Unauthroized access. Please contact the adminstrator")
-                                        }
-                                    }
-                                    404 ->{
-                                        loginResponse.apply{
-                                            loginResponse.errors!!.add("Request failed. Please contact the adminstrator")
-                                        }
-                                    }
-                                    409 -> {
-                                        loginResponse.apply{
-                                            loginResponse.errors!!.add("You are a campaign manager already")
-                                        }
-                                    }
-                                    422 -> {
-                                        val jObjError = JSONObject(response.errorBody().string())
-                                        Log.e("RegisterCM","Not Successful. Status is : " + jObjError.getString("status"))
-                                        Log.e("RegisterCM", "Not Successful. Total errors keys is: " + jObjError.getJSONObject("errors").length())
-                                        val keys = jObjError.getJSONObject("errors").keys()
-                                        loginResponse.apply {
-                                            httpStatus = response.code()
-                                            isValidResponse = false
-                                            message = null
-                                        }
-                                        var errorMessage : String
-                                        while (keys.hasNext()) {
-                                            val test = keys.next()
-                                            //Log.e("RegisterCM","Key:"+test)
-                                            if (test != "message") {
-                                                errorMessage = jObjError.getJSONObject("errors").getJSONArray(test).get(0) as String
-                                                Log.e("RegisterCM", "Accessing: " + errorMessage)
-                                                loginResponse.errors!!.add(errorMessage)
+                                val uenArray = jObjError.optJSONObject("errors")?.optJSONArray("UEN")
+                                val orgNameArray = jObjError.optJSONObject("errors")?.optJSONArray("organization_name")
+                                val getMessage  = jObjError.optJSONObject("errors")?.optString("message")
+
+                                registerResponse.apply {
+                                    status = jObjError.getString("status").toInt()
+                                    errors = Errors().apply {
+                                        uenArray.takeIf { it != null }?.apply {
+                                            for (i in 0..(uenArray?.length()!!.minus(1))) {
+                                                email?.add(uenArray[i].toString())
+                                                Log.e("uenArray", uenArray[i].toString())
                                             }
                                         }
+                                        orgNameArray.takeIf { it != null }?.apply {
+                                            for (i in 0..(orgNameArray?.length()!!.minus(1))) {
+                                                password?.add(orgNameArray[i].toString())
+                                                Log.e("orgNameArray", orgNameArray[i].toString())
+                                            }
+                                        }
+                                        message = getMessage
                                     }
                                 }
                             }
-
-
-
-
-                            //Log.e("RegisterCM","Login response for errors: "+loginResponse.isValidResponse)
-                            data.value = loginResponse;
                         }
-
-
+                        data.value = registerResponse
                     }
 
-                    override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+                    override fun onFailure(call: Call<CMRegister>?, t: Throwable?) {
                         Log.e("Login","Unable to submit email and password to API")
-                        loginResponse.httpStatus = null
-                        loginResponse.user_token = null
-                        loginResponse.message = "No internet connection"
-                        loginResponse.isValidResponse = false
-                        data.value = loginResponse
+                        registerResponse.apply{
+                            status = null
+                            errors = null
+                        }
+                        data.value = registerResponse
                     }
                 }
         )
@@ -163,121 +126,114 @@ class CampaignRepo(email: String, token: String) : ICampaign{
     }
 
     override fun verify(item: Any): Any {
-        Log.e("CampaignRepo","Accessing register method in CampaignRepo")
+        Log.e("CampaignRepo","Accessing verify method in CampaignRepo")
 
-        val data = MutableLiveData<VerifyCMResponse>()
+        val data = MutableLiveData<CMVerify>()
         // call login method from CharitreeApi interface
         api.verifyCM().enqueue(
-                object: Callback<VerifyCMResponse> {
-                    val verifyCMResponse = VerifyCMResponse()
-                    override fun onResponse(call: Call<VerifyCMResponse>?, response: Response<VerifyCMResponse>?) {
-                        //val result: JSONObject = response!!.body()
-                        // If response is successful
-                        /*
-                        isSuccessful is a method of Response
-                         */
-
-                        //Log.e("Verify","Successful:"+response!!.code())
-                        //Log.e("Verify","Successful: "+response!!.body().status)
-                        //Log.e("Verify","Successful: "+response!!.body().campaign_manager!!.cid)
-                        //Log.e("Verify","Successful: "+response!!.body().campaign_manager!!.UEN)
-
+                object: Callback<CMVerify> {
+                    val verifiyResponse = CMVerify()
+                    override fun onResponse(call: Call<CMVerify>?, response: Response<CMVerify>?) {
 
                         if(response!!.isSuccessful){
-                            verifyCMResponse.apply {
-                                status = response.code()
+                            verifiyResponse.apply {
+                                status = response.body().status
                                 errors = null
                                 campaign_manager = CampaignManager().apply{
                                     cid = response.body().campaign_manager!!.cid
                                     UEN = response.body().campaign_manager!!.UEN
                                     organization_name = response.body().campaign_manager!!.organization_name
                                 }
-
-                                isValidResponse = true
                             }
-                            data.value = verifyCMResponse
+                            data.value = verifiyResponse
 
 
                         }else{
-                            Log.e("RegisterCM","Not successful. Printing header code: "+response.headers().toString())
-                            Log.e("RegisterCM","Not successful. Printing response code: "+response.code())
 
-                            if(response.errorBody() == null){
-                                Log.e("RegisterCM","Not Successful. response.errorBody() is null")
-                            }else{
-                                Log.e("RegisterCM","Not Successful. response.errorBody() is NOT null")
-                                Log.e("RegisterCM","Not Successful. response.errorBody(): " + response.errorBody())
-
-                                verifyCMResponse.apply {
-                                    status = response.code()
-                                    campaign_manager = null
-                                    isValidResponse = false
+                            if(response.code() == 500){
+                                verifiyResponse.apply{
+                                    status = 0
+                                    errors = Errors().apply{
+                                        message = "Server error. Please contact adminstrator"
+                                    }
                                 }
+                            }else{
+                                val jObjError = JSONObject(response.errorBody().string())
 
-                                when(response.code()){
-                                    401 -> {
-                                        verifyCMResponse.apply{
-                                            verifyCMResponse.errors!!.add("Unauthroized access. Please contact the adminstrator")
-                                        }
-                                    }
-                                    403 -> {
-                                        verifyCMResponse.apply{
-                                            verifyCMResponse.errors!!.add("Forbidden")
-                                        }
-                                    }
-                                    404 ->{
-                                        verifyCMResponse.apply{
-                                            verifyCMResponse.errors!!.add("Request failed. Please contact the adminstrator")
-                                        }
-                                    }
-                                    409 -> {
-                                        verifyCMResponse.apply{
-                                            verifyCMResponse.errors!!.add("You are a campaign manager already")
-                                        }
-                                    }
-                                    422 -> {
-                                        val jObjError = JSONObject(response.errorBody().string())
-                                        Log.e("RegisterCM","Not Successful. Status is : " + jObjError.getString("status"))
-                                        Log.e("RegisterCM", "Not Successful. Total errors keys is: " + jObjError.getJSONObject("errors").length())
-                                        val keys = jObjError.getJSONObject("errors").keys()
-//                                        verifyCMResponse.apply {
-//                                            httpStatus = response.code()
-//                                            isValidResponse = false
-//                                            message = null
-//                                        }
-                                        var errorMessage : String
-                                        while (keys.hasNext()) {
-                                            val test = keys.next()
-                                            //Log.e("RegisterCM","Key:"+test)
-                                            if (test != "message") {
-                                                errorMessage = jObjError.getJSONObject("errors").getJSONArray(test).get(0) as String
-                                                Log.e("RegisterCM", "Accessing: " + errorMessage)
-                                                verifyCMResponse.errors!!.add(errorMessage)
-                                            }
-                                        }
+                                val getMessage  = jObjError.optJSONObject("errors")?.optString("message")
+
+                                verifiyResponse.apply {
+                                    status = jObjError.getString("status").toInt()
+                                    errors = Errors().apply {
+                                        message = getMessage
                                     }
                                 }
                             }
-
-
-
-
-                            //Log.e("RegisterCM","Login response for errors: "+loginResponse.isValidResponse)
-                            data.value = verifyCMResponse;
+                            data.value = verifiyResponse;
                         }
-
-
                     }
 
-                    override fun onFailure(call: Call<VerifyCMResponse>?, t: Throwable?) {
+                    override fun onFailure(call: Call<CMVerify>?, t: Throwable?) {
                         Log.e("Login","Unable to submit email and password to API")
-                        verifyCMResponse.apply{
+                        verifiyResponse.apply{
                             status = null
-                            errors!!.add("Unable to proceed with this request. No internet available")
-                            campaign_manager = null
-                            isValidResponse = false
+                            errors = null
                         }
-                        data.value = verifyCMResponse
+                        data.value = verifiyResponse
+                    }
+                }
+        )
+        return data
+    }
+
+
+     fun showAll(item: Any): Any {
+        Log.e("CampaignRepo","Accessing showAll method in CampaignRepo")
+
+        val data = MutableLiveData<CMVerify>()
+        // call login method from CharitreeApi interface
+        api.verifyCM().enqueue(
+                object: Callback<CMVerify> {
+                    val verifiyResponse = CMVerify()
+                    override fun onResponse(call: Call<CMVerify>?, response: Response<CMVerify>?) {
+
+                        if(response!!.isSuccessful){
+                            verifiyResponse.apply {
+                                status = response.body().status
+                                errors = null
+                                campaign_manager = CampaignManager().apply{
+                                    cid = response.body().campaign_manager!!.cid
+                                    UEN = response.body().campaign_manager!!.UEN
+                                    organization_name = response.body().campaign_manager!!.organization_name
+                                }
+                            }
+                            data.value = verifiyResponse
+
+
+                        }else{
+
+                            val jObjError = JSONObject(response.errorBody().string())
+
+                            val getMessage  = jObjError.optJSONObject("errors")?.optString("message")
+
+                            verifiyResponse.apply {
+                                status = jObjError.getString("status").toInt()
+                                errors = Errors().apply {
+                                    message = getMessage
+                                }
+                            }
+
+                            data.value = verifiyResponse;
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CMVerify>?, t: Throwable?) {
+                        Log.e("Login","Unable to submit email and password to API")
+                        verifiyResponse.apply{
+                            status = null
+                            errors = null
+                        }
+                        data.value = verifiyResponse
                     }
                 }
         )

@@ -1,14 +1,13 @@
-package com.example.harrisonwjy.charitree
+package com.example.harrisonwjy.charitree.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import com.example.harrisonwjy.charitree.model.Request
-import com.example.harrisonwjy.charitree.model.LoginResponse
-import com.example.harrisonwjy.charitree.model.request.RegisterCM
+import com.example.harrisonwjy.charitree.model.response.Login
+import com.example.harrisonwjy.charitree.model.response.LoginResponse
+import com.example.harrisonwjy.charitree.model.response.UserRegister
 import com.example.harrisonwjy.charitree.repo.IAuthentication
 import com.example.harrisonwjy.charitree.repo.ICampaign
-import com.example.harrisonwjy.charitree.repo.IRegister
-import com.example.harrisonwjy.charitree.repo.IRepository
 
 class UserViewModel : ViewModel() {
 
@@ -28,14 +27,14 @@ class UserViewModel : ViewModel() {
 //    fun authenticate(request: Request): LiveData<LoginResponse>{
 //         return repo!!.verify(request)
 //    }
-    fun authenticate(repo: IAuthentication,request: Request) : LiveData<LoginResponse>{
+    fun authenticate(repo: IAuthentication,request: Request) : LiveData<Login>{
         //val data = MutableLiveData<LoginResponse>()
-        return repo.verify(request) as LiveData<LoginResponse>
+        return repo.verify(request) as LiveData<Login>
     }
 
-    fun register(repo: ICampaign, request: Request) : LiveData<LoginResponse>{
+    fun register(repo: ICampaign, request: Request) : LiveData<UserRegister>{
         //val data = MutableLiveData<LoginResponse>()
-        return repo.register(request) as LiveData<LoginResponse>
+        return repo.register(request) as LiveData<UserRegister>
     }
 
 

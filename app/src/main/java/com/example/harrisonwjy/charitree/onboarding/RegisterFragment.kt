@@ -1,9 +1,6 @@
 package com.example.harrisonwjy.charitree.onboarding
 
-import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,17 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.UserViewModel
+import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
 import com.example.harrisonwjy.charitree.helper.HttpException
 import com.example.harrisonwjy.charitree.helper.InputValidateShowError
 import com.example.harrisonwjy.charitree.helper.SingleActionDialogBox
 import com.example.harrisonwjy.charitree.helper.Validation
-import com.example.harrisonwjy.charitree.model.LoginResponse
 import com.example.harrisonwjy.charitree.model.Request
 import com.example.harrisonwjy.charitree.repo.TradAuthenticationRepo
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import retrofit2.Call
 
 // TODO: Rename parameter arguments, choose names that match
 
@@ -66,9 +61,7 @@ class RegisterFragment : Fragment(), Validation, HttpException {
                 Log.e("RegisterFragment","Password matched")
             }else{
                 Log.e("RegisterFragment","Password doesnt match")
-                val message = ArrayList<String>()
-                message.add("Password doesn't match")
-                val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",message)
+                val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong","Password doesn't match")
                 //val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",onHttpException(it!!.httpStatus))
                 dialogBox.show(fragmentManager,"fragment_alert")
                 return@setOnClickListener
@@ -110,7 +103,7 @@ class RegisterFragment : Fragment(), Validation, HttpException {
                 }
 
                 // If user_token contains something
-                if(it?.isValidResponse == true){
+                if(it?.status == 1){
                     indeterminateBar.visibility = View.INVISIBLE
                     val fragmentManager = fragmentManager
                     val fragmentTransaction = fragmentManager!!.beginTransaction()
@@ -135,7 +128,7 @@ class RegisterFragment : Fragment(), Validation, HttpException {
                     input_passwordconfirm.visibility = View.VISIBLE
                     registerButton.visibility = View.VISIBLE
                     goBackToLoginButton.visibility = View.VISIBLE
-                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",it?.errors)
+                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",it?.errors?.message)
                     //val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",onHttpException(it!!.httpStatus))
                     dialogBox.show(fragmentManager,"fragment_alert")
                 }

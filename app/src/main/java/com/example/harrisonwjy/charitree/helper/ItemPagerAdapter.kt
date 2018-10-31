@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
-import com.example.harrisonwjy.charitree.CampaignItemFragment
+import com.example.harrisonwjy.charitree.user.CampaignItemFragment
 
 class ItemPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager) {
 

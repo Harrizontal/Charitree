@@ -1,4 +1,4 @@
-package com.example.harrisonwjy.charitree.model
+package com.example.harrisonwjy.charitree.model.response
 
 class LoginResponse {
     companion object Factory {

@@ -1,14 +1,11 @@
-package com.example.harrisonwjy.charitree
+package com.example.harrisonwjy.charitree.user
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
-import com.example.harrisonwjy.charitree.onboarding.LoginFragment
-import kotlinx.android.synthetic.main.fragment_register.*
+import com.example.harrisonwjy.charitree.R
 
 // TODO: Rename parameter arguments, choose names that match
 

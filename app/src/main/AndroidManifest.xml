@@ -3,6 +3,7 @@
     package="com.example.harrisonwjy.charitree">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -11,33 +12,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashScreenActivity" android:theme="@style/SplashScreenTheme">
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".onboarding.OnboardingActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat.ThemeLight"
-            android:parentActivityName=".MainActivity" >
-        </activity>
-        <activity android:name=".campaignmanager.RegisterCMActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:parentActivityName=".user.MainActivity"
+            android:theme="@style/Theme.AppCompat.ThemeLight" />
         <activity
-            android:name=".MainActivity"
+            android:name=".setting.RegisterCMActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CampaignManagerActivity"
+            android:name=".user.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".campaignmanager.CampaignManagerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".user.CampaignDetailActivity"
+            android:label="@string/title_activity_campaign_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".user.createdonation.CreateDonationActivity"
+            android:label="@string/title_activity_create_donation"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.harrisonwjy.charitree
+package com.example.harrisonwjy.charitree.user
 
 import android.content.Context
 import android.content.Intent
@@ -13,12 +13,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.support.v4.app.Fragment
 import android.util.Log
+import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.helper.BottomBarAdapter
+import com.example.harrisonwjy.charitree.helper.ItemPagerAdapter
 import com.example.harrisonwjy.charitree.helper.LockableViewPager
 import com.example.harrisonwjy.charitree.setting.SettingFragment
-import android.support.v4.view.ViewPager
-
-
+import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
+import kotlinx.android.synthetic.main.fragment_campaigns.*
 
 
 //fun Context.MainActivity(user: User): Intent {
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
 
     val myViewModel: UserViewModel by viewModel()
     private lateinit var viewPager: LockableViewPager
+    var clickAgain: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,27 +71,6 @@ class MainActivity : AppCompatActivity() {
         navigation.setOnNavigationItemSelectedListener(test)
 
 
-
-        //Manually displaying the first fragment - one time only
-//        val transaction = supportFragmentManager.beginTransaction()
-//        transaction.replace(R.id.container, CampaignsFragment.newInstance())
-//        transaction.commit()
-       // val tokenId:String = intent.getStringExtra(INTENT_USER_ID) ?: throw IllegalStateException("field $INTENT_USER_ID missing in Intent")
-
-//        button.setOnClickListener {
-//
-//            val pref = applicationContext.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
-//            val editor = pref.edit()
-//            editor.remove("token"); // will delete key key_name3
-//
-//            // Save the changes in SharedPreferences
-//            editor.apply();
-//
-//            startActivity(OnboardingActivity())
-//            finish()
-//
-//        }
-
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -114,8 +95,6 @@ class MainActivity : AppCompatActivity() {
             //viewPager.adapter =
             viewPager.adapter = mAdapter
             viewPager.setCurrentItem(3)
-            //mAdapter.getItem(3)
-            //mAdapter.getItem(3)
             Log.e("MainActiivity","Fragment found")
         }
     }
@@ -127,7 +106,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.campaign -> {
                     toolbar.title = "Campaigns"
                     //selectedFragment = CampaignsFragment.newInstance()
-                    viewPager.setCurrentItem(0)
+                    if(viewPager.currentItem == 0){
+                        val adapter = mAdapter
+                        val fragment = adapter.getItem(0) as CampaignsFragment
+                        fragment.setViewPagerToFirst()
+                    }else{
+                        viewPager.setCurrentItem(0)
+                    }
+
                     //fragmentTag = "CampaignsFragment"
                 }
                 R.id.donation ->{

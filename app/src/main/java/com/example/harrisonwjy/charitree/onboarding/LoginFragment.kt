@@ -6,13 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.UserViewModel
+import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.Context.MODE_PRIVATE
-import com.example.harrisonwjy.charitree.MainActivity
+import com.example.harrisonwjy.charitree.user.MainActivity
 import android.content.Intent
-import com.example.harrisonwjy.charitree.CampaignManagerActivity
+import com.example.harrisonwjy.charitree.campaignmanager.CampaignManagerActivity
 import com.example.harrisonwjy.charitree.helper.*
 import com.example.harrisonwjy.charitree.model.Request
 import com.example.harrisonwjy.charitree.repo.TradAuthenticationRepo
@@ -95,7 +95,7 @@ class LoginFragment : Fragment(),Validation, HttpException {
                 }
 
                 // If user_token contains something
-                if(it?.isValidResponse == true){
+                if(it?.status == 1){
                     indeterminateBar.visibility = View.INVISIBLE
                     // Store user_token into SharedPreferences
                     // What is Shared Preferenes? https://developer.android.com/training/data-storage/shared-preferences
@@ -132,7 +132,9 @@ class LoginFragment : Fragment(),Validation, HttpException {
                     loginButton.visibility = View.VISIBLE
                     registerButton.visibility = View.VISIBLE
                     indeterminateBar.visibility = View.INVISIBLE
-                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",it?.errors)
+                    val test: ArrayList<String> = ArrayList()
+                    test.add("asdasdas")
+                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",it?.errors?.message)
                     //val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong",onHttpException(it!!.httpStatus))
                     dialogBox.show(fragmentManager,"fragment_alert")
                 }

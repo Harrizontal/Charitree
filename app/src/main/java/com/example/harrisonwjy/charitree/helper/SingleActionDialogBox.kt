@@ -12,18 +12,29 @@ import android.util.Log
 class SingleActionDialogBox : DialogFragment() {
 
     companion object {
-        fun newInstance(title: String, message: ArrayList<String>?): SingleActionDialogBox {
+        fun newInstance(title: String, message: String?): SingleActionDialogBox {
 
-            var allMessage: String = message?.get(0)!!
-            for (i in 1 until message.count()){
-                allMessage += message[i]+"\n"
+//            var allMessage: String
+//            if(message?.size != 0){
+//                allMessage = message?.get(0)!!
+//                for (i in 1 until message.count()){
+//                    allMessage += message[i]+"\n"
+//                }
+//            }else{
+//                allMessage = "Unable to submit request. Ensure you got internet connection"
+//            }
+            var displayMessage: String
+            if (message == null){
+                displayMessage = "Something went wrong"
+            }else{
+                displayMessage = message;
             }
 
             //val allMessage: String = "Testing"
             val frag = SingleActionDialogBox()
             val args = Bundle()
             args.putString("title",title)
-            args.putString("message",allMessage)
+            args.putString("message",displayMessage)
             frag.arguments = args
             return frag
         }

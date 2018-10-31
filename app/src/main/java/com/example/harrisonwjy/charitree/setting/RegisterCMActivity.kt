@@ -1,4 +1,4 @@
-package com.example.harrisonwjy.charitree.campaignmanager
+package com.example.harrisonwjy.charitree.setting
 
 import android.content.Context
 import android.content.Intent
