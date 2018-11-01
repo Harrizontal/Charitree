@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
+import com.example.harrisonwjy.charitree.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.Context.MODE_PRIVATE
@@ -15,6 +15,7 @@ import android.content.Intent
 import com.example.harrisonwjy.charitree.campaignmanager.CampaignManagerActivity
 import com.example.harrisonwjy.charitree.helper.*
 import com.example.harrisonwjy.charitree.model.Request
+import com.example.harrisonwjy.charitree.model.request.LoginRequest
 import com.example.harrisonwjy.charitree.repo.TradAuthenticationRepo
 
 
@@ -34,7 +35,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class LoginFragment : Fragment(),Validation, HttpException {
     // TODO: Rename and change types of parameters
-    val myViewModel: UserViewModel by viewModel()
+    val myViewModel: AuthViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -76,7 +77,7 @@ class LoginFragment : Fragment(),Validation, HttpException {
             isValidInput(input_password,layout_password,"Please enter a password")
 
             // create a Request object
-            val loginRequest = Request.create()
+            val loginRequest = LoginRequest.create()
             // stores the email and password into the Request object
             loginRequest.email = getEmailAddress
             loginRequest.password = getPassword

@@ -15,7 +15,7 @@ import android.util.Log
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.setting.SettingFragment
 import com.example.harrisonwjy.charitree.user.CampaignsFragment
-import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
+import com.example.harrisonwjy.charitree.viewmodel.AuthViewModel
 
 
 //fun Context.MainActivity(user: User): Intent {
@@ -35,7 +35,7 @@ private val INTENT_USER_ID = "user_token"
 
 class CampaignManagerActivity : AppCompatActivity() {
 
-    val myViewModel: UserViewModel by viewModel()
+    val myViewModel: AuthViewModel by viewModel()
     //private lateinit var viewPager: LockableViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {

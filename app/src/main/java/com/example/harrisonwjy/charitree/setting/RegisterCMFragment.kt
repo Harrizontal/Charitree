@@ -3,18 +3,17 @@ package com.example.harrisonwjy.charitree.setting
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.harrisonwjy.charitree.CampaignViewModel
+import com.example.harrisonwjy.charitree.viewmodel.CampaignManagerViewModel
 
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.helper.HttpException
 import com.example.harrisonwjy.charitree.helper.InputValidateShowError
 import com.example.harrisonwjy.charitree.helper.SingleActionDialogBox
 import com.example.harrisonwjy.charitree.helper.Validation
-import com.example.harrisonwjy.charitree.model.request.RegisterCM
+import com.example.harrisonwjy.charitree.model.request.RegisterCMRequest
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import kotlinx.android.synthetic.main.fragment_cmregister.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,7 +31,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class RegisterCMFragment : Fragment(),Validation,HttpException {
 
-    val campaignViewModel: CampaignViewModel by viewModel()
+    val campaignManagerViewModel: CampaignManagerViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -74,13 +73,13 @@ class RegisterCMFragment : Fragment(),Validation,HttpException {
             val email: String = prefs.getString("email","")
 
             // create a Request object
-            val registerCM = RegisterCM.create()
+            val registerCM = RegisterCMRequest.create()
             // stores the email and password into the Request object
             registerCM.organization_name = input_org_name.text.toString()
             registerCM.UEN = input_uen.text.toString()
 
             // ViewModel will call Authenticate method
-            campaignViewModel.register(CampaignRepo(email,token),registerCM).observe(this,android.arch.lifecycle.Observer {
+            campaignManagerViewModel.register(CampaignRepo(email,token),registerCM).observe(this,android.arch.lifecycle.Observer {
 
                 // make a fake delay response
                 try {

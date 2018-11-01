@@ -1,4 +1,6 @@
-package com.example.harrisonwjy.charitree.model.response
+package com.example.harrisonwjy.charitree.model
+
+// error class
 
 class Errors{
     companion object {

@@ -1,6 +1,6 @@
 package com.example.harrisonwjy.charitree.model
 
-class CampaignItems (val item_name: String) {
+class CampaignItems (var item_name: String, var choiceNumber: Int, var checked: Boolean) {
 
 
 }

@@ -1,7 +1,8 @@
 package com.example.harrisonwjy.charitree
 
-import com.example.harrisonwjy.charitree.model.Request
-import com.example.harrisonwjy.charitree.model.request.RegisterCM
+import com.example.harrisonwjy.charitree.model.request.LoginRequest
+import com.example.harrisonwjy.charitree.model.request.RegisterCMRequest
+import com.example.harrisonwjy.charitree.model.request.UserRegisterRequest
 import com.example.harrisonwjy.charitree.model.response.*
 import retrofit2.Call
 import retrofit2.http.*
@@ -21,11 +22,11 @@ interface CharitreeApi {
 //            : Call<Project>
 
 
-    // create users - not completed
+    // create users
     @POST("users")
     @Headers("Content-Type: application/json")
-    fun register(@Body request:Request)
-                 : Call<UserRegister>
+    fun register(@Body request:UserRegisterRequest)
+                 : Call<UserRegisterResponse>
 
     /*
     Purpose: Send a POST request (http:ipaddress/session) to the respective API with a
@@ -40,23 +41,23 @@ interface CharitreeApi {
 
     @POST("sessions")
     @Headers("Content-Type: application/json")
-    fun login(@Body request: Request)
-            : Call<Login>
+    fun login(@Body request: LoginRequest)
+            : Call<LoginResponse>
 
 
     @POST("users/campaignmanager")
     @Headers("Content-Type: application/json")
-    fun registerCM(@Body request: RegisterCM)
-                : Call<CMRegister>
+    fun registerCM(@Body request: RegisterCMRequest)
+                : Call<CMRegisterResponse>
 
     @GET("users/campaignmanager")
     @Headers("Content-Type: application/json")
-    fun verifyCM(): Call<CMVerify>
+    fun verifyCM(): Call<CMVerifyResponse>
 
 
     companion object {
         // Local server
-        val API_URL = "http://10.0.2.2/public/"
+         val API_URL = "http://10.0.2.2/public/"
         // IP address
         //val API_URL = "http://172.21.148.170/Charitree/public/"
     }

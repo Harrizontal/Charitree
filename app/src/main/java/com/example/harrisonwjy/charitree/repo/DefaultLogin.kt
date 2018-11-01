@@ -1,14 +1,6 @@
 package com.example.harrisonwjy.charitree.repo
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.util.Log
 import com.example.harrisonwjy.charitree.CharitreeApi
-import com.example.harrisonwjy.charitree.model.Request
-import com.example.harrisonwjy.charitree.model.response.LoginResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -52,10 +44,10 @@ class DefaultLogin {
 //                            loginResponse.httpStatus = response!!.code()
 //                            loginResponse.user_token = response!!.body().user_token
 //                            data.value = loginResponse
-//                            Log.e("Login","Successful: "+response!!.body().user_token)
+//                            Log.e("LoginResponse","Successful: "+response!!.body().user_token)
 //                        }else{
-//                            Log.e("Login","Not successful. Printing response code: "+response.code())
-//                            Log.e("Login","Not Successful. Printing body: "+response.errorBody().string())
+//                            Log.e("LoginResponse","Not successful. Printing response code: "+response.code())
+//                            Log.e("LoginResponse","Not Successful. Printing body: "+response.errorBody().string())
 //                            loginResponse.httpStatus = response!!.code()
 //                            loginResponse.user_token = null
 //                            data.value = loginResponse;
@@ -65,7 +57,7 @@ class DefaultLogin {
 //                    }
 //
 //                    override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
-//                        Log.e("Login","Unable to submit email and password to API")
+//                        Log.e("LoginResponse","Unable to submit email and password to API")
 //                        data.value = null
 //
 //                    }

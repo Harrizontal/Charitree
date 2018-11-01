@@ -1,8 +1,8 @@
 package com.example.harrisonwjy.charitree.model.request
 
-class RegisterCM{
+class RegisterCMRequest{
     companion object Factory {
-        fun create(): RegisterCM = RegisterCM()
+        fun create(): RegisterCMRequest = RegisterCMRequest()
     }
 
     var organization_name: String? = ""

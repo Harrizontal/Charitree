@@ -11,5 +11,4 @@ class Request{
     var password: String = ""
     var user_token: String = ""
 
-
 }

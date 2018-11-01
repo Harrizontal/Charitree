@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
+import com.example.harrisonwjy.charitree.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_success_register.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class SuccessRegisterFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    val myViewModel: UserViewModel by viewModel()
+    val myViewModel: AuthViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

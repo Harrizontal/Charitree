@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
+import com.example.harrisonwjy.charitree.viewmodel.AuthViewModel
 import com.example.harrisonwjy.charitree.helper.HttpException
 import com.example.harrisonwjy.charitree.helper.InputValidateShowError
 import com.example.harrisonwjy.charitree.helper.SingleActionDialogBox
 import com.example.harrisonwjy.charitree.helper.Validation
 import com.example.harrisonwjy.charitree.model.Request
+import com.example.harrisonwjy.charitree.model.request.UserRegisterRequest
 import com.example.harrisonwjy.charitree.repo.TradAuthenticationRepo
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -31,7 +32,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class RegisterFragment : Fragment(), Validation, HttpException {
 
-    val myViewModel: UserViewModel by viewModel()
+    val myViewModel: AuthViewModel by viewModel()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -84,7 +85,7 @@ class RegisterFragment : Fragment(), Validation, HttpException {
             goBackToLoginButton.visibility = View.INVISIBLE
 
             val repo = TradAuthenticationRepo()
-            val request = Request()
+            val request = UserRegisterRequest()
             request.email = input_email.text.toString()
             request.first_name = input_firstname.text.toString()
             request.last_name = input_lastname.text.toString()

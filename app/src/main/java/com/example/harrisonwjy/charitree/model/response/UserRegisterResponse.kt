@@ -1,12 +1,12 @@
 package com.example.harrisonwjy.charitree.model.response
 
-class Login {
+import com.example.harrisonwjy.charitree.model.Errors
+
+class UserRegisterResponse {
     companion object Factory {
-        fun create(): Login = Login()
+        fun create(): LoginResponse = LoginResponse()
     }
 
     var status: Int? = 0
-    var user_token: String? = null
     var errors: Errors? = null
 }
-

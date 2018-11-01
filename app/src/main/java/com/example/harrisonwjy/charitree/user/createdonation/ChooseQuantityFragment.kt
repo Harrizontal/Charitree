@@ -12,9 +12,8 @@ import android.widget.LinearLayout
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.helper.ChooseItemAdapter
 import com.example.harrisonwjy.charitree.model.CampaignItems
-import kotlinx.android.synthetic.main.fragment_create_donation.*
+import kotlinx.android.synthetic.main.fragment_create_donation_items.*
 import android.support.v7.widget.DividerItemDecoration
-import android.content.ClipData.Item
 import com.example.harrisonwjy.charitree.helper.OnItemCheckListener
 
 
@@ -30,49 +29,14 @@ class ChooseQuantityFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        Log.e("RegisterCMF","test");
-        val view =  inflater.inflate(R.layout.fragment_create_donation, container, false)
+        Log.e("Quantity","test");
+        val view =  inflater.inflate(R.layout.fragment_create_donation_quantity, container, false)
 
-        val data = ArrayList<CampaignItems>()
-        var selectionList = view.findViewById<RecyclerView>(R.id.selection_list)
+//        val currentChoices = arguments!!.getSerializable("currentChoices") as ArrayList<CampaignItems>
+//        for(item in currentChoices){
+//            Log.e("CQF","Printing -> item: "+item.item_name + "checked" + item.checked)
+//        }
 
-        data.add(CampaignItems("Newspaer"))
-        data.add(CampaignItems("Paper"))
-        data.add(CampaignItems("Clothes"))
-
-        val currentItem = ArrayList<CampaignItems>()
-
-        linearLayoutManager = LinearLayoutManager(context,LinearLayout.VERTICAL,false)
-        val dividerItemDecoration = DividerItemDecoration(selectionList.getContext(), linearLayoutManager.getOrientation())
-        selectionList.layoutManager = linearLayoutManager
-
-        selectionList.adapter = ChooseItemAdapter(data, object: OnItemCheckListener{
-            override fun onItemCheck(item: CampaignItems) {
-                Log.e("CIFragment","added item" + item.item_name)
-                currentItem.add(item)
-                if(currentItem.size > 0){
-                    nextButton.visibility = View.VISIBLE
-                    noItemSelected.visibility = View.INVISIBLE
-                }else{
-                    nextButton.visibility = View.INVISIBLE
-                    noItemSelected.visibility = View.VISIBLE
-                }
-            }
-
-            override fun onItemUncheck(item: CampaignItems) {
-                Log.e("CIFragment","remove item "+item.item_name)
-                currentItem.remove(item)
-                if(currentItem.size > 0){
-                    nextButton.visibility = View.VISIBLE
-                    noItemSelected.visibility = View.INVISIBLE
-                }else{
-                    nextButton.visibility = View.INVISIBLE
-                    noItemSelected.visibility = View.VISIBLE
-                }
-            }
-
-        })
-        selectionList.addItemDecoration(dividerItemDecoration)
 
         return view
     }

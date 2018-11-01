@@ -1,14 +1,14 @@
 package com.example.harrisonwjy.charitree.repo
 
-import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.harrisonwjy.charitree.CharitreeApi
-import com.example.harrisonwjy.charitree.model.response.LoginResponse
 import com.example.harrisonwjy.charitree.model.Request
-import com.example.harrisonwjy.charitree.model.response.Errors
-import com.example.harrisonwjy.charitree.model.response.Login
-import com.example.harrisonwjy.charitree.model.response.UserRegister
+import com.example.harrisonwjy.charitree.model.Errors
+import com.example.harrisonwjy.charitree.model.request.LoginRequest
+import com.example.harrisonwjy.charitree.model.request.UserRegisterRequest
+import com.example.harrisonwjy.charitree.model.response.LoginResponse
+import com.example.harrisonwjy.charitree.model.response.UserRegisterResponse
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,14 +38,14 @@ class TradAuthenticationRepo : ICampaign{
 
     override fun verify(item: Any): Any {
 
-        val getItem: Request = item as Request
-        val data = MutableLiveData<Login>()
+        val getItem: LoginRequest = item as LoginRequest
+        val data = MutableLiveData<LoginResponse>()
 
         // call login method from CharitreeApi interface
         api.login(getItem).enqueue(
-                object: Callback<Login> {
-                    val loginResponse = Login()
-                    override fun onResponse(call: Call<Login>?, response: Response<Login>?) {
+                object: Callback<LoginResponse> {
+                    val loginResponse = LoginResponse()
+                    override fun onResponse(call: Call<LoginResponse>?, response: Response<LoginResponse>?) {
 
                         if(response!!.isSuccessful){
                             loginResponse.apply {
@@ -54,10 +54,10 @@ class TradAuthenticationRepo : ICampaign{
                                 errors = null
                             }
                             data.value = loginResponse
-                            //Log.e("Login","Successful: "+response!!.body().user_token)
+                            //Log.e("LoginResponse","Successful: "+response!!.body().user_token)
                         }else{
-                            //Log.e("Login","Not successful. Printing response code: "+response.code())
-                            //Log.e("Login","Not Successful. Printing body: "+response.errorBody())
+                            //Log.e("LoginResponse","Not successful. Printing response code: "+response.code())
+                            //Log.e("LoginResponse","Not Successful. Printing body: "+response.errorBody())
                             if(response.code() == 500){
                                 Log.e("TradAuth","Response code is 500")
                                 loginResponse.apply{
@@ -100,8 +100,8 @@ class TradAuthenticationRepo : ICampaign{
 
                     }
 
-                    override fun onFailure(call: Call<Login>?, t: Throwable?) {
-                        Log.e("Login","Unable to submit email and password to API")
+                    override fun onFailure(call: Call<LoginResponse>?, t: Throwable?) {
+                        Log.e("LoginResponse","Unable to submit email and password to API")
                         loginResponse.apply {
                             status = 0
                             user_token = null
@@ -115,13 +115,13 @@ class TradAuthenticationRepo : ICampaign{
     }
 
     override fun register(item: Any): Any {
-        val getItem: Request = item as Request
-        val data = MutableLiveData<UserRegister>()
+        val getItem: UserRegisterRequest = item as UserRegisterRequest
+        val data = MutableLiveData<UserRegisterResponse>()
 
         api.register(getItem).enqueue(
-                object: Callback<UserRegister> {
-                    val registerResponse = UserRegister()
-                    override fun onResponse(call: Call<UserRegister>?, response: Response<UserRegister>?) {
+                object: Callback<UserRegisterResponse> {
+                    val registerResponse = UserRegisterResponse()
+                    override fun onResponse(call: Call<UserRegisterResponse>?, response: Response<UserRegisterResponse>?) {
 
                         if(response!!.isSuccessful){
                             registerResponse.apply {
@@ -167,8 +167,8 @@ class TradAuthenticationRepo : ICampaign{
                         }
                     }
 
-                    override fun onFailure(call: Call<UserRegister>?, t: Throwable?) {
-                        Log.e("Login","Unable to submit email and password to API")
+                    override fun onFailure(call: Call<UserRegisterResponse>?, t: Throwable?) {
+                        Log.e("LoginResponse","Unable to submit email and password to API")
                         registerResponse.apply{
                             status = null
                             errors = null

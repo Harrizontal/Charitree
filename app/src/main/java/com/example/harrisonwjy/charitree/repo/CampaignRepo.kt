@@ -3,7 +3,9 @@ package com.example.harrisonwjy.charitree.repo
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.harrisonwjy.charitree.CharitreeApi
-import com.example.harrisonwjy.charitree.model.request.RegisterCM
+import com.example.harrisonwjy.charitree.model.CampaignManager
+import com.example.harrisonwjy.charitree.model.Errors
+import com.example.harrisonwjy.charitree.model.request.RegisterCMRequest
 import com.example.harrisonwjy.charitree.model.response.*
 import okhttp3.Credentials
 import okhttp3.Interceptor
@@ -54,14 +56,14 @@ class CampaignRepo(email: String, token: String) : ICampaign{
 
     override fun register(item: Any): Any {
         Log.e("CampaignRepo","Accessing register method in CampaignRepo")
-        val getItem: RegisterCM = item as RegisterCM
+        val getItem: RegisterCMRequest = item as RegisterCMRequest
 
-        val data = MutableLiveData<CMRegister>()
+        val data = MutableLiveData<CMRegisterResponse>()
         // call login method from CharitreeApi interface
         api.registerCM(getItem).enqueue(
-                object: Callback<CMRegister> {
-                    val registerResponse = CMRegister()
-                    override fun onResponse(call: Call<CMRegister>?, response: Response<CMRegister>?) {
+                object: Callback<CMRegisterResponse> {
+                    val registerResponse = CMRegisterResponse()
+                    override fun onResponse(call: Call<CMRegisterResponse>?, response: Response<CMRegisterResponse>?) {
 
                         if(response!!.isSuccessful){
                             registerResponse.apply {
@@ -70,10 +72,10 @@ class CampaignRepo(email: String, token: String) : ICampaign{
                             }
                             data.value = registerResponse
 
-                            Log.e("RegisterCM","Successful: "+response.body().toString())
+                            Log.e("RegisterCMRequest","Successful: "+response.body().toString())
                         }else{
-                            Log.e("RegisterCM","Not successful. Printing header code: "+response.headers().toString())
-                            Log.e("RegisterCM","Not successful. Printing response code: "+response.code())
+                            Log.e("RegisterCMRequest","Not successful. Printing header code: "+response.headers().toString())
+                            Log.e("RegisterCMRequest","Not successful. Printing response code: "+response.code())
 
                             if(response.code() == 500){
                                 registerResponse.apply{
@@ -112,8 +114,8 @@ class CampaignRepo(email: String, token: String) : ICampaign{
                         data.value = registerResponse
                     }
 
-                    override fun onFailure(call: Call<CMRegister>?, t: Throwable?) {
-                        Log.e("Login","Unable to submit email and password to API")
+                    override fun onFailure(call: Call<CMRegisterResponse>?, t: Throwable?) {
+                        Log.e("LoginResponse","Unable to submit email and password to API")
                         registerResponse.apply{
                             status = null
                             errors = null
@@ -128,12 +130,12 @@ class CampaignRepo(email: String, token: String) : ICampaign{
     override fun verify(item: Any): Any {
         Log.e("CampaignRepo","Accessing verify method in CampaignRepo")
 
-        val data = MutableLiveData<CMVerify>()
+        val data = MutableLiveData<CMVerifyResponse>()
         // call login method from CharitreeApi interface
         api.verifyCM().enqueue(
-                object: Callback<CMVerify> {
-                    val verifiyResponse = CMVerify()
-                    override fun onResponse(call: Call<CMVerify>?, response: Response<CMVerify>?) {
+                object: Callback<CMVerifyResponse> {
+                    val verifiyResponse = CMVerifyResponse()
+                    override fun onResponse(call: Call<CMVerifyResponse>?, response: Response<CMVerifyResponse>?) {
 
                         if(response!!.isSuccessful){
                             verifiyResponse.apply {
@@ -173,8 +175,8 @@ class CampaignRepo(email: String, token: String) : ICampaign{
                         }
                     }
 
-                    override fun onFailure(call: Call<CMVerify>?, t: Throwable?) {
-                        Log.e("Login","Unable to submit email and password to API")
+                    override fun onFailure(call: Call<CMVerifyResponse>?, t: Throwable?) {
+                        Log.e("LoginResponse","Unable to submit email and password to API")
                         verifiyResponse.apply{
                             status = null
                             errors = null
@@ -190,12 +192,12 @@ class CampaignRepo(email: String, token: String) : ICampaign{
      fun showAll(item: Any): Any {
         Log.e("CampaignRepo","Accessing showAll method in CampaignRepo")
 
-        val data = MutableLiveData<CMVerify>()
+        val data = MutableLiveData<CMVerifyResponse>()
         // call login method from CharitreeApi interface
         api.verifyCM().enqueue(
-                object: Callback<CMVerify> {
-                    val verifiyResponse = CMVerify()
-                    override fun onResponse(call: Call<CMVerify>?, response: Response<CMVerify>?) {
+                object: Callback<CMVerifyResponse> {
+                    val verifiyResponse = CMVerifyResponse()
+                    override fun onResponse(call: Call<CMVerifyResponse>?, response: Response<CMVerifyResponse>?) {
 
                         if(response!!.isSuccessful){
                             verifiyResponse.apply {
@@ -227,8 +229,8 @@ class CampaignRepo(email: String, token: String) : ICampaign{
                         }
                     }
 
-                    override fun onFailure(call: Call<CMVerify>?, t: Throwable?) {
-                        Log.e("Login","Unable to submit email and password to API")
+                    override fun onFailure(call: Call<CMVerifyResponse>?, t: Throwable?) {
+                        Log.e("LoginResponse","Unable to submit email and password to API")
                         verifiyResponse.apply{
                             status = null
                             errors = null

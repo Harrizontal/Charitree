@@ -15,11 +15,9 @@ import android.support.v4.app.Fragment
 import android.util.Log
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.helper.BottomBarAdapter
-import com.example.harrisonwjy.charitree.helper.ItemPagerAdapter
 import com.example.harrisonwjy.charitree.helper.LockableViewPager
 import com.example.harrisonwjy.charitree.setting.SettingFragment
-import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
-import kotlinx.android.synthetic.main.fragment_campaigns.*
+import com.example.harrisonwjy.charitree.viewmodel.AuthViewModel
 
 
 //fun Context.MainActivity(user: User): Intent {
@@ -41,7 +39,7 @@ private val INTENT_USER_ID = "user_token"
 
 class MainActivity : AppCompatActivity() {
 
-    val myViewModel: UserViewModel by viewModel()
+    val myViewModel: AuthViewModel by viewModel()
     private lateinit var viewPager: LockableViewPager
     var clickAgain: Boolean = true
 

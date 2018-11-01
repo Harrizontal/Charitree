@@ -9,7 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.harrisonwjy.charitree.CampaignViewModel
+import com.example.harrisonwjy.charitree.viewmodel.CampaignManagerViewModel
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.model.Request
 
@@ -18,6 +18,7 @@ import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import kotlinx.android.synthetic.main.fragment_setting.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.example.harrisonwjy.charitree.campaignmanager.CampaignManagerActivity
+import com.example.harrisonwjy.charitree.model.request.RegisterCMRequest
 import com.example.harrisonwjy.charitree.user.MainActivity
 
 
@@ -34,7 +35,7 @@ import com.example.harrisonwjy.charitree.user.MainActivity
  */
 class SettingFragment : Fragment() {
 
-    val campaignViewModel: CampaignViewModel by viewModel()
+    val campaignManagerViewModel: CampaignManagerViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -72,14 +73,11 @@ class SettingFragment : Fragment() {
         val mode: String = prefs.getString("mode","user")
 
         // create a Request object
-        val request = Request.create()
+        val request = RegisterCMRequest.create() // empty request for now
         // stores the email and password into the Request object
-        request.email = email
-        request.user_token = token
 
-
-        //campaignViewModel.verifyCM(CampaignRepo(email,token),request)
-        campaignViewModel.getCampaignManagerAccess(CampaignRepo(email,token),request)!!.observe(this, Observer {
+        //campaignManagerViewModel.verifyCM(CampaignRepo(email,token),request)
+        campaignManagerViewModel.getCampaignManagerAccess(CampaignRepo(email,token),request)!!.observe(this, Observer {
             val isCampaignManager = it?.status
 
             when(mode){
