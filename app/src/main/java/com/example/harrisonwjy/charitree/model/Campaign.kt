@@ -1,6 +1,8 @@
 package com.example.harrisonwjy.charitree.model
 
-class Campaign {
+import java.io.Serializable
+
+class Campaign : Serializable {
     companion object {
         fun create(): Campaign = Campaign()
     }
@@ -10,8 +12,12 @@ class Campaign {
     var start_date : String? = null
     var end_date: String? = null
     var start_time: Int? = 0
+    var end_time: Int? = 0
+    var collection_point: String? = ""
+    var description: String? = ""
+    var postal_code: String? = ""
     var cid: Int? = 0
     var campaign_manager: CampaignManager? = null
-    var accepted_items: ArrayList<AcceptableItem>? = null
+    var accepted_items: ArrayList<AcceptedItem>? = null
 
 }

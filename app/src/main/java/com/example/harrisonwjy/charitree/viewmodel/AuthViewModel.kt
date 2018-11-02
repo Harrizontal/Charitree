@@ -2,13 +2,13 @@ package com.example.harrisonwjy.charitree.viewmodel
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
-import com.example.harrisonwjy.charitree.model.Request
+import com.example.harrisonwjy.charitree.model.request.GetOrgNameUENRequest
 import com.example.harrisonwjy.charitree.model.request.LoginRequest
 import com.example.harrisonwjy.charitree.model.request.UserRegisterRequest
+import com.example.harrisonwjy.charitree.model.response.GetOrgNameUENResponse
 import com.example.harrisonwjy.charitree.model.response.LoginResponse
 import com.example.harrisonwjy.charitree.model.response.UserRegisterResponse
-import com.example.harrisonwjy.charitree.repo.IAuthentication
-import com.example.harrisonwjy.charitree.repo.ICampaign
+import com.example.harrisonwjy.charitree.repo.interfaces.ILoginAndRegister
 
 class AuthViewModel : ViewModel() {
 
@@ -28,16 +28,19 @@ class AuthViewModel : ViewModel() {
 //    fun authenticate(request: Request): LiveData<LoginResponse>{
 //         return repo!!.verify(request)
 //    }
-    fun authenticate(repo: IAuthentication,request: LoginRequest) : LiveData<LoginResponse>{
+    fun authenticate(repo: ILoginAndRegister, request: LoginRequest) : LiveData<LoginResponse>{
         //val data = MutableLiveData<LoginResponse>()
         return repo.verify(request) as LiveData<LoginResponse>
     }
 
-    fun register(repo: ICampaign, request: UserRegisterRequest) : LiveData<UserRegisterResponse>{
+    fun register(repo: ILoginAndRegister, request: UserRegisterRequest) : LiveData<UserRegisterResponse>{
         //val data = MutableLiveData<LoginResponse>()
         return repo.register(request) as LiveData<UserRegisterResponse>
     }
 
+    fun getOrgNameByUEN (repo: ILoginAndRegister, request: GetOrgNameUENRequest) : LiveData<GetOrgNameUENResponse>{
+        return repo.getOrgNameByUEN(GetOrgNameUENRequest) as LiveData<GetOrgNameUENResponse>
+    }
 
 //    private val addressInput = MutableLiveData<User>()
 

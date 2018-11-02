@@ -1,6 +1,8 @@
 package com.example.harrisonwjy.charitree.model
 
-class AcceptableItem{
+import java.io.Serializable
+
+class AcceptedItem : Serializable{
     var key: Int? = 0
     var value: String? = null
 

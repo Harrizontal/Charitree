@@ -105,7 +105,7 @@
                         card_view:layout_constraintTop_toBottomOf="@id/textView_endDate"
                         android:layout_marginTop="5dp"
                         card_view:layout_constraintRight_toRightOf="parent"
-                        android:layout_marginRight="95dp"
+                        android:layout_marginRight="70dp"
                         android:id="@+id/textView_time"
                         android:textColor="#000000"
                         android:textSize="17sp"
@@ -281,52 +281,7 @@
 
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                android:layout_marginTop="10dp"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/card_view_4a"
-                android:background="#908D8E"
-                card_view:cardBackgroundColor="#FFFFFF"
-                card_view:cardCornerRadius="2dp"
-                card_view:cardElevation="2dp"
-                card_view:contentPadding="5dp"
-                android:foreground="?selectableItemBackground"
-                android:clickable="false">
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp">
-
-                    <TextView
-                        android:text="COLLECTION POINT"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        card_view:layout_constraintTop_toTopOf="parent"
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/textView_collectionPointa"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto"/>
-
-                    <TextView
-                        android:text="collectionAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        card_view:layout_constraintTop_toBottomOf="@+id/textView_collectionPointa"
-                        android:layout_marginTop="5dp"
-                        android:textColor="#000000"
-                        android:id="@+id/textView_addressa"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/roboto"/>
-
-                </android.support.constraint.ConstraintLayout>
-
-
-            </android.support.v7.widget.CardView>
 
         </LinearLayout>
 

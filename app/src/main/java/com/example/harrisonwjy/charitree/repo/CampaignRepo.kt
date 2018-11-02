@@ -7,6 +7,7 @@ import com.example.harrisonwjy.charitree.model.CampaignManager
 import com.example.harrisonwjy.charitree.model.Errors
 import com.example.harrisonwjy.charitree.model.request.RegisterCMRequest
 import com.example.harrisonwjy.charitree.model.response.*
+import com.example.harrisonwjy.charitree.repo.interfaces.ICampaign
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import retrofit2.Call
@@ -19,7 +20,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class CampaignRepo(email: String, token: String) : ICampaign{
+class CampaignRepo(email: String, token: String) : ICampaign {
 
 
     private val api: CharitreeApi
@@ -188,54 +189,56 @@ class CampaignRepo(email: String, token: String) : ICampaign{
         return data
     }
 
-
-     fun showAll(item: Any): Any {
+    override fun showAll(): Any {
         Log.e("CampaignRepo","Accessing showAll method in CampaignRepo")
 
-        val data = MutableLiveData<CMVerifyResponse>()
+        val data = MutableLiveData<GetCampaignsResponse>()
         // call login method from CharitreeApi interface
-        api.verifyCM().enqueue(
-                object: Callback<CMVerifyResponse> {
-                    val verifiyResponse = CMVerifyResponse()
-                    override fun onResponse(call: Call<CMVerifyResponse>?, response: Response<CMVerifyResponse>?) {
+        api.getCampaigns().enqueue(
+                object: Callback<GetCampaignsResponse> {
+                    val campaignsResponse = GetCampaignsResponse()
+                    override fun onResponse(call: Call<GetCampaignsResponse>?, response: Response<GetCampaignsResponse>?) {
 
                         if(response!!.isSuccessful){
-                            verifiyResponse.apply {
-                                status = response.body().status
-                                errors = null
-                                campaign_manager = CampaignManager().apply{
-                                    cid = response.body().campaign_manager!!.cid
-                                    UEN = response.body().campaign_manager!!.UEN
-                                    organization_name = response.body().campaign_manager!!.organization_name
-                                }
-                            }
-                            data.value = verifiyResponse
+                            Log.e("CampaignRepo","successful call")
+
+                            data.value = response.body()
 
 
                         }else{
+                            Log.e("CampaignRepo","failed: "+response.errorBody().string())
+                            if(response.code() == 500){
+                                campaignsResponse.apply{
+                                    status = 0
+                                    errors = Errors().apply{
+                                        message = "Server error. Please contact adminstrator"
+                                    }
+                                }
+                            }else {
 
-                            val jObjError = JSONObject(response.errorBody().string())
+                                val jObjError = JSONObject(response.errorBody().string())
 
-                            val getMessage  = jObjError.optJSONObject("errors")?.optString("message")
+                                val getMessage = jObjError.optJSONObject("errors")?.optString("message")
 
-                            verifiyResponse.apply {
-                                status = jObjError.getString("status").toInt()
-                                errors = Errors().apply {
-                                    message = getMessage
+                                campaignsResponse.apply {
+                                    status = jObjError.getString("status").toInt()
+                                    errors = Errors().apply {
+                                        message = getMessage
+                                    }
                                 }
                             }
 
-                            data.value = verifiyResponse;
+                            data.value = campaignsResponse;
                         }
                     }
 
-                    override fun onFailure(call: Call<CMVerifyResponse>?, t: Throwable?) {
+                    override fun onFailure(call: Call<GetCampaignsResponse>?, t: Throwable?) {
                         Log.e("LoginResponse","Unable to submit email and password to API")
-                        verifiyResponse.apply{
+                        campaignsResponse.apply{
                             status = null
                             errors = null
                         }
-                        data.value = verifiyResponse
+                        data.value = campaignsResponse
                     }
                 }
         )

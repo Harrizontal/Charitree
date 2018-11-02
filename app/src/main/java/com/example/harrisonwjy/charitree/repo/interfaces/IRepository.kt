@@ -1,4 +1,4 @@
-package com.example.harrisonwjy.charitree.repo
+package com.example.harrisonwjy.charitree.repo.interfaces
 
 interface IRepository {
 //    fun giveHello(): String

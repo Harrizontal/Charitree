@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log
 import com.example.harrisonwjy.charitree.R
+import com.example.harrisonwjy.charitree.model.Campaign
 
 import kotlinx.android.synthetic.main.activity_create_donation.*
 
@@ -16,8 +17,17 @@ class CreateDonationActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
+        supportActionBar?.title = "Donation"
+        val campaign = intent.getSerializableExtra("campaign") as Campaign
+
+
+
+        val bundle = Bundle()
+        bundle.putSerializable("campaign",campaign)
+        val fragment = ChooseItemsFragment.newInstance()
+        fragment.arguments = bundle
         supportFragmentManager.beginTransaction()
-                .add(R.id.frame_layout, ChooseItemsFragment.newInstance())
+                .add(R.id.frame_layout, fragment)
                 .commit()
 
 

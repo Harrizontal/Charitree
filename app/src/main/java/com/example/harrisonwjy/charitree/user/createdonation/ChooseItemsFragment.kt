@@ -18,6 +18,8 @@ import com.example.harrisonwjy.charitree.helper.OnItemCheckListener
 import com.example.harrisonwjy.charitree.onboarding.RegisterFragment
 import android.net.http.SslCertificate.saveState
 import android.widget.Button
+import com.example.harrisonwjy.charitree.model.AcceptedItem
+import com.example.harrisonwjy.charitree.model.Campaign
 
 
 /**
@@ -28,9 +30,7 @@ class ChooseItemsFragment : Fragment() {
     private lateinit var linearLayoutManager: LinearLayoutManager
     val currentItem = ArrayList<Int>()
     private var savedState: Bundle? = null
-    var testData = ArrayList<CampaignItems>().apply{
-        add(CampaignItems("kappatesting",1,false))
-    }
+
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -41,9 +41,16 @@ class ChooseItemsFragment : Fragment() {
         var data = ArrayList<CampaignItems>()
         var selectionList = view.findViewById<RecyclerView>(R.id.selection_list)
 
-        data.add(CampaignItems("Newspaper", 1,false))
-        data.add(CampaignItems("Paper", 2,false))
-        data.add(CampaignItems("Clothes", 3,false))
+        val campaign = arguments?.getSerializable("campaign") as Campaign
+
+        for (item in campaign.accepted_items as java.util.ArrayList<AcceptedItem>){
+            data.add(CampaignItems().apply{
+                item_name = item.value
+                choiceNumber = item.key
+                checked = false
+            })
+        }
+
         if(savedState != null) {
             //Log.e("CIF","savedState: "+ savedState!!.getIntegerArrayList("currentChoices"))
             //nextButton.visibility = View.VISIBLE
@@ -51,7 +58,7 @@ class ChooseItemsFragment : Fragment() {
             for (item in data){
                 for(item2 in selected){
                     Log.e("CIF","Access item: "+item.choiceNumber + "item2: "+item2)
-                    if(item.choiceNumber.equals(item2)){
+                    if(item.choiceNumber!!.equals(item2)){
                         Log.e("CIF",item.item_name + "should be ticked")
                         item.checked = true
                         break
@@ -70,7 +77,7 @@ class ChooseItemsFragment : Fragment() {
         selectionList.adapter = ChooseItemAdapter(data, object: OnItemCheckListener{
             override fun onItemCheck(item: CampaignItems) {
                 Log.e("CIFragment","added item" + item.item_name)
-                currentItem.add(item.choiceNumber)
+                currentItem.add(item.choiceNumber!!)
                 if(currentItem.size > 0){
                     nextButton.visibility = View.VISIBLE
                     noItemSelected.visibility = View.INVISIBLE
@@ -82,7 +89,7 @@ class ChooseItemsFragment : Fragment() {
 
             override fun onItemUncheck(item: CampaignItems) {
                 Log.e("CIFragment","remove item "+item.item_name)
-                currentItem.remove(item.choiceNumber)
+                currentItem.remove(item.choiceNumber!!)
                 if(currentItem.size > 0){
                     nextButton.visibility = View.VISIBLE
                     noItemSelected.visibility = View.INVISIBLE

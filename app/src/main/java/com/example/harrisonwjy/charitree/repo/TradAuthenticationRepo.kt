@@ -3,12 +3,14 @@ package com.example.harrisonwjy.charitree.repo
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.harrisonwjy.charitree.CharitreeApi
-import com.example.harrisonwjy.charitree.model.Request
 import com.example.harrisonwjy.charitree.model.Errors
+import com.example.harrisonwjy.charitree.model.request.GetOrgNameUENRequest
 import com.example.harrisonwjy.charitree.model.request.LoginRequest
 import com.example.harrisonwjy.charitree.model.request.UserRegisterRequest
+import com.example.harrisonwjy.charitree.model.response.GetOrgNameUENResponse
 import com.example.harrisonwjy.charitree.model.response.LoginResponse
 import com.example.harrisonwjy.charitree.model.response.UserRegisterResponse
+import com.example.harrisonwjy.charitree.repo.interfaces.ILoginAndRegister
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -16,7 +18,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class TradAuthenticationRepo : ICampaign{
+class TradAuthenticationRepo : ILoginAndRegister {
 
 
     private val api: CharitreeApi
@@ -177,6 +179,59 @@ class TradAuthenticationRepo : ICampaign{
                     }
                 }
         )
+        return data
+    }
+
+    override fun getOrgNameByUEN(item: Any): Any{
+
+        val getItem: GetOrgNameUENRequest = item as GetOrgNameUENRequest
+        val uen : String = getItem.uen!!
+        val data = MutableLiveData<GetOrgNameUENResponse>()
+
+        api.getOrgNameByUEN(uen).enqueue(
+                object: Callback<GetOrgNameUENResponse> {
+                    val uenResponse = GetOrgNameUENResponse()
+                    override fun onResponse(call: Call<GetOrgNameUENResponse>?, response: Response<GetOrgNameUENResponse>?) {
+
+                        if(response!!.isSuccessful){
+                            uenResponse.apply {
+                                status = response.body().status
+                                errors = null
+                            }
+                            data.value = uenResponse
+                        }else{
+                            if(response.code() == 500){
+                                uenResponse.apply{
+                                    status = 0
+                                    errors = Errors().apply{
+                                        message = "Server error. Please contact adminstrator"
+                                    }
+                                }
+                            }else{
+                                val jObjError = JSONObject(response.errorBody().string())
+                                val getMessage  = jObjError.optJSONObject("errors")?.optString("message")
+
+                                uenResponse.apply {
+                                    status = jObjError.getString("status").toInt()
+                                    errors = Errors().apply {
+                                        message = getMessage
+                                    }
+                                }
+                            }
+                            data.value = uenResponse;
+                        }
+                    }
+
+                    override fun onFailure(call: Call<GetOrgNameUENResponse>?, t: Throwable?) {
+                        uenResponse.apply{
+                            status = null
+                            errors = null
+                        }
+                        data.value = uenResponse
+                    }
+                }
+        )
+
         return data
     }
 }

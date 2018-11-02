@@ -60,7 +60,7 @@ class ChooseItemAdapter(private val campaignItems: ArrayList<CampaignItems>, pri
         private var view: View = v
         fun bindItems(campaignItems: CampaignItems,onItemCheckListener: OnItemCheckListener) {
             view.contact_name.text = campaignItems.item_name
-            view.contact_name.isChecked = campaignItems.checked
+            view.contact_name.isChecked = campaignItems.checked!!
             view.contact_name.setOnClickListener{
                 if(!view.contact_name.isChecked){
                     view.contact_name.isChecked = false

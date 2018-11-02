@@ -22,44 +22,49 @@ interface CharitreeApi {
 //            : Call<Project>
 
 
-    // create users
+    // register
     @POST("users")
     @Headers("Content-Type: application/json")
     fun register(@Body request:UserRegisterRequest)
                  : Call<UserRegisterResponse>
 
-    /*
-    Purpose: Send a POST request (http:ipaddress/session) to the respective API with a
-    header of content-type: application/json and passing in a Request object in Body, and received a LoginResponse
-    Parameter: Request object
-    Return: LoginResponse
-     */
-//    @POST("sessions")
-//    @Headers("Content-Type: application/json")
-//    fun login(@Body request: Request)
-//                : Call<LoginResponse>
-
+    // login
     @POST("sessions")
     @Headers("Content-Type: application/json")
     fun login(@Body request: LoginRequest)
             : Call<LoginResponse>
 
 
-    @POST("users/campaignmanager")
+    // register as a  campaign manager
+    @POST("users/campaignmanagers")
     @Headers("Content-Type: application/json")
     fun registerCM(@Body request: RegisterCMRequest)
                 : Call<CMRegisterResponse>
 
-    @GET("users/campaignmanager")
+    @GET("uen")
+    @Headers("Content-Type: application/json")
+    fun getOrgNameByUEN(@Path("uen") uen: String)
+                : Call<GetOrgNameUENResponse>
+
+    // verify user is campaign manager
+    @GET("users/campaignmanagers")
     @Headers("Content-Type: application/json")
     fun verifyCM(): Call<CMVerifyResponse>
+
+    // get list of campaign
+    @GET("campaigns")
+    @Headers("Content-Type: application/json")
+    fun getCampaigns(): Call<GetCampaignsResponse>
 
 
     companion object {
         // Local server
-         val API_URL = "http://10.0.2.2/public/"
-        // IP address
+        val API_URL = "http://10.0.2.2/public/"
+        // School IP address
         //val API_URL = "http://172.21.148.170/Charitree/public/"
+        // Tobias IP address
+        //val API_URL = "http://10.27.145.99/public/"
+
     }
 
 

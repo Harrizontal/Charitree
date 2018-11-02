@@ -1,6 +1,13 @@
 package com.example.harrisonwjy.charitree.model
 
-class CampaignItems (var item_name: String, var choiceNumber: Int, var checked: Boolean) {
+class CampaignItems{
 
+    companion object {
+        fun create(): CampaignItems = CampaignItems()
+    }
+
+    var item_name: String? = null
+    var choiceNumber: Int? = null
+    var checked: Boolean? = false
 
 }
