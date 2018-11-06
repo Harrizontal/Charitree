@@ -14,5 +14,6 @@ interface ICampaign : IRegister, IAuthentication {
     fun getListOfDonors(item: Any): Any
     fun getDonationByDID(item: Any): Any
     fun changeStatusByDID(id: Int,item: Any): Any
+    fun getDonationsCount(item: Any): Any
 
 }

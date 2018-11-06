@@ -42,7 +42,7 @@ interface CharitreeApi {
     // get org name based on UEN
     @GET("uen")
     @Headers("Content-Type: application/json")
-    fun getOrgNameByUEN(@Path("uen") uen: String)
+    fun getOrgNameByUEN(@Query("uen") uen: String)
                 : Call<GetOrgNameUENResponse>
 
     // verify user is campaign manager
@@ -115,9 +115,10 @@ interface CharitreeApi {
 
 
     // Get number of successful donations by the current user session
-//    @GET("donations/count")
-//    @Headers("Content-Type: application/json")
-//    fun getNoOfDonation(@Path)
+    @GET("donations/count")
+    @Headers("Content-Type: application/json")
+    fun getNoOfDonation(@Query("countBy") countBy: String)
+            : Call<GetDonationsCountResponse>
 
 
     companion object {

@@ -563,22 +563,14 @@ class CampaignRepo(email: String, token: String) : ICampaign {
     }
 
     override fun getOrgNameByUEN(item: Any): Any{
-
-        val getItem: GetOrgNameUENRequest = item as GetOrgNameUENRequest
-        val uen : String = getItem.uen!!
+        val uen : String = item.toString()
         val data = MutableLiveData<GetOrgNameUENResponse>()
-
         api.getOrgNameByUEN(uen).enqueue(
                 object: Callback<GetOrgNameUENResponse> {
-                    val uenResponse = GetOrgNameUENResponse()
+                    var uenResponse = GetOrgNameUENResponse()
                     override fun onResponse(call: Call<GetOrgNameUENResponse>?, response: Response<GetOrgNameUENResponse>?) {
-
                         if(response!!.isSuccessful){
-                            uenResponse.apply {
-                                status = response.body().status
-                                errors = null
-                            }
-                            data.value = uenResponse
+                            data.value = response.body()
                         }else{
                             if(response.code() == 500){
                                 uenResponse.apply{
@@ -936,4 +928,71 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         )
         return data
     }
+
+    override fun getDonationsCount(item: Any): Any {
+        val getItem = item.toString()
+        val data = MutableLiveData<GetDonationsCountResponse>()
+        api.getNoOfDonation(getItem).enqueue(
+                object: Callback<GetDonationsCountResponse> {
+                    val getDonationCountResponse = GetDonationsCountResponse()
+                    override fun onResponse(call: Call<GetDonationsCountResponse>?, response: Response<GetDonationsCountResponse>?) {
+
+                        Log.e("CampaignRepo","Resposne code is "+ response!!.code().toString())
+                        if(response!!.isSuccessful){
+                            Log.e("CampaignRepo","successful call")
+                            Log.e("CampaignRepo",response.body().toString())
+                            data.value = response.body()
+
+                        }else{
+                            //Log.e("CampaignRepo","failed: "+response.errorBody().string())
+                            when(response.code()){
+                                500 -> {
+                                    getDonationCountResponse.apply{
+                                        status = 0
+                                        errors = Errors().apply{
+                                            message = "Server error. Please contact adminstrator"
+                                        }
+                                    }
+                                }
+                                404 -> {
+                                    getDonationCountResponse.apply{
+                                        status = 0
+                                        errors = Errors().apply{
+                                            message = "No donors list for this campaign in database"
+                                        }
+                                    }
+                                }
+                                else -> {
+                                    val jObjError = JSONObject(response.errorBody().string())
+
+                                    val getMessage = jObjError.optJSONObject("errors")?.optString("message")
+
+                                    getDonationCountResponse.apply {
+                                        status = jObjError.getString("status").toInt()
+                                        errors = Errors().apply {
+                                            message = getMessage
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        data.value = getDonationCountResponse;
+                    }
+
+
+                    override fun onFailure(call: Call<GetDonationsCountResponse>?, t: Throwable?) {
+                        Log.e("LoginResponse","Unable to submit email and password to API")
+                        getDonationCountResponse.apply{
+                            status = null
+                            errors = null
+                        }
+                        data.value = getDonationCountResponse
+                    }
+                }
+        )
+        return data
+    }
+
+
 }

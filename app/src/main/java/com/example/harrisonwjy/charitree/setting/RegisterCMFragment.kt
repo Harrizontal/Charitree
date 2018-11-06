@@ -3,6 +3,7 @@ package com.example.harrisonwjy.charitree.setting
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +53,11 @@ class RegisterCMFragment : Fragment(),Validation,HttpException {
         input_org_name.addTextChangedListener(InputValidateShowError("normal",input_org_name,layout_org_name,getString(R.string.error_message_org_name)))
         input_uen.addTextChangedListener(InputValidateShowError("normal",input_uen,layout_uen,getString(R.string.error_message_uen)))
 
+        // get token
+        val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+        val token: String = prefs.getString("token", "")//"No name defined" is the default value.
+        val email: String = prefs.getString("email","")
+
         registerCMButton.setOnClickListener {
             indeterminateBar.visibility = View.VISIBLE
             // retrieve inputted text from the respective Edit Text (or Textfield)
@@ -61,16 +67,12 @@ class RegisterCMFragment : Fragment(),Validation,HttpException {
             input_org_name.visibility = View.INVISIBLE
             layout_uen.visibility = View.INVISIBLE
             input_uen.visibility = View.INVISIBLE
+            retrieveNameButton.visibility = View.INVISIBLE
             registerCMButton.visibility = View.INVISIBLE
 
 
             isValidInput(input_org_name,layout_org_name,"Please enter a valid email")
             isValidInput(input_uen,layout_uen,"Please enter a password")
-
-            // get token
-            val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
-            val token: String = prefs.getString("token", "")//"No name defined" is the default value.
-            val email: String = prefs.getString("email","")
 
             // create a Request object
             val registerCM = RegisterCMRequest.create()
@@ -102,6 +104,7 @@ class RegisterCMFragment : Fragment(),Validation,HttpException {
                     layout_uen.visibility = View.VISIBLE
                     input_uen.visibility = View.VISIBLE
                     registerCMButton.visibility = View.VISIBLE
+                    retrieveNameButton.visibility = View.VISIBLE
                     val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong", it?.errors?.message)
                     dialogBox.show(fragmentManager,"fragment_alert")
                 }
@@ -114,6 +117,22 @@ class RegisterCMFragment : Fragment(),Validation,HttpException {
 
         backToSettingButton.setOnClickListener {
             activity?.finish()
+        }
+
+        retrieveNameButton.setOnClickListener {
+            val uen = input_uen.text.toString()
+
+            campaignManagerViewModel.getOrgNameByUEN(CampaignRepo(email,token),uen).observe(this,android.arch.lifecycle.Observer {
+                // If user_token contains something
+                if(it?.status == 1){
+                    input_org_name.setText(it.organization_name!!)
+                    Log.e("RegisterCMFragment","Organisation name is "+ it.organization_name!!)
+                }else{
+                    Log.e("RegisterCMFragment","Organisation name is FALIED!!")
+                    val dialogBox = SingleActionDialogBox.newInstance("Opps! Something went wrong", it?.errors?.message)
+                    dialogBox.show(fragmentManager,"fragment_alert")
+                }
+            })
         }
     }
 
