@@ -114,6 +114,12 @@ interface CharitreeApi {
             : Call<ChangeStatusDonationResponse>
 
 
+    // Get number of successful donations by the current user session
+//    @GET("donations/count")
+//    @Headers("Content-Type: application/json")
+//    fun getNoOfDonation(@Path)
+
+
     companion object {
         // Local server
         val API_URL = "http://10.0.2.2/public/"

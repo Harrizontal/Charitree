@@ -9,17 +9,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.model.AcceptedItem
 import com.example.harrisonwjy.charitree.model.Campaign
-import kotlinx.android.synthetic.main.fragment_campaign_item.*
 import kotlinx.android.synthetic.main.fragment_campaign_item.view.*
-import java.sql.Date
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.DAYS
 
 class CampaignItemFragment: Fragment(){
 
@@ -38,6 +36,9 @@ class CampaignItemFragment: Fragment(){
             Log.e("CIF",item.value + "->"+itemNeeded)
             itemNeeded = item.value + " "+ itemNeeded
         }
+
+        val imageView = view.findViewById<ImageView>(R.id.imageView)
+        displayCampaignImage(campaign.id!!,imageView)
 
         var daysLeft: String? = null
         //val startDate = Date(campaign.start_date)
@@ -64,5 +65,37 @@ class CampaignItemFragment: Fragment(){
         }
 
         return view
+    }
+
+    fun displayCampaignImage(id: Int, imageView: ImageView){
+        val number = id % 8
+        var image: Int? = null
+        when(number){
+            0 -> {
+                 image = R.drawable.android_image_0
+            }
+            1 -> {
+                image = R.drawable.android_image_1
+            }
+            2 -> {
+                image = R.drawable.android_image_2
+            }
+            3 -> {
+                image = R.drawable.android_image_3
+            }
+            4 -> {
+                image = R.drawable.android_image_4
+            }
+            5 -> {
+                image = R.drawable.android_image_5
+            }
+            6 -> {
+                image = R.drawable.android_image_6
+            }
+            7 -> {
+                image = R.drawable.android_image_7
+            }
+        }
+        imageView.setImageResource(image!!)
     }
 }

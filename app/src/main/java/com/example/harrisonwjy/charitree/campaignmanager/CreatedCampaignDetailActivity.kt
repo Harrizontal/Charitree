@@ -44,8 +44,8 @@ class CreatedCampaignDetailActivity : AppCompatActivity() {
         val textView_items = findViewById<TextView>(R.id.textView_items)
         val textView_address = findViewById<TextView>(R.id.textView_address)
 
-
-        image_displayed.setImageResource(R.drawable.give_image) // set image
+        displayCampaignImage(campaign.id!!,image_displayed)
+        //image_displayed.setImageResource(R.drawable.give_image) // set image
         textView_CampName.text = campaign.name // set name
         val timing: String = campaign.start_time.toString() + "00HRS -" + campaign.end_time.toString()+"00HRS"
         textView_time.text = timing
@@ -78,7 +78,7 @@ class CreatedCampaignDetailActivity : AppCompatActivity() {
         ViewDonation.setOnClickListener(object: View.OnClickListener {
             override fun onClick(view: View): Unit {
                 val intent = Intent(this@CreatedCampaignDetailActivity, DonorListActivity::class.java).apply{
-                    putExtra("campaignId",campaign.id)
+                    putExtra("campaignId",campaign.id!!)
                 }
                 startActivity(intent)
             }
@@ -86,6 +86,38 @@ class CreatedCampaignDetailActivity : AppCompatActivity() {
             // need pass data
         })
 
+    }
+
+    fun displayCampaignImage(id: Int, imageView: ImageView){
+        val number = id % 8
+        var image: Int? = null
+        when(number){
+            0 -> {
+                image = R.drawable.android_image_0
+            }
+            1 -> {
+                image = R.drawable.android_image_1
+            }
+            2 -> {
+                image = R.drawable.android_image_2
+            }
+            3 -> {
+                image = R.drawable.android_image_3
+            }
+            4 -> {
+                image = R.drawable.android_image_4
+            }
+            5 -> {
+                image = R.drawable.android_image_5
+            }
+            6 -> {
+                image = R.drawable.android_image_6
+            }
+            7 -> {
+                image = R.drawable.android_image_7
+            }
+        }
+        imageView.setImageResource(image!!)
     }
 
 }

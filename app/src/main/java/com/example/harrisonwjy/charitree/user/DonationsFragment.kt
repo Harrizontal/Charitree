@@ -10,9 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.helper.ItemPagerAdapter
 import com.example.harrisonwjy.charitree.helper.MyDonationAdapter
-import com.example.harrisonwjy.charitree.model.Campaign
 import com.example.harrisonwjy.charitree.model.Donation
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import com.example.harrisonwjy.charitree.user.createdonation.IOnFocusListenable
@@ -55,7 +53,7 @@ class DonationsFragment : Fragment(), IOnFocusListenable {
         val token: String = prefs.getString("token", "")//"No name defined" is the default value.
         val email: String = prefs.getString("email","")
 
-        donationViewModel.getAddress(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
+        donationViewModel.getAllDonationForUser(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
             if(it?.status == 1){
                 val donations : ArrayList<Donation>? = it.donations
                 val adapter = MyDonationAdapter(donations)
@@ -78,7 +76,7 @@ class DonationsFragment : Fragment(), IOnFocusListenable {
             val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
             val token: String = prefs.getString("token", "")//"No name defined" is the default value.
             val email: String = prefs.getString("email","")
-            donationViewModel.getAddress(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
+            donationViewModel.getAllDonationForUser(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
                 if(it?.status == 1){
                     val donations : ArrayList<Donation>? = it.donations
                     val adapter = MyDonationAdapter(donations)

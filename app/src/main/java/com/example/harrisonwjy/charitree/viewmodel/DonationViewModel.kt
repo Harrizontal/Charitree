@@ -9,7 +9,7 @@ class DonationViewModel : ViewModel(){
 
     // view my donations
 
-    fun getAddress(repo: CampaignRepo): LiveData<GetAllDonationForUserResponse> {
+    fun getAllDonationForUser(repo: CampaignRepo): LiveData<GetAllDonationForUserResponse> {
         return repo.showAllUserDonations() as LiveData<GetAllDonationForUserResponse>
     }
 

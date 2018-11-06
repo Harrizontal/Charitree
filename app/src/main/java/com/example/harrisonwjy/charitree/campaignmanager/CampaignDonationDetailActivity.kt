@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.model.Donation
 import com.example.harrisonwjy.charitree.model.request.ChangeStatusDonationRequest
@@ -62,6 +63,7 @@ class CampaignDonationDetailActivity : AppCompatActivity() {
 
         supportActionBar?.title = donation.user!!.first_name +" "+ donation.user!!.last_name + "'s donation"
 
+        displayCampaignImage(donation.Campaign_id!!,donation_detail_background)
         val donatedItem = donation.items
         var text: String? = ""
         for (i in donatedItem!!.indices){
@@ -103,7 +105,7 @@ class CampaignDonationDetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.setting_menu, menu)
+        menuInflater.inflate(R.menu.cancel_donation_menu, menu)
         return true
     }
 
@@ -276,5 +278,37 @@ class CampaignDonationDetailActivity : AppCompatActivity() {
             val email: String = prefs.getString("email","")
             retrieveData(email, token, donationId)
         }
+    }
+
+    fun displayCampaignImage(id: Int, imageView: ImageView){
+        val number = id % 8
+        var image: Int? = null
+        when(number){
+            0 -> {
+                image = R.drawable.android_image_0
+            }
+            1 -> {
+                image = R.drawable.android_image_1
+            }
+            2 -> {
+                image = R.drawable.android_image_2
+            }
+            3 -> {
+                image = R.drawable.android_image_3
+            }
+            4 -> {
+                image = R.drawable.android_image_4
+            }
+            5 -> {
+                image = R.drawable.android_image_5
+            }
+            6 -> {
+                image = R.drawable.android_image_6
+            }
+            7 -> {
+                image = R.drawable.android_image_7
+            }
+        }
+        imageView.setImageResource(image!!)
     }
 }

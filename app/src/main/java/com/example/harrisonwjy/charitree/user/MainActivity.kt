@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         //val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
 
         if(viewPager.currentItem == 1) {
+            Log.e("MainActivity","Donation fragment viewed")
             //if (currentFragment is IOnFocusListenable) {
             val fragment = mAdapter.getItem(1)
                 (fragment as IOnFocusListenable).onWindowFocusChanged(hasFocus)
@@ -99,26 +100,21 @@ class MainActivity : AppCompatActivity() {
                     }else{
                         viewPager.setCurrentItem(0)
                     }
-
-                    //fragmentTag = "CampaignsFragment"
                 }
                 R.id.donation ->{
                     toolbar.title = "Donation"
-                    //selectedFragment = DonationsFragment.newInstance()
                     viewPager.setCurrentItem(1)
-                    //fragmentTag = "Donation"
+                    val fragment = mAdapter.getItem(1)
+                    (fragment as IOnFocusListenable).onWindowFocusChanged(true)
                 }
                 R.id.tree -> {
                     toolbar.title = "Tree"
                     viewPager.setCurrentItem(2)
-                    //selectedFragment = TreeFragment.newInstance()
-                    //fragmentTag = "TreeFragment"
                 }
                 R.id.setting -> {
                     toolbar.title = "Setting"
                     viewPager.setCurrentItem(3)
                     selectedFragment = SettingFragment.newInstance()
-                    //fragmentTag = "SettingFragment"
                 }
             }
 true

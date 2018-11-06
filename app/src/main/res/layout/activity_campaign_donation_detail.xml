@@ -41,10 +41,9 @@
                     android:layout_height="match_parent">
 
                     <ImageView android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="250dp"
                         android:id="@+id/donation_detail_background"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/give_image"
                         />
 
 

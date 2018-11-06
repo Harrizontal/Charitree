@@ -42,6 +42,8 @@ class CreatedCampaignRecyclerAdapter constructor(private val campaigns: ArrayLis
             var displayDate: String = ""
             itemView.item_title.text = campaign.name
 
+            displayCampaignImage(campaign.id!!,itemView.item_image)
+
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val startDate = LocalDate.parse(campaign.start_date, DateTimeFormatter.ISO_DATE)
                 val endDate = LocalDate.parse(campaign.end_date, DateTimeFormatter.ISO_DATE)
@@ -52,10 +54,9 @@ class CreatedCampaignRecyclerAdapter constructor(private val campaigns: ArrayLis
             }
 
             itemView.item_detail.text = displayDate
-            itemView.Pending_items.text = "12"
-            itemView.Ongoing_items.text = "12"
-            itemView.Total_items.text = "12"
-            itemView.item_image.setImageResource(R.drawable.give_image)
+            itemView.Pending_items.text = campaign.pending_donations.toString()
+            itemView.Ongoing_items.text = campaign.inprogress_donations.toString()
+            itemView.Total_items.text = campaign.total_donations.toString()
 
             itemView.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(p0: View?) {
@@ -70,6 +71,38 @@ class CreatedCampaignRecyclerAdapter constructor(private val campaigns: ArrayLis
 
         }
 
+    }
+
+    fun displayCampaignImage(id: Int, imageView: ImageView){
+        val number = id % 8
+        var image: Int? = null
+        when(number){
+            0 -> {
+                image = R.drawable.android_image_0
+            }
+            1 -> {
+                image = R.drawable.android_image_1
+            }
+            2 -> {
+                image = R.drawable.android_image_2
+            }
+            3 -> {
+                image = R.drawable.android_image_3
+            }
+            4 -> {
+                image = R.drawable.android_image_4
+            }
+            5 -> {
+                image = R.drawable.android_image_5
+            }
+            6 -> {
+                image = R.drawable.android_image_6
+            }
+            7 -> {
+                image = R.drawable.android_image_7
+            }
+        }
+        imageView.setImageResource(image!!)
     }
 
 

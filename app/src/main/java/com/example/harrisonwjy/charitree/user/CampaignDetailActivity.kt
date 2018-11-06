@@ -7,6 +7,7 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.model.AcceptedItem
 import com.example.harrisonwjy.charitree.model.Campaign
@@ -31,7 +32,7 @@ class CampaignDetailActivity : AppCompatActivity() {
         supportActionBar?.title = campaign.name
         Log.e("CampaignDetail","The campaign name is "+campaign.name)
 
-        image_displayed.setImageResource(R.drawable.give_image)
+        displayCampaignImage(campaign.id!!,image_displayed)
 
         textView_CampName.text = campaign.name
 
@@ -79,6 +80,38 @@ class CampaignDetailActivity : AppCompatActivity() {
             }
             startActivity(intent)
         }
+    }
+
+    fun displayCampaignImage(id: Int, imageView: ImageView){
+        val number = id % 8
+        var image: Int? = null
+        when(number){
+            0 -> {
+                image = R.drawable.android_image_0
+            }
+            1 -> {
+                image = R.drawable.android_image_1
+            }
+            2 -> {
+                image = R.drawable.android_image_2
+            }
+            3 -> {
+                image = R.drawable.android_image_3
+            }
+            4 -> {
+                image = R.drawable.android_image_4
+            }
+            5 -> {
+                image = R.drawable.android_image_5
+            }
+            6 -> {
+                image = R.drawable.android_image_6
+            }
+            7 -> {
+                image = R.drawable.android_image_7
+            }
+        }
+        imageView.setImageResource(image!!)
     }
 
 }

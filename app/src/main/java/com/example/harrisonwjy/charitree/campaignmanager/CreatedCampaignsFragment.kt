@@ -87,6 +87,8 @@ class CreatedCampaignsFragment : Fragment() , IOnFocusListenable {
 
 
 
+
+
     companion object {
         fun newInstance(): CreatedCampaignsFragment {
             return CreatedCampaignsFragment()

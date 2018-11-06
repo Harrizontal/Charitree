@@ -42,7 +42,7 @@ class DonorListAdapter constructor(private val donors: ArrayList<Donation>?) : R
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bindItems(donor: Donation){
-            itemView.donar_name.text = donor.user!!.first_name + donor.user!!.last_name
+            itemView.donar_name.text = donor.user!!.first_name +" "+donor.user!!.last_name
             itemView.donationStatus.text = donor.status
 
             var items: String? = ""
@@ -64,6 +64,5 @@ class DonorListAdapter constructor(private val donors: ArrayList<Donation>?) : R
         }
 
     }
-
 
 }

@@ -17,6 +17,9 @@ class Campaign : Serializable {
     var description: String? = ""
     var postal_code: String? = ""
     var cid: Int? = 0
+    var total_donations: Int? = 0
+    var pending_donations: Int? = 0
+    var inprogress_donations: Int? = 0
     var campaign_manager: CampaignManager? = null
     var accepted_items: ArrayList<AcceptedItem>? = null
     var days_left: Int? = 0
