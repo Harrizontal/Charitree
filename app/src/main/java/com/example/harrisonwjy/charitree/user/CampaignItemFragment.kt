@@ -63,21 +63,6 @@ class CampaignItemFragment: Fragment(){
             startActivity(intent)
         }
 
-        //val button = view.findViewById<Button>(R.id.button2)
-
-        //button.setText(name)
-
-//        button.setOnClickListener{
-//            val bundle = bundleOf("userName" to name)
-//            Navigation.findNavController.findNavController(button).navigate(
-//                    R.id.action_do_good_to_detailsFragment,
-//                    bundle)
-//        }
-        //val bundle = bundleOf("userName" to name)
-//        cardView?.setOnClickListener {
-//            //Navigation.findNavController(it).navigate(R.id.action_do_good_to_detailsFragment, bundle)
-//        }
-
         return view
     }
 }

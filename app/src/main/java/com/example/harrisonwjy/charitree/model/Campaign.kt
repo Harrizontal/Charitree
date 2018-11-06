@@ -19,5 +19,6 @@ class Campaign : Serializable {
     var cid: Int? = 0
     var campaign_manager: CampaignManager? = null
     var accepted_items: ArrayList<AcceptedItem>? = null
+    var days_left: Int? = 0
 
 }

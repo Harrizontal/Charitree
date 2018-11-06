@@ -11,7 +11,6 @@ import com.example.harrisonwjy.charitree.repo.interfaces.ICampaign
 class CampaignManagerViewModel : ViewModel() {
 
 
-
     fun register(repo: ICampaign, request: RegisterCMRequest): LiveData<CMRegisterResponse>{
         return repo.register(request) as LiveData<CMRegisterResponse>
     }

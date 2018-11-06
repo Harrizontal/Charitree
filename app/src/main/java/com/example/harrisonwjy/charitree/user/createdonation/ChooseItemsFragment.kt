@@ -18,6 +18,7 @@ import com.example.harrisonwjy.charitree.helper.OnItemCheckListener
 import com.example.harrisonwjy.charitree.onboarding.RegisterFragment
 import android.net.http.SslCertificate.saveState
 import android.widget.Button
+import com.example.harrisonwjy.charitree.helper.FragmentCallBack
 import com.example.harrisonwjy.charitree.model.AcceptedItem
 import com.example.harrisonwjy.charitree.model.Campaign
 
@@ -27,48 +28,53 @@ import com.example.harrisonwjy.charitree.model.Campaign
  */
 class ChooseItemsFragment : Fragment() {
 
-    private lateinit var linearLayoutManager: LinearLayoutManager
-    val currentItem = ArrayList<Int>()
-    private var savedState: Bundle? = null
 
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private var campaignData: Campaign? = null
+    private var data = ArrayList<CampaignItems>()
+    //val currentItem = ArrayList<Int>()
+    private var savedState: Bundle? = null
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        Log.e("CIFragment","OnCreateView()")
         val view =  inflater.inflate(R.layout.fragment_create_donation_items, container, false)
 
-        var data = ArrayList<CampaignItems>()
+        //var data = ArrayList<CampaignItems>()
         var selectionList = view.findViewById<RecyclerView>(R.id.selection_list)
 
-        val campaign = arguments?.getSerializable("campaign") as Campaign
+        // set Campaign data
+        campaignData = arguments?.getSerializable("campaign") as Campaign
 
-        for (item in campaign.accepted_items as java.util.ArrayList<AcceptedItem>){
-            data.add(CampaignItems().apply{
-                item_name = item.value
-                choiceNumber = item.key
-                checked = false
-            })
-        }
-
+        val nextButton = view.findViewById<Button>(R.id.nextButton)
+        // when retrieve old data
         if(savedState != null) {
-            //Log.e("CIF","savedState: "+ savedState!!.getIntegerArrayList("currentChoices"))
-            //nextButton.visibility = View.VISIBLE
-            val selected = savedState!!.getIntegerArrayList("currentChoices")
+            nextButton.visibility = View.VISIBLE
+
+            val selected = savedState!!.getSerializable("datadata") as ArrayList<CampaignItems>
             for (item in data){
-                for(item2 in selected){
-                    Log.e("CIF","Access item: "+item.choiceNumber + "item2: "+item2)
-                    if(item.choiceNumber!!.equals(item2)){
-                        Log.e("CIF",item.item_name + "should be ticked")
+                for (item2 in selected){
+                    if (item.choiceNumber!!.equals(item2)){
                         item.checked = true
-                        break
+                        break;
                     }
                 }
             }
-        }
 
-       // val persistentVariable = mySavedInstanceState!!.getString("testtest") ?: "asd"
-        //Log.e("CIF","Data is "+persistentVariable)
+        }else{
+            // if no data found
+
+            // load data
+            for (item in campaignData!!.accepted_items as java.util.ArrayList<AcceptedItem>){
+                data.add(CampaignItems().apply{
+                    Log.e("keykey","key is "+item.key)
+                    key = item.key
+                    item_name = item.value
+                    choiceNumber = item.key
+                    checked = false
+                })
+            }
+        }
 
         linearLayoutManager = LinearLayoutManager(context,LinearLayout.VERTICAL,false)
         val dividerItemDecoration = DividerItemDecoration(selectionList.getContext(), linearLayoutManager.getOrientation())
@@ -76,58 +82,55 @@ class ChooseItemsFragment : Fragment() {
 
         selectionList.adapter = ChooseItemAdapter(data, object: OnItemCheckListener{
             override fun onItemCheck(item: CampaignItems) {
-                Log.e("CIFragment","added item" + item.item_name)
-                currentItem.add(item.choiceNumber!!)
-                if(currentItem.size > 0){
-                    nextButton.visibility = View.VISIBLE
-                    noItemSelected.visibility = View.INVISIBLE
-                }else{
-                    nextButton.visibility = View.INVISIBLE
-                    noItemSelected.visibility = View.VISIBLE
+                for(itemData in data){
+                    if(itemData.choiceNumber == item.choiceNumber){
+                        itemData.checked = true
+                    }
                 }
+
+                displayWhenOneTick()
             }
 
             override fun onItemUncheck(item: CampaignItems) {
-                Log.e("CIFragment","remove item "+item.item_name)
-                currentItem.remove(item.choiceNumber!!)
-                if(currentItem.size > 0){
-                    nextButton.visibility = View.VISIBLE
-                    noItemSelected.visibility = View.INVISIBLE
-                }else{
-                    nextButton.visibility = View.INVISIBLE
-                    noItemSelected.visibility = View.VISIBLE
+                for(itemData in data){
+                    if(itemData.choiceNumber == item.choiceNumber){
+                        itemData.checked = false
+                    }
                 }
+                displayWhenOneTick()
             }
 
         })
         selectionList.addItemDecoration(dividerItemDecoration)
 
+        nextButton.setOnClickListener {
 
+            var selectedItems : ArrayList<CampaignItems> = ArrayList()
+
+            // only pass selected items
+            data.forEachIndexed { index, campaignItems ->
+                if(campaignItems.checked == true){
+                    selectedItems.add(campaignItems)
+                }
+            }
+
+            val fragment = ChooseQuantityFragment()
+            val args = Bundle()
+//            Log.e("CIF","item size is "+selectedItems.size)
+            args.putSerializable("currentChoices",selectedItems)
+            args.putSerializable("campaign",campaignData)
+            fragment.arguments = args
+
+            val fragmentManager = fragmentManager
+            val fragmentTransaction = fragmentManager!!.beginTransaction()
+            fragmentTransaction.replace(R.id.frame_layout, fragment)
+                    .addToBackStack("ChooseItemsFragment")
+            fragmentTransaction.commit()
+        }
 
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-//        val test = savedInstanceState?.getInt("checked",0) ?: 0
-//        Log.e("CIF","onViewCreated() test is "+test)
-        if(savedState != null){
-            nextButton.visibility = View.VISIBLE
-        }
-
-        nextButton.setOnClickListener {
-            val fragment = ChooseQuantityFragment()
-            val args = Bundle()
-            args.putSerializable("currentChoices","asd")
-            fragment.arguments = args
-            val fragmentManager = fragmentManager
-            val fragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.replace(R.id.frame_layout, fragment)
-                    .addToBackStack("ChooseQuantityFragment")
-            fragmentTransaction.commit()
-        }
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -136,11 +139,22 @@ class ChooseItemsFragment : Fragment() {
 
     private fun saveState(): Bundle { /* called either from onDestroyView() or onSaveInstanceState() */
         val state = Bundle()
-        state.putIntegerArrayList("currentChoices",currentItem)
-//        state.putInt("testest",1)
+        //state.putIntegerArrayList("currentChoices",currentItem)
+        state.putSerializable("datadata",data)
         return state
     }
 
+    private fun displayWhenOneTick(){
+        nextButton.visibility = View.INVISIBLE
+        noItemSelected.visibility = View.VISIBLE
+        for (itemData in data){
+            if(itemData.checked == true){
+                nextButton.visibility = View.VISIBLE
+                noItemSelected.visibility = View.INVISIBLE
+                break;
+            }
+        }
+    }
     companion object {
         fun newInstance(): ChooseItemsFragment {
             return ChooseItemsFragment()

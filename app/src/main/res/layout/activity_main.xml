@@ -28,7 +28,9 @@ tools:context=".user.MainActivity">
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_marginTop="?attr/actionBarSize"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:layout_marginBottom="56dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@+id/navigationView"/>
 
 <!--<FrameLayout-->
     <!--android:id="@+id/container"-->

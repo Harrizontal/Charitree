@@ -17,15 +17,9 @@ import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.helper.BottomBarAdapter
 import com.example.harrisonwjy.charitree.helper.LockableViewPager
 import com.example.harrisonwjy.charitree.setting.SettingFragment
+import com.example.harrisonwjy.charitree.user.createdonation.IOnFocusListenable
 import com.example.harrisonwjy.charitree.viewmodel.AuthViewModel
 
-
-//fun Context.MainActivity(user: User): Intent {
-//    return Intent(this, MainActivity()::class.java).apply {
-//        Log.e("MainActivity","user.id is " + user.id)
-//        putExtra("INTENT_USER_ID", user.id)
-//    }
-//}
 
 fun Context.MainActivity(user: User): Intent {
     return Intent(this, MainActivity::class.java).apply {
@@ -51,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         viewPager = findViewById(R.id.viewPager)
+        viewPager.offscreenPageLimit = 1
 
         setSupportActionBar(toolbar)
 
@@ -68,33 +63,26 @@ class MainActivity : AppCompatActivity() {
 
         navigation.setOnNavigationItemSelectedListener(test)
 
-
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-        Log.e("MainActivity","Gained focus "+hasFocus)
-//        val myFragment = supportFragmentManager.findFragmentByTag("SettingFragment")
-//        if (myFragment != null && myFragment!!.isVisible() && hasFocus) {
-//            if(viewPager.currentItem == 3){
-//                // hard code for now....
-//
-//            }
-//            val transaction = supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.container, SettingFragment.newInstance(),"SettingFragment")
-//            transaction.commit()
-//        }
-
-        val fragment = supportFragmentManager.findFragmentByTag("android:switcher:" + R.id.viewPager + ":" + viewPager.currentItem)
-        // based on the current position you can then cast the page to the correct Fragment class and call some method inside that fragment to reload the data:
+        Log.e("MainActivity","Gained focus "+hasFocus +" "+ viewPager.currentItem)
+ // based on the current position you can then cast the page to the correct Fragment class and call some method inside that fragment to reload the data:
         if (viewPager.currentItem == 3) {
-//            supportFragmentManager.beginTransaction().remove(fragment).commit()
-//            adapter.addFragment(SettingFragment())
-            //viewPager.adapter =
             viewPager.adapter = mAdapter
             viewPager.setCurrentItem(3)
-            Log.e("MainActiivity","Fragment found")
         }
+
+        //val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+
+        if(viewPager.currentItem == 1) {
+            //if (currentFragment is IOnFocusListenable) {
+            val fragment = mAdapter.getItem(1)
+                (fragment as IOnFocusListenable).onWindowFocusChanged(hasFocus)
+            //}
+        }
+
     }
 
     private val test = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -115,10 +103,10 @@ class MainActivity : AppCompatActivity() {
                     //fragmentTag = "CampaignsFragment"
                 }
                 R.id.donation ->{
-                    toolbar.title = "Donations"
+                    toolbar.title = "Donation"
                     //selectedFragment = DonationsFragment.newInstance()
                     viewPager.setCurrentItem(1)
-                    //fragmentTag = "Donations"
+                    //fragmentTag = "Donation"
                 }
                 R.id.tree -> {
                     toolbar.title = "Tree"
@@ -133,26 +121,6 @@ class MainActivity : AppCompatActivity() {
                     //fragmentTag = "SettingFragment"
                 }
             }
-
-//            val transaction = supportFragmentManager.beginTransaction()
-//            transaction.replace(R.id.container, selectedFragment!!,fragmentTag)
-//            transaction.commit()
 true
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        menuInflater.inflate(R.menu.menu_main, menu)
-//        return true
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        return when (item.itemId) {
-//            R.id.action_settings -> true
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
 }

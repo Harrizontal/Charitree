@@ -20,8 +20,6 @@ class CreateDonationActivity : AppCompatActivity() {
         supportActionBar?.title = "Donation"
         val campaign = intent.getSerializableExtra("campaign") as Campaign
 
-
-
         val bundle = Bundle()
         bundle.putSerializable("campaign",campaign)
         val fragment = ChooseItemsFragment.newInstance()
@@ -29,8 +27,6 @@ class CreateDonationActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
                 .add(R.id.frame_layout, fragment)
                 .commit()
-
-
     }
 
     override fun onSaveInstanceState(outState: Bundle?) {
@@ -50,6 +46,17 @@ class CreateDonationActivity : AppCompatActivity() {
             supportFragmentManager.popBackStack()
         } else {
             super.onBackPressed()
+        }
+    }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
+
+        if (currentFragment is IOnFocusListenable) {
+            Log.e("CDA","This fragment is ChooseAddressFragment")
+            (currentFragment as IOnFocusListenable).onWindowFocusChanged(hasFocus)
         }
     }
 

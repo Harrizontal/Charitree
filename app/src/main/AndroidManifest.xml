@@ -45,7 +45,36 @@
         <activity
             android:name=".user.createdonation.CreateDonationActivity"
             android:label="@string/title_activity_create_donation"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".campaignmanager.CreatedCampaignDetailActivity"
+            android:label="@string/title_activity_created_campaign_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".user.address.CreateAddressActivity"
+            android:label="@string/title_activity_create_donation"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".user.DonationDetailActivity"
+            android:label="@string/title_activity_donation_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".campaignmanager.createcampaign.CreateCampaignActivity"
+            android:label="Create Campaign">
+        </activity>
+        <activity android:name=".campaignmanager.DonorListActivity"
+            android:label="Donor List"></activity>
+
+        <activity android:name=".campaignmanager.CampaignDonationDetailActivity"
+            android:label="Donation Detail"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".campaignmanager.AssignVolunteerActivity"
+            android:label="Assign a Volunteer"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+
     </application>
 
 </manifest>

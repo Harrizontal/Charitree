@@ -38,9 +38,9 @@ class AuthViewModel : ViewModel() {
         return repo.register(request) as LiveData<UserRegisterResponse>
     }
 
-    fun getOrgNameByUEN (repo: ILoginAndRegister, request: GetOrgNameUENRequest) : LiveData<GetOrgNameUENResponse>{
-        return repo.getOrgNameByUEN(GetOrgNameUENRequest) as LiveData<GetOrgNameUENResponse>
-    }
+//    fun getOrgNameByUEN (repo: ILoginAndRegister, request: GetOrgNameUENRequest) : LiveData<GetOrgNameUENResponse>{
+//        return repo.getOrgNameByUEN(GetOrgNameUENRequest) as LiveData<GetOrgNameUENResponse>
+//    }
 
 //    private val addressInput = MutableLiveData<User>()
 

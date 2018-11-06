@@ -12,9 +12,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.support.v4.app.Fragment
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import com.example.harrisonwjy.charitree.R
+import com.example.harrisonwjy.charitree.campaignmanager.createcampaign.CreateCampaignActivity
+import com.example.harrisonwjy.charitree.helper.BottomBarAdapter
+import com.example.harrisonwjy.charitree.helper.LockableViewPager
 import com.example.harrisonwjy.charitree.setting.SettingFragment
 import com.example.harrisonwjy.charitree.user.CampaignsFragment
+import com.example.harrisonwjy.charitree.user.createdonation.IOnFocusListenable
 import com.example.harrisonwjy.charitree.viewmodel.AuthViewModel
 
 
@@ -32,11 +38,12 @@ fun Context.CampaignManagerActivity(user: User): Intent {
 }
 
 private val INTENT_USER_ID = "user_token"
+lateinit var mAdapter: BottomBarAdapter
 
 class CampaignManagerActivity : AppCompatActivity() {
 
     val myViewModel: AuthViewModel by viewModel()
-    //private lateinit var viewPager: LockableViewPager
+    private lateinit var viewPager: LockableViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,40 +52,73 @@ class CampaignManagerActivity : AppCompatActivity() {
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
 
-        //viewPager = findViewById(R.id.viewPager)
+        val navigation = navigationView
 
+        viewPager = findViewById(R.id.viewPager)
+//
         setSupportActionBar(toolbar)
 
-        val navigation = navigationView
+        mAdapter = BottomBarAdapter(supportFragmentManager)
+        mAdapter.addFragment(CreatedCampaignsFragment())
+        mAdapter.addFragment(SettingFragment())
+        viewPager.adapter = mAdapter
+
+        viewPager.setSwipeable(false)
 
         navigation.setOnNavigationItemSelectedListener(test)
 
-
-        //Manually displaying the first fragment - one time only
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, CampaignsFragment.newInstance())
-        transaction.commit()
     }
 
 
-    private val test = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-            var selectedFragment: Fragment? = null
-            when (item.itemId) {
-                R.id.campaign -> {
-                    Log.e("CMActivity","Campaigns clicked")
-                    toolbar.title = "Campaigns"
-                    selectedFragment = CampaignsFragment.newInstance()
-                }
-                R.id.setting ->{
-                    Log.e("CMActivity","Settings clicked")
-                    toolbar.title = "Settings"
-                    selectedFragment = SettingFragment.newInstance()
-                }
-            }
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        Log.e("CampaignManagerActivity","Gained focus "+hasFocus +" "+ viewPager.currentItem)
+        if(viewPager.currentItem == 0) {
+            //if (currentFragment is IOnFocusListenable) {
+            val fragment = mAdapter.getItem(0)
+            (fragment as IOnFocusListenable).onWindowFocusChanged(hasFocus)
+            //}
+        }
 
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.container, selectedFragment!!)
-            transaction.commit()
+    }
+    private val test = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+        var selectedFragment: Fragment? = null
+        var fragmentTag: String? = null
+        when (item.itemId) {
+            R.id.campaign -> {
+                toolbar.title = "Campaigns"
+                viewPager.setCurrentItem(0)
+                selectedFragment = CreatedCampaignsFragment.newInstance()
+
+            }
+            R.id.setting -> {
+                toolbar.title = "Setting"
+                viewPager.setCurrentItem(1)
+                selectedFragment = SettingFragment.newInstance()
+            }
+        }
         true
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.setting_menu, menu)
+        return true
+    }
+
+    //and this to handle actions
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        val id = item.getItemId()
+        return if (id == R.id.action_settings) {
+            val intent = Intent(this,CreateCampaignActivity::class.java).apply{
+//                putExtra("campaign",campaign)
+            }
+            startActivity(intent)
+
+            true
+        } else super.onOptionsItemSelected(item)
     }
 }

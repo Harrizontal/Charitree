@@ -14,6 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="CheckBox"
+        android:textSize="17sp"
+        android:textColor="@color/slightlyBlack"
+        android:textStyle="bold"
         />
 
 </LinearLayout>

@@ -82,31 +82,6 @@ class ChooseItemAdapter(private val campaignItems: ArrayList<CampaignItems>, pri
             }
         }
 
-//        override fun onClick(v: View) {
-//            Log.e("RecyclerView", "CLICK!")
-//            val adapterPosition = adapterPosition
-//
-//            if(!view.contact_name.isChecked){
-//                view.contact_name.isChecked = true
-//
-//            }else{
-//                view.contact_name.isChecked = false
-//            }
-//        }
-
-        //2
-
-
-        //3
-//        init {
-//            view.setOnClickListener(this)
-//        }
-//
-//
-//        //4
-
-
-
         companion object {
             //5
             private val PHOTO_KEY = "PHOTO"

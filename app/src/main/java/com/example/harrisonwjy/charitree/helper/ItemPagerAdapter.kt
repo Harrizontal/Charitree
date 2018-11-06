@@ -42,4 +42,5 @@ class ItemPagerAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAda
         return POSITION_NONE
     }
 
+
 }

@@ -50,7 +50,6 @@ class RegisterFragment : Fragment(), Validation, HttpException {
 
         registerButton.setOnClickListener {
 
-
             isValidEmail(input_email,layout_email,"Please enter a valid email")
             isValidInput(input_firstname,layout_firstname,"Please enter a first name")
             isValidInput(input_lastname,layout_lastname,"Please enter a last name")

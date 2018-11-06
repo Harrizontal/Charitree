@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/campaign"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_flag"
         android:title="Campaigns"/>
 
     <item
         android:id="@+id/setting"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_settings_1"
         android:title="Settings" />
 </menu>

@@ -13,6 +13,9 @@ import com.example.harrisonwjy.charitree.model.Campaign
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import com.example.harrisonwjy.charitree.viewmodel.CampaignViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import android.support.v4.widget.SwipeRefreshLayout
+import kotlinx.android.synthetic.main.fragment_campaigns.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 
@@ -58,8 +61,17 @@ class CampaignsFragment : Fragment() {
                 val campaigns : ArrayList<Campaign>? = it.campaigns
                 val obj_adapter = ItemPagerAdapter(childFragmentManager,campaigns)
                 viewPager.adapter=obj_adapter
+                emptyState.visibility = View.INVISIBLE
+            }else{
+                emptyState.visibility = View.VISIBLE
             }
         })
+
+//        val swiperefresh = view.findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
+//        swiperefresh.setOnRefreshListener{
+//
+//        }
+
 
         return view
     }
@@ -71,6 +83,16 @@ class CampaignsFragment : Fragment() {
 
     fun setViewPagerToFirst(){
         viewPager.setCurrentItem(0)
+        val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
+        val token: String = prefs.getString("token", "")//"No name defined" is the default value.
+        val email: String = prefs.getString("email","")
+        campaignViewModel.getListOfCampaigns(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
+            if(it?.status == 1){
+                val campaigns : ArrayList<Campaign>? = it.campaigns
+                val obj_adapter = ItemPagerAdapter(childFragmentManager,campaigns)
+                viewPager.adapter=obj_adapter
+            }
+        })
     }
 
     companion object {

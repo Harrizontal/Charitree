@@ -182,56 +182,5 @@ class TradAuthenticationRepo : ILoginAndRegister {
         return data
     }
 
-    override fun getOrgNameByUEN(item: Any): Any{
 
-        val getItem: GetOrgNameUENRequest = item as GetOrgNameUENRequest
-        val uen : String = getItem.uen!!
-        val data = MutableLiveData<GetOrgNameUENResponse>()
-
-        api.getOrgNameByUEN(uen).enqueue(
-                object: Callback<GetOrgNameUENResponse> {
-                    val uenResponse = GetOrgNameUENResponse()
-                    override fun onResponse(call: Call<GetOrgNameUENResponse>?, response: Response<GetOrgNameUENResponse>?) {
-
-                        if(response!!.isSuccessful){
-                            uenResponse.apply {
-                                status = response.body().status
-                                errors = null
-                            }
-                            data.value = uenResponse
-                        }else{
-                            if(response.code() == 500){
-                                uenResponse.apply{
-                                    status = 0
-                                    errors = Errors().apply{
-                                        message = "Server error. Please contact adminstrator"
-                                    }
-                                }
-                            }else{
-                                val jObjError = JSONObject(response.errorBody().string())
-                                val getMessage  = jObjError.optJSONObject("errors")?.optString("message")
-
-                                uenResponse.apply {
-                                    status = jObjError.getString("status").toInt()
-                                    errors = Errors().apply {
-                                        message = getMessage
-                                    }
-                                }
-                            }
-                            data.value = uenResponse;
-                        }
-                    }
-
-                    override fun onFailure(call: Call<GetOrgNameUENResponse>?, t: Throwable?) {
-                        uenResponse.apply{
-                            status = null
-                            errors = null
-                        }
-                        data.value = uenResponse
-                    }
-                }
-        )
-
-        return data
-    }
 }
