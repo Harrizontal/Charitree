@@ -45,7 +45,7 @@ class ChooseRequestedItemAdapter (private val items: ArrayList<Items>, private v
 
         private var view: View = v
         fun bindItems(item: Items, onRequestItemCheckListener: OnRequestItemCheckListener) {
-            view.timeCheckBox.text = item.name + " " +item.id
+            view.timeCheckBox.text = item.name
 
             view.timeCheckBox.setOnClickListener{
                 if(!view.timeCheckBox.isChecked){

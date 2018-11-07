@@ -121,6 +121,12 @@ interface CharitreeApi {
             : Call<GetDonationsCountResponse>
 
 
+    @GET("sessions")
+    @Headers("Content-Type: application/json")
+    fun checkSessionIsValid()
+            : Call<GetSessionsResponse>
+
+
     companion object {
         // Local server
         val API_URL = "http://10.0.2.2/public/"

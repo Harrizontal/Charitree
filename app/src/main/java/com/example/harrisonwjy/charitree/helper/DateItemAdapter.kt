@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import com.example.harrisonwjy.charitree.model.DateItem
-import com.example.harrisonwjy.charitree.user.createdonation.DateItemFragment
+import com.example.harrisonwjy.charitree.views.createdonation.DateItemFragment
 
 class DateItemAdapter(fragmentManager: FragmentManager) : SmartFragmentStatePagerAdapter(fragmentManager) {
     var data: Array<String>? = null

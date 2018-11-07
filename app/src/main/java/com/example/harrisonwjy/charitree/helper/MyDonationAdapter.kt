@@ -2,14 +2,13 @@ package com.example.harrisonwjy.charitree.helper
 
 import android.content.Intent
 import android.graphics.Color
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.model.Donation
-import com.example.harrisonwjy.charitree.user.DonationDetailActivity
+import com.example.harrisonwjy.charitree.views.DonationDetailActivity
 import kotlinx.android.synthetic.main.item_donation_card.view.*
 
 
@@ -59,7 +58,7 @@ class MyDonationAdapter constructor(private val donations: ArrayList<Donation>?)
             itemView.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(p0: View?) {
                     val context = itemView.context
-                    val intent = Intent(context,DonationDetailActivity::class.java).apply{
+                    val intent = Intent(context, DonationDetailActivity::class.java).apply{
                         putExtra("donation",donation)
                     }
                     context.startActivity(intent)

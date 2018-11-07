@@ -32,7 +32,6 @@ class CampaignRepo(email: String, token: String) : ICampaign {
     }
 
     init {
-        Log.e("asd","email is "+ email + " token is "+token)
         val okHttpClient = OkHttpClient().newBuilder().addInterceptor(object : Interceptor {
             @Throws(IOException::class)
             override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
@@ -259,7 +258,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
 
 
                         }else{
-                            Log.e("CampaignRepo","failed: "+response.errorBody().string())
+                            //Log.e("CampaignRepo","failed: "+response.errorBody().string())
                                 when(response.code()){
                                     500 -> {
                                         campaignsResponse.apply{
@@ -272,6 +271,14 @@ class CampaignRepo(email: String, token: String) : ICampaign {
                                     404 -> {
                                         campaignsResponse.apply{
                                             status = 0
+                                            errors = Errors().apply{
+                                                message = "No created campaign created by you"
+                                            }
+                                        }
+                                    }
+                                    403 -> {
+                                        campaignsResponse.apply{
+                                            status = 403
                                             errors = Errors().apply{
                                                 message = "No created campaign created by you"
                                             }
@@ -898,6 +905,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
                                     }
                                 }
                                 else -> {
+                                    Log.e("AssignVolunteer",response.errorBody().string())
                                     val jObjError = JSONObject(response.errorBody().string())
 
                                     val getMessage = jObjError.optJSONObject("errors")?.optString("message")

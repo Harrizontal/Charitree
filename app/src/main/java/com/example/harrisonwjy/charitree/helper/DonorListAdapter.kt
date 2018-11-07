@@ -1,25 +1,14 @@
 package com.example.harrisonwjy.charitree.helper
 
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import com.example.harrisonwjy.charitree.R
-import com.example.harrisonwjy.charitree.campaignmanager.CampaignDonationDetailActivity
-import com.example.harrisonwjy.charitree.campaignmanager.CreatedCampaignDetailActivity
-import com.example.harrisonwjy.charitree.model.Campaign
+import com.example.harrisonwjy.charitree.views.campaignmanager.CampaignDonationDetailActivity
 import com.example.harrisonwjy.charitree.model.Donation
-import com.example.harrisonwjy.charitree.user.createdonation.CreateDonationActivity
-import kotlinx.android.synthetic.main.item_created_campaign.view.*
 import kotlinx.android.synthetic.main.item_donor.view.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 
 class DonorListAdapter constructor(private val donors: ArrayList<Donation>?) : RecyclerView.Adapter<DonorListAdapter.ViewHolder>() {
@@ -55,7 +44,7 @@ class DonorListAdapter constructor(private val donors: ArrayList<Donation>?) : R
             itemView.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(p0: View?) {
                     val context = itemView.context
-                    val intent = Intent(context,CampaignDonationDetailActivity::class.java).apply{
+                    val intent = Intent(context, CampaignDonationDetailActivity::class.java).apply{
                         putExtra("donationId",donor.did)
                     }
                     context.startActivity(intent)

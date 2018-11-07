@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".user.createdonation.ChooseItemsFragment"
+    tools:context=".views.createdonation.ChooseItemsFragment"
     android:background="@color/slightlyWhite"
     android:weightSum="20">
 

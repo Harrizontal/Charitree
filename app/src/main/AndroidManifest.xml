@@ -22,54 +22,54 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".onboarding.OnboardingActivity"
+            android:name=".views.onboarding.OnboardingActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".user.MainActivity"
+            android:parentActivityName="com.example.harrisonwjy.charitree.views.MainActivity"
             android:theme="@style/Theme.AppCompat.ThemeLight" />
         <activity
-            android:name=".setting.RegisterCMActivity"
+            android:name=".views.setting.RegisterCMActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".user.MainActivity"
+            android:name="com.example.harrisonwjy.charitree.views.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".campaignmanager.CampaignManagerActivity"
+            android:name=".views.campaignmanager.CampaignManagerActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".user.CampaignDetailActivity"
+            android:name="com.example.harrisonwjy.charitree.views.CampaignDetailActivity"
             android:label="@string/title_activity_campaign_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".user.createdonation.CreateDonationActivity"
+            android:name="com.example.harrisonwjy.charitree.views.createdonation.CreateDonationActivity"
             android:label="@string/title_activity_create_donation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".campaignmanager.CreatedCampaignDetailActivity"
+            android:name=".views.campaignmanager.CreatedCampaignDetailActivity"
             android:label="@string/title_activity_created_campaign_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".user.address.CreateAddressActivity"
+            android:name="com.example.harrisonwjy.charitree.views.createdonation.address.CreateAddressActivity"
             android:label="@string/title_activity_create_donation"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".user.DonationDetailActivity"
+            android:name="com.example.harrisonwjy.charitree.views.DonationDetailActivity"
             android:label="@string/title_activity_donation_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".campaignmanager.createcampaign.CreateCampaignActivity"
+            android:name=".views.campaignmanager.createcampaign.CreateCampaignActivity"
             android:label="Create Campaign">
         </activity>
-        <activity android:name=".campaignmanager.DonorListActivity"
+        <activity android:name=".views.campaignmanager.DonorListActivity"
             android:label="Donor List"></activity>
 
-        <activity android:name=".campaignmanager.CampaignDonationDetailActivity"
+        <activity android:name=".views.campaignmanager.CampaignDonationDetailActivity"
             android:label="Donation Detail"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".campaignmanager.AssignVolunteerActivity"
+        <activity android:name=".views.campaignmanager.AssignVolunteerActivity"
             android:label="Assign a Volunteer"
             android:theme="@style/AppTheme.NoActionBar">
 

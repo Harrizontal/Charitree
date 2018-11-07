@@ -23,5 +23,6 @@ class Campaign : Serializable {
     var campaign_manager: CampaignManager? = null
     var accepted_items: ArrayList<AcceptedItem>? = null
     var days_left: Int? = 0
+    var weather_forecasts : ArrayList<WeatherForecast> = ArrayList()
 
 }

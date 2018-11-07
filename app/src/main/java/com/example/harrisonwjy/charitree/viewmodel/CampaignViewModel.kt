@@ -13,9 +13,6 @@ import com.example.harrisonwjy.charitree.repo.CampaignRepo
 
 class CampaignViewModel : ViewModel(){
 
-    // get list of campaigns
-    private lateinit var campaigns: LiveData<Campaign>
-
 
     fun getListOfCampaigns(repo: CampaignRepo): LiveData<GetCampaignsResponse> {
         return repo.showAll() as LiveData<GetCampaignsResponse>
