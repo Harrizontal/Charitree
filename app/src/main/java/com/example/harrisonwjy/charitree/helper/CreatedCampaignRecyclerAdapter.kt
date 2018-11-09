@@ -61,50 +61,48 @@ class CreatedCampaignRecyclerAdapter constructor(private val campaigns: ArrayLis
 
             // display weather
             val noOfLayers = campaign.weather_forecasts.size
-            val sizeForEachLayer = 100 / noOfLayers
-            for(item in campaign.weather_forecasts){
-                val layout2 = LinearLayout(itemView.context)
-                layout2.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,sizeForEachLayer.toFloat())
-                layout2.setOrientation(LinearLayout.VERTICAL)
-                val tv1 = TextView(itemView.context)
-                val imageView = ImageView(itemView.context)
-                imageView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            if (noOfLayers > 0){
+                val sizeForEachLayer = 100 / noOfLayers
+                for(item in campaign.weather_forecasts){
+                    val layout2 = LinearLayout(itemView.context)
+                    layout2.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT,sizeForEachLayer.toFloat())
+                    layout2.setOrientation(LinearLayout.VERTICAL)
+                    val tv1 = TextView(itemView.context)
+                    val imageView = ImageView(itemView.context)
+                    imageView.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
 
 
-                tv1.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val currentDate = LocalDateTime.now()
-                    val formatter = DateTimeFormatter.ofPattern("dd LLL")
-                    val current = currentDate.format(formatter)
-                    val getDate = LocalDate.parse(item.date, DateTimeFormatter.ISO_DATE)
-                    val date = getDate.format(formatter)
-                    if(current == date){
-                        tv1.text = "Today"
+                    tv1.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val currentDate = LocalDateTime.now()
+                        val formatter = DateTimeFormatter.ofPattern("dd LLL")
+                        val current = currentDate.format(formatter)
+                        val getDate = LocalDate.parse(item.date, DateTimeFormatter.ISO_DATE)
+                        val date = getDate.format(formatter)
+                        if(current == date){
+                            tv1.text = "Today"
+                        }else{
+                            tv1.text = date.format(formatter)
+                        }
+
                     }else{
-                        tv1.text = date.format(formatter)
+                        tv1.text = item.date
                     }
 
-                }else{
-                    tv1.text = item.date
+                    if (item.forecast!!.contains("showers")){
+                        imageView.setImageResource(R.drawable.ic_rain)
+                    }else{
+                        imageView.setImageResource(R.drawable.ic_sun)
+                    }
+                    tv1.gravity = Gravity.CENTER
+                    layout2.addView(tv1)
+
+
+                    layout2.addView(imageView)
+                    itemView.weatherSection.addView(layout2)
                 }
-
-                if (item.forecast!!.contains("showers")){
-                    imageView.setImageResource(R.drawable.ic_rain)
-                }else{
-                    imageView.setImageResource(R.drawable.ic_sun)
-                }
-                tv1.gravity = Gravity.CENTER
-                layout2.addView(tv1)
-
-
-                layout2.addView(imageView)
-                itemView.weatherSection.addView(layout2)
             }
-//            for (item in campaign.weather_forecasts){
-
-
-//            }
-
+            
             itemView.setOnClickListener(object: View.OnClickListener {
                 override fun onClick(p0: View?) {
                     val context = itemView.context
