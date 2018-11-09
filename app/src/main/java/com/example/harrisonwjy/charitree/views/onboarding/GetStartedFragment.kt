@@ -11,6 +11,10 @@ import kotlinx.android.synthetic.main.fragment_getstarted.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
+/**
+ * A GetStartedFragment holds the very first screen when user open the app (provided he/she is not logged in)
+ * The GetStartedFragment has only one button (and one way) to go the LoginFragment
+ */
 class GetStartedFragment : Fragment() {
     // TODO: Rename and change types of parameters
 

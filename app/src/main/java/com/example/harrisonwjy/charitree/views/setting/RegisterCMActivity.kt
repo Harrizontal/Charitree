@@ -1,18 +1,13 @@
 package com.example.harrisonwjy.charitree.views.setting
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity;
 import com.example.harrisonwjy.charitree.R
 import android.util.Log
 
-
-fun Context.RegisterCMActivity(): Intent {
-    return Intent(this, RegisterCMActivity::class.java).apply {
-    }
-}
-
+/**
+ * RegisterCMActivity holds the RegisterCMFragment
+ */
 class RegisterCMActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

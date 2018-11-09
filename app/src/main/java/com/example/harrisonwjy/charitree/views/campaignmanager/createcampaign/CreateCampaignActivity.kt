@@ -6,6 +6,10 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.harrisonwjy.charitree.R
 
+/**
+ * CreateCampaignActivity class holds the CampaignInformationFragment
+ * @author Lim Yiern
+ */
 class CreateCampaignActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

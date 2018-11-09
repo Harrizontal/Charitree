@@ -21,6 +21,12 @@ import kotlinx.android.synthetic.main.fragment_campaign_date_and_time.*
 import java.util.*
 
 
+/**
+ * A CampaignDateAndTimeFragment holds the UI of creation of campaign (2nd part)
+ * The CampaignDateAndTimeFragment consist of four text input (two of them has a date picker) - Start date, end date, start time, end time
+ * and a button to submit the request
+ *  @author Lim Yiern
+ */
 class CampaignDateAndTimeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

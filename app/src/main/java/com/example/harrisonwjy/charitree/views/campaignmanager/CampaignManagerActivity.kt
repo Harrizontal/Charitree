@@ -33,9 +33,14 @@ fun Context.CampaignManagerActivity(user: User): Intent {
 private val INTENT_USER_ID = "user_token"
 private lateinit var mAdapter: BottomBarAdapter
 
+/**
+ * CampaignManagerActivity holds the the Main Activity of the Campaign Mananger Mode
+ * When User switch to Campaign Manager mode, it will be redirected to this Activity
+ * This class consist of two class such as CreatedCampaignsFragment and SettingFragment
+ * @author Harrison Wong
+ */
 class CampaignManagerActivity : AppCompatActivity() {
 
-    val myViewModel: UserViewModel by viewModel()
     private lateinit var viewPager: LockableViewPager
 
     override fun onCreate(savedInstanceState: Bundle?) {

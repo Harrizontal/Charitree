@@ -17,6 +17,10 @@ import com.example.harrisonwjy.charitree.helper.*
 import com.example.harrisonwjy.charitree.model.request.LoginRequest
 import com.example.harrisonwjy.charitree.repo.TradAuthenticationRepo
 
+/**
+ * A LoginFragment holds the UI of the Login Screen
+ * The LoginFragment consist of two text inputs and a button to login
+ */
 class LoginFragment : Fragment(),Validation, HttpException {
     // TODO: Rename and change types of parameters
     private val myViewModel: UserViewModel by viewModel()
@@ -61,7 +65,7 @@ class LoginFragment : Fragment(),Validation, HttpException {
 
             // ViewModel will call Authenticate method
             myViewModel.authenticate(TradAuthenticationRepo(),loginRequest).observe(this,android.arch.lifecycle.Observer {
-                //Log.e("LoginFragment","LoginFragment received "+ it?.user_token + " " + it?.status)
+
 
                 // make a fake delay response
                 try {

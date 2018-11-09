@@ -17,12 +17,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 // TODO: Rename parameter arguments, choose names that match
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [TreeFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [TreeFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * A TreeFragment holds the UI of the Tree Screen
+ * @author Harrison Wong
  *
  */
 class TreeFragment : Fragment() {

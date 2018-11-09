@@ -19,7 +19,10 @@ import okhttp3.OkHttpClient
 import org.json.JSONObject
 import java.io.IOException
 
-
+/**
+ * A CampaignRepo class to execute campaign and campaign manager related APIs
+ * @author Harrison Wong
+ */
 class CampaignRepo(email: String, token: String) : CampaignInterface {
 
 
@@ -54,6 +57,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         api = retrofit.create(CharitreeApi::class.java)
     }
 
+    /**
+     * A method to register as campaign manager
+     */
     override fun register(item: Any): Any {
         Log.e("CampaignRepo","Accessing register method in CampaignRepo")
         val getItem: RegisterCMRequest = item as RegisterCMRequest
@@ -127,6 +133,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to verify the user as a campaign manager
+     */
     override fun verify(item: Any): Any {
         Log.e("CampaignRepo","Accessing verify method in CampaignRepo")
 
@@ -188,6 +197,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to retrieve all campaigns
+     */
     override fun showAll(): Any {
         Log.e("CampaignRepo","Accessing showAll method in CampaignRepo")
 
@@ -243,6 +255,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to retrieve all campaigns created by the campaign manager
+     */
     override fun showAllByCMSession(): Any {
         val data = MutableLiveData<GetCampaignsByCMSession>()
         api.getCampaignsByCMSession().enqueue(
@@ -316,6 +331,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to retrieve the organisation name using the UEN
+     */
     override fun getOrgNameByUEN(item: Any): Any{
         val uen : String = item.toString()
         val data = MutableLiveData<GetOrgNameUENResponse>()
@@ -361,6 +379,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to retrieve the list of items
+     */
     override fun getItems(): Any {
         val data = MutableLiveData<GetItemsResponse>()
         api.getItems().enqueue(
@@ -424,6 +445,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to create campaign
+     */
     override fun create(item: Any): Any {
         val getItem: CreateCampaignRequest = item as CreateCampaignRequest
         val data = MutableLiveData<CreateCampaignResponse>()
@@ -487,6 +511,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to retrieve a list of donors
+     */
     override fun showDonors(item: Any): Any {
         Log.e("showDonors","item is "+item.toString().toInt())
         val campaignId = item.toString().toInt()
@@ -553,6 +580,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to a donation details using the donation id
+     */
     override fun getDonationByDID(item: Any): Any {
         val donationId = item.toString().toInt()
         val data = MutableLiveData<GetDonationByDonationIDResponse>()
@@ -618,6 +648,9 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
+    /**
+     * A method to change the status of a donation
+     */
     override fun changeStatusByDID(id: Int,item: Any): Any {
         val getItem = item as ChangeStatusDonationRequest
         val data = MutableLiveData<ChangeStatusDonationResponse>()

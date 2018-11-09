@@ -31,6 +31,13 @@ lateinit var toolbar: ActionBar
 lateinit var mAdapter: BottomBarAdapter
 private val INTENT_USER_ID = "user_token"
 
+/**
+ * MainActivity class that have four fragments (CamapaignsFragment, DonationsFragment, TreeFragment and SettingFragment attached to it
+ * It also serve as a navigation between the stated fragments
+ * @author Harrison Wong
+ *
+ */
+
 class MainActivity : AppCompatActivity() {
 
     private val myViewModel: UserViewModel by viewModel()

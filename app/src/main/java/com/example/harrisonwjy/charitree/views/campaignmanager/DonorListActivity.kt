@@ -14,6 +14,11 @@ import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import com.example.harrisonwjy.charitree.viewmodel.CampaignViewModel
 import kotlinx.android.synthetic.main.activity_donor_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
+
+/**
+ * DonorListActivity class holds a recycleview of donors for the specific campaign
+ * @author Wang Lu
+ */
 class DonorListActivity : AppCompatActivity() {
 
     private val campaignViewModel : CampaignViewModel by viewModel()

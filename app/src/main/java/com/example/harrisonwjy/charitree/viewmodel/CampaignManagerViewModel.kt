@@ -8,8 +8,12 @@ import com.example.harrisonwjy.charitree.model.response.CMVerifyResponse
 import com.example.harrisonwjy.charitree.model.response.GetOrgNameUENResponse
 import com.example.harrisonwjy.charitree.repo.interfaces.CampaignInterface
 
-
+/**
+ * Two way binding ViewModel to handle campaign manager tasks
+ * @author Harrison wong
+ */
 class CampaignManagerViewModel : ViewModel() {
+
 
 
     fun register(repo: CampaignInterface, request: RegisterCMRequest): LiveData<CMRegisterResponse>{

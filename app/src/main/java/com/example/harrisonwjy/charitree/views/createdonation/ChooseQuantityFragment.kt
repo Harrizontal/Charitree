@@ -20,7 +20,9 @@ import kotlinx.android.synthetic.main.fragment_create_donation_quantity.*
 
 
 /**
- * A placeholder fragment containing a simple view.
+ * A ChooseQuantityFragment holds the UI for selecting the quantity (plastic bag, carton box or trolley) for the seleted items he/she wants to donate
+ * The ChooseQuantityFragment has a RecycleView of three checkboxes that can be selected one only
+ * @author Harrison Wong
  */
 class ChooseQuantityFragment : Fragment() {
 
@@ -99,7 +101,7 @@ class ChooseQuantityFragment : Fragment() {
         return view
     }
 
-    fun loadData(): ArrayList<CampaignItems>{
+    private fun loadData(): ArrayList<CampaignItems>{
         @Suppress("UNCHECKED_Cast")
         val campaignItems = arguments?.getSerializable("currentChoices") as ArrayList<CampaignItems>
 
@@ -123,7 +125,7 @@ class ChooseQuantityFragment : Fragment() {
         return checkedItem
     }
 
-    fun displayNextWhenFilled(){
+    private fun displayNextWhenFilled(){
         var count: Int = 0
         for(itemData in selectedItems){
             if (itemData.quantity != 0){

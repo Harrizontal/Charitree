@@ -21,7 +21,8 @@ import com.example.harrisonwjy.charitree.model.Campaign
 
 
 /**
- * A placeholder fragment containing a simple view.
+ * A ChooseItemsFragment holds the UI of choosing the items they (or donors) want to donate
+ * @author Harrison Wong
  */
 class ChooseItemsFragment : Fragment() {
 

@@ -19,6 +19,11 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.*
 
+/**
+ * A CampaignItemFragment holds the UI of the list of campaigns screen
+ * @author Harrison Wong, Wang Lu
+ *
+ */
 class CampaignItemFragment: Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -64,7 +69,7 @@ class CampaignItemFragment: Fragment(){
         return view
     }
 
-    fun displayCampaignImage(id: Int, imageView: ImageView){
+    private fun displayCampaignImage(id: Int, imageView: ImageView){
         val number = id % 8
         var image: Int? = null
         when(number){

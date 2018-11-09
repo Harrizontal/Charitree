@@ -8,6 +8,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.harrisonwjy.charitree.R
 
+/**
+ * A DateItemFragment is used during the creation of donation
+ * The DateItemFragment will be added in a viewpager and acts a date picker
+ * @author Harrison Wong
+ */
 class DateItemFragment: Fragment(){
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

@@ -1,5 +1,10 @@
 package com.example.harrisonwjy.charitree.repo.interfaces
 
+
+/**
+ * An Campaign Interface for CampaignRepo
+ * @author Harrison Wong
+ */
 interface CampaignInterface : RepositoryInterface {
 
     fun register(item: Any): Any

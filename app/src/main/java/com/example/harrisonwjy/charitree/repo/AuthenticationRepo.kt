@@ -17,6 +17,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
+/**
+ * A AuthenticationRepo class to execute Authentication related APIs
+ * @author Harrison Wong
+ */
 class AuthenticationRepo(email: String, token: String) : AuthenticationInterface {
 
     private val api: CharitreeApi
@@ -26,6 +30,8 @@ class AuthenticationRepo(email: String, token: String) : AuthenticationInterface
             return AuthenticationRepo(email,token)
         }
     }
+
+
     init {
         val okHttpClient = OkHttpClient().newBuilder().addInterceptor(object : Interceptor {
             @Throws(IOException::class)
@@ -50,6 +56,9 @@ class AuthenticationRepo(email: String, token: String) : AuthenticationInterface
     }
 
 
+    /**
+     * A method to verify the current session token with a return of GetSessionResponse
+     */
     override fun verify(): Any {
         val data = MutableLiveData<GetSessionsResponse>()
         // call login method from CharitreeApi interface

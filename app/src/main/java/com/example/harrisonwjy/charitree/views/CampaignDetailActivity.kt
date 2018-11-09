@@ -15,6 +15,10 @@ import kotlinx.android.synthetic.main.activity_campaign_detail.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * CampaignDetailActivity class holds the UI for the details of the campaign
+ *@author Wang Lu, Harrison
+ */
 class CampaignDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +71,10 @@ class CampaignDetailActivity : AppCompatActivity() {
         }
     }
 
-    fun displayCampaignImage(id: Int, imageView: ImageView){
+    /**
+     * A function that displays the image based on the campaign id
+     */
+    private fun displayCampaignImage(id: Int, imageView: ImageView){
         val number = id % 8
         var image: Int? = null
         when(number){

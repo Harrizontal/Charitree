@@ -30,7 +30,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 
 /**
- * A placeholder fragment containing a simple view.
+ * A ChooseAddressFragment holds the UI for selecting a created address
+ * The ChooseAddressFragment has a RecycleView with a checkbox for every row to select the address
+ * It also has a button to open a new Activity (CreateAddressActivity) for creating a new address
+ * @author Harrison Wong
  */
 class ChooseAddressFragment : Fragment(), IOnFocusListenable {
 

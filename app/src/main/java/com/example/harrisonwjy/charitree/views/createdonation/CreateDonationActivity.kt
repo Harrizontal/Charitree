@@ -8,6 +8,11 @@ import com.example.harrisonwjy.charitree.model.Campaign
 
 import kotlinx.android.synthetic.main.activity_create_donation.*
 
+/**
+ * CreateDonationActivity class is a the main class in dealing with the creation of donation
+ * The CreateDonationActivity class has a ChooseItemFragment attached to it when its called
+ * @author Harrison Wong
+ */
 class CreateDonationActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

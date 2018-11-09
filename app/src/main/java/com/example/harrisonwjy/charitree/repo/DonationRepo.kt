@@ -20,6 +20,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
+/**
+ * A DonationRepo class to execute donation related APIs
+ * @author Harrison Wong
+ */
 class DonationRepo(email: String, token: String) : DonationInterface{
 
     private val api: CharitreeApi
@@ -53,6 +57,10 @@ class DonationRepo(email: String, token: String) : DonationInterface{
         api = retrofit.create(CharitreeApi::class.java)
     }
 
+
+    /**
+     * A method to retrieve all donation by the user
+     */
     override fun getAll(): Any {
         val data = MutableLiveData<GetAllDonationForUserResponse>()
         api.getUserDonations().enqueue(
@@ -116,6 +124,9 @@ class DonationRepo(email: String, token: String) : DonationInterface{
         return data
     }
 
+    /**
+     * A method to create a donation request
+     */
     override fun create(id: Int, item: Any): Any {
         val getItem: CreateDonationRequest = item as CreateDonationRequest
         val data = MutableLiveData<CreateDonationResponse>()
@@ -179,6 +190,9 @@ class DonationRepo(email: String, token: String) : DonationInterface{
         return data
     }
 
+    /**
+     * A method to get the count of donation donated by the user
+     */
     override fun getCount(item: Any): Any {
         val getItem = item.toString()
         val data = MutableLiveData<GetDonationsCountResponse>()
@@ -243,10 +257,6 @@ class DonationRepo(email: String, token: String) : DonationInterface{
         )
         return data
     }
-
-    // get donation
-
-    // create donation
 
 
 }

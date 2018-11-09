@@ -14,6 +14,11 @@ import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import com.example.harrisonwjy.charitree.viewmodel.CampaignViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
+/**
+ * AssignVolunteerActivity class holds the UI for assigning of volunteer to the donation
+ * It consist of two text input (name and handphone number) and a button to submit
+ * @author Wang Lu
+ */
 class AssignVolunteerActivity : AppCompatActivity() {
 
     private val campaignViewModel : CampaignViewModel by viewModel()

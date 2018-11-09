@@ -22,13 +22,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 // TODO: Rename parameter arguments, choose names that match
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [RegisterCMFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [RegisterCMFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
+ * A RegisterCMFragment to hold the UI of the Register As Campaign Manager Screen
+ * The RegisterCMFragment consist of a two text inputs (for UEN and Organisation button), a button to retrieve the organisation name, and a submit button
  */
 class RegisterCMFragment : Fragment(),Validation,HttpException {
 

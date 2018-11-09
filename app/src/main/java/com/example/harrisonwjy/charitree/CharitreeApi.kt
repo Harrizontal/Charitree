@@ -5,128 +5,164 @@ import com.example.harrisonwjy.charitree.model.response.*
 import retrofit2.Call
 import retrofit2.http.*
 
-
+/**
+ * An interface with API methods to the Charitree server
+ * @author Harrison wong, Wang Lu
+ * For more information on the API, please refer to the Charitree-server files/documentation
+ */
 interface CharitreeApi {
 
 
-
-//    @GET("users/{user}/repos")
-//    fun getProjectList(@Path("user") user: String)
-//            : Call<List<Project>>
-//
-//    @GET("/repos/{user}/{reponame}")
-//    fun getProjectDetails(@Path("user") user: String,
-//                          @Path("reponame") projectName: String)
-//            : Call<Project>
-
-
     // register
+    /**
+     * A POST method to register as Normal User (donor)
+     */
     @POST("users")
     @Headers("Content-Type: application/json")
     fun register(@Body request:UserRegisterRequest)
                  : Call<UserRegisterResponse>
 
-    // login
+    /**
+     * A POST method for users to login into the application
+     */
     @POST("sessions")
     @Headers("Content-Type: application/json")
     fun login(@Body request: LoginRequest)
             : Call<LoginResponse>
 
 
-    // register as a  campaign manager
+    /**
+     * A POST method for users to register as a Campaign Manager
+     */
     @POST("users/campaignmanagers")
     @Headers("Content-Type: application/json")
     fun registerCM(@Body request: RegisterCMRequest)
                 : Call<CMRegisterResponse>
 
-    // get org name based on UEN
+    /**
+     * A GET method for a user to retrieve the organisation name using the Unique Entity Number (UEN)
+     */
     @GET("uen")
     @Headers("Content-Type: application/json")
     fun getOrgNameByUEN(@Query("uen") uen: String)
                 : Call<GetOrgNameUENResponse>
 
-    // verify user is campaign manager
+    /**
+     * A GET method to verify whether the user is a campaign manager
+     */
     @GET("users/campaignmanagers")
     @Headers("Content-Type: application/json")
     fun verifyCM(): Call<CMVerifyResponse>
 
-    // get list of campaign
+    /**
+     * A GET method to retrieve a  list of current and future Campaigns and its details such as description and weather
+     */
     @GET("campaigns")
     @Headers("Content-Type: application/json")
     fun getCampaigns(): Call<GetCampaignsResponse>
 
-    // get list of campaigns by session if he is campaign manager
+    /**
+     * A GET method to retrieve a list of campaigns and its details created by the campaign manager
+     */
     @GET("campaigns/campaignmanagers")
     @Headers("Content-Type: application/json")
     fun getCampaignsByCMSession(): Call<GetCampaignsByCMSession>
 
-    // get addresses
+    /**
+     * A GET method to retrieve the addresses of the user
+     */
     @GET("addresses")
     @Headers("Content-Type: application/json")
     fun getAddresses(): Call<GetAddressResponse>
 
-    // add address
+    /**
+     * A POST method to create an address
+     */
     @POST("addresses")
     @Headers("Content-Type: application/json")
     fun createAddresses(@Body request: GetAddressRequest)
             : Call<GetAddressResponse>
 
-    // create donation
+    /**
+     * A POST method to create a donation request for a specific campaign
+     */
     @POST("donations/campaigns/{campaignId}")
     @Headers("Content-Type: application/json")
     fun createDonation(@Path("campaignId") campaignId: Int, @Body request: CreateDonationRequest)
             : Call<CreateDonationResponse>
 
 
-    // Get all donations by the current user session
+    /**
+     * A GET method to retrieve all the user's donation
+     */
     @GET("donations")
     @Headers("Content-Type: application/json")
     fun getUserDonations(): Call<GetAllDonationForUserResponse>
 
-    // create campaign (2ii)
+    /**
+     * A POST method to create a campaign
+     */
     @POST("campaigns")
     @Headers("Content-Type: application/json")
     fun createCampaign(@Body request: CreateCampaignRequest)
             : Call<CreateCampaignResponse>
 
+    /**
+     * A GET method to retrieve the available list of items that can be choosen by the campaign manager during the creation of campaign
+     */
     @GET("items")
-    @Headers("Content-Type: applicaiton/json")
+    @Headers("Content-Type: application/json")
     fun getItems(): Call<GetItemsResponse>
 
     // get list of donations by campaign id (3vi)
+    /**
+     * A GET method to retrieve the list of donors by the specific campaign
+     */
     @GET("donations/campaignmanagers/campaigns/{campaignId}")
     @Headers("Content-Type: application/json")
     fun getListOfDonationsByCID(@Path("campaignId") campaignId: Int)
             :Call<GetListOfDonationsByCIDResponse>
 
 
-    // get donations by donation id (3v)
+    /**
+     * A GET method to retrieve the details of a donation
+     */
     @GET("donations/{donationId}/campaignmanagers")
     @Headers("Content-Type: application/json")
     fun getDonationByDID(@Path("donationId") donationId: Int)
             :Call<GetDonationByDonationIDResponse>
 
 
-    //Change status of a donation (3vii)
+    /**
+     * A PATCH method to update the status of the donation
+     */
     @PATCH("donations/{donationId}/campaignmanagers")
     @Headers("Content-Type: application/json")
     fun editStatusByDID(@Path("donationId") donationId: Int, @Body request: ChangeStatusDonationRequest)
             : Call<ChangeStatusDonationResponse>
 
 
-    // Get number of successful donations by the current user session
+    /**
+     * A GET method to retireve the no of donation by the user
+     */
     @GET("donations/count")
     @Headers("Content-Type: application/json")
     fun getNoOfDonation(@Query("countBy") countBy: String)
             : Call<GetDonationsCountResponse>
 
 
+    /**
+     * A GET method to check whether the session is valid
+     */
     @GET("sessions")
     @Headers("Content-Type: application/json")
     fun checkSessionIsValid()
             : Call<GetSessionsResponse>
 
 
+    /**
+     * An object declaration with a parameter to hold the IP Address
+     */
     companion object {
         // Local server
         //val API_URL = "http://10.0.2.2/public/"

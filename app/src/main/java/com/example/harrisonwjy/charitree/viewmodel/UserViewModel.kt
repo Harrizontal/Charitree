@@ -8,6 +8,10 @@ import com.example.harrisonwjy.charitree.model.response.*
 import com.example.harrisonwjy.charitree.repo.AuthenticationRepo
 import com.example.harrisonwjy.charitree.repo.interfaces.LoginAndRegisterInterface
 
+/**
+ * Two way binding ViewModel to handle UserViewModel tasks
+ * @author Harrison wong
+ */
 class UserViewModel : ViewModel() {
 
 

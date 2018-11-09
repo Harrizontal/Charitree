@@ -14,21 +14,21 @@ import com.example.harrisonwjy.charitree.R
 import kotlinx.android.synthetic.main.fragment_campaign_information.*
 
 
+/**
+ * A CampaignInformationFragment holds a UI of creation of campaign (1st part)
+ * The CampaignInformationFragment consist of four text inputs (campaign name, description, street name, postal code) and a button to process
+ * to the next fragment
+ *  @author Lim Yiern
+ */
 class CampaignInformationFragment : Fragment() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_campaign_information, container, false)
 
-
         val nextButton = view.findViewById<Button>(R.id.nextButton)
-
 
         nextButton.setOnClickListener {
             val campaignName = input_campaign_name.text

@@ -21,13 +21,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 // TODO: Rename parameter arguments, choose names that match
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [RegisterFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [RegisterFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
+ * A RegisterFragment holds the UI of the Register Screen as a User
+ * The RegisterFragment consist of five text inputs (email, first, last name, password and confirm password) and a button to register
  */
 class RegisterFragment : Fragment(), Validation, HttpException {
 

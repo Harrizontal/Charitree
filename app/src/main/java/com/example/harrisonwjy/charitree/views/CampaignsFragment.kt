@@ -19,12 +19,8 @@ import kotlinx.android.synthetic.main.fragment_campaigns.*
 // TODO: Rename parameter arguments, choose names that match
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [CampaignsFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [CampaignsFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * A CampaignsFragment holds the UI of the list of campaigns screen
+ * @author Harrison Wong, Wang Lu
  *
  */
 class CampaignsFragment : Fragment() {
@@ -64,6 +60,10 @@ class CampaignsFragment : Fragment() {
     }
 
 
+    /**
+     * A method to set the ViewPager to the first one when tab at the Bottom Navigation Bar
+     * This method is called MainActivity class
+     */
     fun setViewPagerToFirst(){
         viewPager.setCurrentItem(0)
         val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)

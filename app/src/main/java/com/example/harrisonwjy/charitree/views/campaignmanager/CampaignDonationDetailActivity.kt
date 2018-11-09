@@ -20,6 +20,10 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * CampaignDonationDetailActivity class holds the details of the donations
+ * @author Wang Lu
+ */
 class CampaignDonationDetailActivity : AppCompatActivity() {
 
     private val campaignViewModel : CampaignViewModel by viewModel()

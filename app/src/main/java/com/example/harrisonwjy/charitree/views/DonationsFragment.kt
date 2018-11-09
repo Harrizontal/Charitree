@@ -22,12 +22,8 @@ import org.koin.android.viewmodel.ext.android.viewModel
 // TODO: Rename parameter arguments, choose names that match
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [DonationsFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [DonationsFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * A DonationsFragment holds the UI of the Donation Screen
+ * @author Harrison Wong
  *
  */
 class DonationsFragment : Fragment(), IOnFocusListenable {

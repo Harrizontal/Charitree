@@ -16,6 +16,10 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * A TradAuthenticationRepo class to execute login and register related APIs
+ * @author Harrison Wong
+ */
 class TradAuthenticationRepo : LoginAndRegisterInterface {
 
 
@@ -36,6 +40,9 @@ class TradAuthenticationRepo : LoginAndRegisterInterface {
         api = retrofit.create(CharitreeApi::class.java)
     }
 
+    /**
+     * A method for user to login into the app
+     */
     override fun verify(item: Any): Any {
 
         val getItem: LoginRequest = item as LoginRequest
@@ -114,6 +121,9 @@ class TradAuthenticationRepo : LoginAndRegisterInterface {
         return data
     }
 
+    /**
+     * A method for user to register as a user
+     */
     override fun register(item: Any): Any {
         val getItem: UserRegisterRequest = item as UserRegisterRequest
         val data = MutableLiveData<UserRegisterResponse>()

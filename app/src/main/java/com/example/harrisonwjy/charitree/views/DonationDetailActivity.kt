@@ -14,6 +14,10 @@ import kotlinx.android.synthetic.main.activity_donation_detail.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * DonationDetailActivity class holds the UI for the details of the donation
+ *@author Wang Lu
+ */
 class DonationDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +93,10 @@ class DonationDetailActivity : AppCompatActivity() {
         } else super.onOptionsItemSelected(item)
     }
 
-    fun generateQuantityText(i: Int): String{
+    /**
+     * A function to generate a string based on the quantity
+     */
+    private fun generateQuantityText(i: Int): String{
         when(i){
             1 -> {
                 return "(Plastic bag)"
@@ -106,7 +113,10 @@ class DonationDetailActivity : AppCompatActivity() {
         }
     }
 
-    fun displayStatus(status: String){
+    /**
+     * A function to display the status UI based on the retrieved status
+     */
+    private fun displayStatus(status: String){
         when(status){
             "Pending"->{
                 firstSection.setImageResource(R.drawable.highlighted_1)
@@ -157,7 +167,10 @@ class DonationDetailActivity : AppCompatActivity() {
         }
     }
 
-    fun displayCampaignImage(id: Int, imageView: ImageView){
+    /**
+     * A function that displays the image based on the campaign id
+     */
+    private fun displayCampaignImage(id: Int, imageView: ImageView){
         val number = id % 8
         var image: Int? = null
         when(number){

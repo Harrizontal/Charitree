@@ -24,13 +24,8 @@ import com.example.harrisonwjy.charitree.views.MainActivity
 // TODO: Rename parameter arguments, choose names that match
 
 /**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [SettingFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- *
+ * A SettingFragment to hold the UI of the Setting Screen
+ * The SettingFragment has a button to switch/register as a Campaign Manager and Log off
  */
 class SettingFragment : Fragment() {
 

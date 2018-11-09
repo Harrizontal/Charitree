@@ -7,6 +7,10 @@ import com.example.harrisonwjy.charitree.model.request.CreateCampaignRequest
 import com.example.harrisonwjy.charitree.model.response.*
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
 
+/**
+ * Two way binding ViewModel to handle campaign tasks
+ * @author Harrison wong
+ */
 class CampaignViewModel : ViewModel(){
 
 

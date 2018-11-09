@@ -14,6 +14,10 @@ import com.example.harrisonwjy.charitree.repo.AddressRepo
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import com.example.harrisonwjy.charitree.repo.DonationRepo
 
+/**
+ * Two way binding ViewModel to handle donation task
+ * @author Harrison wong
+ */
 class DonationViewModel : ViewModel(){
 
     // view my donations

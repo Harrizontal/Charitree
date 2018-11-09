@@ -18,15 +18,13 @@ import com.example.harrisonwjy.charitree.viewmodel.CampaignViewModel
 import com.example.harrisonwjy.charitree.viewmodel.DonationViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
-fun Context.CreateAddressActivity(): Intent {
-    return Intent(this, CreateAddressActivity::class.java).apply {
-    }
-}
-
+/**
+ *CreateAddressActivity class holds the UI for creating a donor
+ *The class consist of three text input (street, unit, zip code) and a button to create the address
+ * @author Harrison Wong
+ */
 class CreateAddressActivity : AppCompatActivity() {
 
-    private val campaignViewModel : CampaignViewModel by viewModel()
     private val donationViewModel : DonationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {

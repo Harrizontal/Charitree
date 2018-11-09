@@ -18,6 +18,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
 
+/**
+ * A AddressRepo class to execute address related APIs
+ * @author Harrison Wong
+ */
 class AddressRepo(email: String, token: String) : AddressInterface{
 
 
@@ -54,7 +58,9 @@ class AddressRepo(email: String, token: String) : AddressInterface{
     }
 
 
-    // show address
+    /**
+     * A method to retrieve a list of addresses with a return of GetAddressResponse
+     */
     override fun get(): Any {
         val data = MutableLiveData<GetAddressResponse>()
         api.getAddresses().enqueue(
@@ -116,7 +122,9 @@ class AddressRepo(email: String, token: String) : AddressInterface{
         return data
     }
 
-    // create address
+    /**
+     * A method to create address with a return of GetAddressResponse
+     */
     override fun create(item: Any): Any {
         val getItem: GetAddressRequest = item as GetAddressRequest
 

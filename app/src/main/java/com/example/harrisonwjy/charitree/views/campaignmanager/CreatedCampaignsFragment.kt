@@ -21,6 +21,10 @@ import kotlinx.android.synthetic.main.fragment_created_campaigns.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
+/**
+ *A CreatedCampaignsFragment holds the UI for list of campaign created by the Campaign Manager
+ * @author Wang Lu
+ */
 class CreatedCampaignsFragment : Fragment() , IOnFocusListenable {
 
 

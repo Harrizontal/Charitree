@@ -29,6 +29,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 
 
+/**
+ * A CampaignItemsFragment holds the UI for user to choose the items they requesting for
+ * The CampaignItemsFragment has a recycleview with a checkbox in every row
+ * @author Lim Yiern
+ */
 class CampaignItemsFragment : Fragment() {
 
     private lateinit var linearLayoutManager: LinearLayoutManager

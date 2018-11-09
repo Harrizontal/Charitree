@@ -13,6 +13,10 @@ fun Context.OnboardingActivity(): Intent {
     }
 }
 
+/**
+ * OnboardingActivity class is class that holds the GetStartedFragment
+ * This class is intialize ONLY when the app have a invalid or no token stored in the app (SharedPreference)
+ */
 class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -20,6 +20,10 @@ import org.w3c.dom.Text
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * CreatedCampaignDetailActivity class holds the UI of details of the campaign
+ * @author Wang Lu
+ */
 class CreatedCampaignDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
