@@ -40,3 +40,10 @@ The scope of the system for “Charities” are:
 	* View a campaign information and its forecasted weather created by the Campaign Manager
 	* Edit campaign information for Campaign Manager
 	* Manage donations of a specific campaign and assignment of volunteer for Campaign Manager
+	
+	
+Seeing it in action
+------------------
+
+[![Image from Gyazo](https://i.gyazo.com/a52b3f29c1e58a5856b5998b0a281c22.gif)](https://gyazo.com/a52b3f29c1e58a5856b5998b0a281c22)[![Image from Gyazo](https://i.gyazo.com/b09d71579f2a29717ae25c456d838c69.gif)](https://gyazo.com/b09d71579f2a29717ae25c456d838c69)[![Image from Gyazo](https://i.gyazo.com/3c17955a67aa498c773d2527d15f40b9.gif)](https://gyazo.com/3c17955a67aa498c773d2527d15f40b9)
+
