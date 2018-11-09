@@ -58,7 +58,6 @@ class AssignVolunteerActivity : AppCompatActivity() {
             })
         }
 
-        // populating data into elements
     }
 
 }

@@ -33,18 +33,11 @@ class CreatedCampaignsFragment : Fragment() , IOnFocusListenable {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view =  inflater.inflate(R.layout.fragment_created_campaigns, container, false)
-        //var data = arrayOf("page1", "page2","page3","page4")
-        // Inflate the layout for this fragment
-
-        //val obj_adapter = ItemPagerAdapter(childFragmentManager,data)
-        //viewPager.adapter=obj_adapter
 
         val recycler_view = view.findViewById<RecyclerView>(R.id.recycler_view)
 
         layoutManager = LinearLayoutManager(context)
         recycler_view.layoutManager = layoutManager
-
-
 
         // get token
         val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
@@ -57,8 +50,6 @@ class CreatedCampaignsFragment : Fragment() , IOnFocusListenable {
                 adapter = CreatedCampaignRecyclerAdapter(campaigns)
                 recycler_view.adapter = adapter
                 emptyState.visibility = View.INVISIBLE
-//                val obj_adapter = ItemPagerAdapter(childFragmentManager,campaigns)
-//                viewPager.adapter=obj_adapter
             }
         })
 
@@ -67,7 +58,6 @@ class CreatedCampaignsFragment : Fragment() , IOnFocusListenable {
 
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
-        //Log.e("CCF", "onWindowFocus called")
         if(hasFocus) {
             val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
             val token: String = prefs.getString("token", "")//"No name defined" is the default value.
@@ -78,18 +68,7 @@ class CreatedCampaignsFragment : Fragment() , IOnFocusListenable {
                     adapter = CreatedCampaignRecyclerAdapter(campaigns)
                     recycler_view.adapter = adapter
                     emptyState.visibility = View.INVISIBLE
-                    //emptyState.visibility = View.INVISIBLE
-//                val obj_adapter = ItemPagerAdapter(childFragmentManager,campaigns)
-//                viewPager.adapter=obj_adapter
                 }
-
-//                if(it?.status == 403){
-//                    val prefs = activity?.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
-//                    val editor = prefs?.edit()
-//                    editor?.putString("mode","user")
-//                    editor?.apply()
-//                    activity!!.finish()
-//                }
             })
         }
     }

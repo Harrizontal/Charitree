@@ -23,12 +23,6 @@ import com.example.harrisonwjy.charitree.views.createdonation.IOnFocusListenable
 import com.example.harrisonwjy.charitree.viewmodel.UserViewModel
 
 
-//fun Context.MainActivity(user: User): Intent {
-//    return Intent(this, MainActivity()::class.java).apply {
-//        Log.e("MainActivity","user.id is " + user.id)
-//        putExtra("INTENT_USER_ID", user.id)
-//    }
-//}
 
 fun Context.CampaignManagerActivity(user: User): Intent {
     return Intent(this, CampaignManagerActivity::class.java).apply {

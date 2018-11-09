@@ -24,13 +24,6 @@ class GetStartedFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //myViewModel.sayHello()
-
-
-        //loginButton.text = myViewModel.authenticate(email.text.toString(),password.text.toString())
-//            myViewModel.getProjectDetail().observe(this, android.arch.lifecycle.Observer {
-//                registerButton.text = it
-//            })
 
         getStartedButton.setOnClickListener {
             val fragmentManager = fragmentManager
@@ -40,7 +33,6 @@ class GetStartedFragment : Fragment() {
             fragmentTransaction.commit()
         }
     }
-
 
 
     companion object {

@@ -55,9 +55,6 @@ class CampaignItemFragment: Fragment(){
             itemsNeededText.text = itemNeeded
         }
 
-        //view.title.text = campaign.name
-
-        //title.setText(name)
         cardview.setOnClickListener {
             val intent = Intent(activity, CampaignDetailActivity::class.java)
             intent.putExtra("campaign",campaign)

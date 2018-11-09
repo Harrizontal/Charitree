@@ -2,7 +2,7 @@ package com.example.harrisonwjy.charitree.model.response
 
 import com.example.harrisonwjy.charitree.model.Errors
 
-class LoginResponse {
+class LoginResponse{
     companion object Factory {
         fun create(): LoginResponse = LoginResponse()
     }

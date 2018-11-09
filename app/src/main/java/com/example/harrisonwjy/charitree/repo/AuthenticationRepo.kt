@@ -6,7 +6,6 @@ import com.example.harrisonwjy.charitree.CharitreeApi
 import com.example.harrisonwjy.charitree.model.Errors
 import com.example.harrisonwjy.charitree.model.response.GetSessionsResponse
 import com.example.harrisonwjy.charitree.repo.interfaces.AuthenticationInterface
-import com.example.harrisonwjy.charitree.repo.interfaces.IAuthentication
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient

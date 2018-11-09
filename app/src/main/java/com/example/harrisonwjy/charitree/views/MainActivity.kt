@@ -67,13 +67,11 @@ class MainActivity : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         Log.e("MainActivity","Gained focus "+hasFocus +" "+ viewPager.currentItem)
- // based on the current position you can then cast the page to the correct Fragment class and call some method inside that fragment to reload the data:
-        if (viewPager.currentItem == 3) {
+     if (viewPager.currentItem == 3) {
             viewPager.adapter = mAdapter
             viewPager.setCurrentItem(3)
         }
 
-        //val currentFragment = supportFragmentManager.findFragmentById(R.id.frame_layout)
 
         if(viewPager.currentItem == 1) {
             Log.e("MainActivity","Donation fragment viewed")

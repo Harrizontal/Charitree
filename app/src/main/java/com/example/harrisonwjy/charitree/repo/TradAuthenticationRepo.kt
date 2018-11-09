@@ -4,13 +4,11 @@ import android.arch.lifecycle.MutableLiveData
 import android.util.Log
 import com.example.harrisonwjy.charitree.CharitreeApi
 import com.example.harrisonwjy.charitree.model.Errors
-import com.example.harrisonwjy.charitree.model.request.GetOrgNameUENRequest
 import com.example.harrisonwjy.charitree.model.request.LoginRequest
 import com.example.harrisonwjy.charitree.model.request.UserRegisterRequest
-import com.example.harrisonwjy.charitree.model.response.GetOrgNameUENResponse
 import com.example.harrisonwjy.charitree.model.response.LoginResponse
 import com.example.harrisonwjy.charitree.model.response.UserRegisterResponse
-import com.example.harrisonwjy.charitree.repo.interfaces.ILoginAndRegister
+import com.example.harrisonwjy.charitree.repo.interfaces.LoginAndRegisterInterface
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,7 +16,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class TradAuthenticationRepo : ILoginAndRegister {
+class TradAuthenticationRepo : LoginAndRegisterInterface {
 
 
     private val api: CharitreeApi

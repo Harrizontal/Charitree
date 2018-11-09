@@ -60,8 +60,6 @@ class SettingFragment : Fragment() {
             activity?.startActivity(intent)
             activity?.finish()
 
-//            startActivity(OnboardingActivity())
-//            finish()
 
         }
 

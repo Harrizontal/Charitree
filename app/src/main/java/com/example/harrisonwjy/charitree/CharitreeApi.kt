@@ -130,6 +130,7 @@ interface CharitreeApi {
     companion object {
         // Local server
         //val API_URL = "http://10.0.2.2/public/"
+
         // School IP address
         val API_URL = "http://172.21.148.170/Charitree/public/"
     }

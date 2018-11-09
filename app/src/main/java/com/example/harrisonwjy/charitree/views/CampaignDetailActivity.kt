@@ -22,8 +22,6 @@ class CampaignDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_campaign_detail)
         setSupportActionBar(toolbar)
 
-
-        //val message = intent.getStringExtra("test1")
         val campaign = intent.getSerializableExtra("campaign") as Campaign
         supportActionBar?.title = campaign.name
         Log.e("CampaignDetail","The campaign name is "+campaign.name)
@@ -60,15 +58,6 @@ class CampaignDetailActivity : AppCompatActivity() {
         val address = campaign.collection_point + " Singapore "+campaign.postal_code
         textView_address.text = address
 
-
-
-//        ViewDonation.setOnClickListener(object: View.OnClickListener {
-//            override fun onClick(view: View): Unit {
-//
-////                val intent = Intent(this, DonarList::class.java)
-////                startActivity(intent)
-//            }
-//        })
 
         donateButton.setOnClickListener {
             val intent = Intent(this, CreateDonationActivity::class.java).apply{

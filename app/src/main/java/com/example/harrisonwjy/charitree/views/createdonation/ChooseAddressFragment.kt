@@ -20,9 +20,12 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.harrisonwjy.charitree.model.*
 import com.example.harrisonwjy.charitree.model.request.CreateDonationRequest
+import com.example.harrisonwjy.charitree.repo.AddressRepo
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
+import com.example.harrisonwjy.charitree.repo.DonationRepo
 import com.example.harrisonwjy.charitree.views.createdonation.address.CreateAddressActivity
 import com.example.harrisonwjy.charitree.viewmodel.CampaignViewModel
+import com.example.harrisonwjy.charitree.viewmodel.DonationViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -43,6 +46,7 @@ class ChooseAddressFragment : Fragment(), IOnFocusListenable {
     private lateinit var selectionList: RecyclerView
     private var savedState: Bundle? = null
     private val campaignViewModel : CampaignViewModel by viewModel()
+    private val donationViewModel : DonationViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -69,7 +73,7 @@ class ChooseAddressFragment : Fragment(), IOnFocusListenable {
         val email: String = prefs.getString("email","")
 
 
-         campaignViewModel.getAddress(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
+        donationViewModel.getAddress(AddressRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
             if(it?.status == 1){
                 val addresses : ArrayList<Address>? = it.addresses
                 mAdapter = ChooseAddressAdapter(addresses!!, object: OnItemCheckAddressListener{
@@ -149,7 +153,7 @@ class ChooseAddressFragment : Fragment(), IOnFocusListenable {
                 }
             }
 
-            campaignViewModel.createDonation(CampaignRepo(email,token),campaignId!!,request).observe(this,android.arch.lifecycle.Observer{
+            donationViewModel.createDonation(DonationRepo(email,token),campaignId!!,request).observe(this,android.arch.lifecycle.Observer{
                 Log.e("CAF","campaignViewMode.createDonation status: " +it!!.status)
                 if(it!!.status == 1){
                     Log.e("CAF","Donation created!!!!")
@@ -158,23 +162,7 @@ class ChooseAddressFragment : Fragment(), IOnFocusListenable {
                 }
             })
 
-//            // display data here
-//            val addressId = selectedAddress!!.get(0).id
-//            val pickupTime = arguments?.getString("getTimeSlot")
-//            val pickupDate = arguments?.getString("getDate")
-//
-//
-//            Log.e("SUBMIT","campaignId "+campaignData!!.id)
-//            Log.e("SUBMIT","addressId "+selectedAddress!!.get(0).id)
-//            Log.e("SUBMIT","pickupTime "+arguments?.getString("getTimeSlot"))
-//            Log.e("SUBMIT","pickupDate "+arguments?.getString("getDate"))
-//            Log.e("SUBMIT","selectedItem size "+ selectedItems.size)
-//            for(item in selectedItems){
-//                Log.e("SUBMIT",item.key.toString() + " " +item.item_name + " " +item.quantity)
-//            }
-
         }
-
         return view
     }
 
@@ -183,7 +171,7 @@ class ChooseAddressFragment : Fragment(), IOnFocusListenable {
         val token: String = prefs.getString("token", "")//"No name defined" is the default value.
         val email: String = prefs.getString("email","")
 
-        campaignViewModel.getAddress(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
+        donationViewModel.getAddress(AddressRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
             val nextButton = view!!.findViewById<Button>(R.id.nextButton)
             val noItemSelected = view!!.findViewById<TextView>(R.id.noItemSelected)
             if(it?.status == 1){

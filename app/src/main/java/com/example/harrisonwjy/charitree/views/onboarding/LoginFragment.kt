@@ -30,13 +30,6 @@ class LoginFragment : Fragment(),Validation, HttpException {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //(activity as OnboardingActivity).getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true)
-
-        // no meaning, just for testing
-        //myViewModel.sayHello()
-
-        // As user types, it checks whether the inputted value is valid
-        // See InputValidateShowError interface for more information
         input_email.addTextChangedListener(InputValidateShowError("email",input_email,layout_email,getString(R.string.error_message_email)))
         input_password.addTextChangedListener(InputValidateShowError("normal",input_password,layout_password,getString(R.string.error_message_password)))
 
@@ -125,10 +118,6 @@ class LoginFragment : Fragment(),Validation, HttpException {
                 }
 
             })
-            //loginButton.text = myViewModel.authenticate(email.text.toString(),password.text.toString())
-//            myViewModel.getProjectDetail().observe(this, android.arch.lifecycle.Observer {
-//                registerButton.text = it
-//            })
         }
 
         // When user taps on Register button, goes to Register Screen

@@ -13,6 +13,7 @@ import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.helper.MyDonationAdapter
 import com.example.harrisonwjy.charitree.model.Donation
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
+import com.example.harrisonwjy.charitree.repo.DonationRepo
 import com.example.harrisonwjy.charitree.views.createdonation.IOnFocusListenable
 import com.example.harrisonwjy.charitree.viewmodel.DonationViewModel
 import kotlinx.android.synthetic.main.fragment_donations.*
@@ -30,8 +31,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
  *
  */
 class DonationsFragment : Fragment(), IOnFocusListenable {
-
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,7 +52,7 @@ class DonationsFragment : Fragment(), IOnFocusListenable {
         val token: String = prefs.getString("token", "")//"No name defined" is the default value.
         val email: String = prefs.getString("email","")
 
-        donationViewModel.getAllDonationForUser(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
+        donationViewModel.getAllDonationForUser(DonationRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
             if(it?.status == 1){
                 val donations : ArrayList<Donation>? = it.donations
                 val adapter = MyDonationAdapter(donations)
@@ -76,7 +75,7 @@ class DonationsFragment : Fragment(), IOnFocusListenable {
             val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
             val token: String = prefs.getString("token", "")//"No name defined" is the default value.
             val email: String = prefs.getString("email","")
-            donationViewModel.getAllDonationForUser(CampaignRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
+            donationViewModel.getAllDonationForUser(DonationRepo(email,token)).observe(this,android.arch.lifecycle.Observer{
                 if(it?.status == 1){
                     val donations : ArrayList<Donation>? = it.donations
                     val adapter = MyDonationAdapter(donations)

@@ -16,7 +16,6 @@ class CampaignManagerViewModel : ViewModel() {
         return repo.register(request) as LiveData<CMRegisterResponse>
     }
 
-
     fun getCampaignManagerAccess(repo: CampaignInterface, request: RegisterCMRequest) : LiveData<CMVerifyResponse>? {
         return repo.verify(request) as LiveData<CMVerifyResponse>
     }

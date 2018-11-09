@@ -33,12 +33,6 @@ class CreateDonationActivity : AppCompatActivity() {
         Log.e("CreateDonationAct","Saving state")
     }
 
-//    override fun onBackPressed() {
-//        val fm = supportFragmentManager
-//        for (i in 0 until fm.backStackEntryCount) {
-//            fm.popBackStack()
-//        }
-//    }
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount > 0) {

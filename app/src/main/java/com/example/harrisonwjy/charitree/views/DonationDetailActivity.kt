@@ -69,7 +69,6 @@ class DonationDetailActivity : AppCompatActivity() {
 
         displayStatus(donation.status!!)
 
-        // populating data into elements
     }
 
 

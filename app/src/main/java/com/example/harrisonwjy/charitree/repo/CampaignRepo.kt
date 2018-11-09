@@ -316,263 +316,6 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
-    // AddressRepo - get
-    override fun showAddress(): Any {
-        val data = MutableLiveData<GetAddressResponse>()
-        api.getAddresses().enqueue(
-                object: Callback<GetAddressResponse> {
-                    val campaignsResponse = GetAddressResponse()
-                    override fun onResponse(call: Call<GetAddressResponse>?, response: Response<GetAddressResponse>?) {
-
-                        Log.e("CampaignRepo","Resposne code is "+ response!!.code().toString())
-                        if(response!!.isSuccessful){
-                            Log.e("CampaignRepo","successful call")
-                            data.value = response.body()
-
-                        }else{
-                            Log.e("CampaignRepo","failed: "+response.errorBody().string())
-                            when(response.code()){
-                                500 -> {
-                                    campaignsResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "Server error. Please contact adminstrator"
-                                        }
-                                    }
-                                }
-                                404 -> {
-                                    campaignsResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "No created campaign created by you"
-                                        }
-                                    }
-                                }
-                                else -> {
-                                    val jObjError = JSONObject(response.errorBody().string())
-
-                                    val getMessage = jObjError.optJSONObject("errors")?.optString("message")
-
-                                    campaignsResponse.apply {
-                                        status = jObjError.getString("status").toInt()
-                                        errors = Errors().apply {
-                                            message = getMessage
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        data.value = campaignsResponse;
-                    }
-
-
-                    override fun onFailure(call: Call<GetAddressResponse>?, t: Throwable?) {
-                        Log.e("LoginResponse","Unable to submit email and password to API")
-                        campaignsResponse.apply{
-                            status = null
-                            errors = null
-                        }
-                        data.value = campaignsResponse
-                    }
-                }
-        )
-        return data
-    }
-
-    // AddressRepo - create
-    override fun createAddress(item: Any): Any {
-
-        val getItem: GetAddressRequest = item as GetAddressRequest
-
-        val data = MutableLiveData<GetAddressResponse>()
-        api.createAddresses(getItem).enqueue(
-                object: Callback<GetAddressResponse> {
-                    val campaignsResponse = GetAddressResponse()
-                    override fun onResponse(call: Call<GetAddressResponse>?, response: Response<GetAddressResponse>?) {
-                        Log.e("CampaignRepo","Resposne code is "+ response!!.code().toString())
-                        if(response!!.isSuccessful){
-                            data.value = response.body()
-
-                        }else{
-                            Log.e("createAddress",response.errorBody().string())
-                            when(response.code()){
-                                500 -> {
-                                    campaignsResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "Server error. Please contact adminstrator"
-                                        }
-                                    }
-                                }
-                                404 -> {
-                                    campaignsResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "No address created by you"
-                                        }
-                                    }
-                                }
-                                else -> {
-                                    val jObjError = JSONObject(response.errorBody().string())
-
-                                    val getMessage = jObjError.optJSONObject("errors")?.optString("message")
-
-                                    campaignsResponse.apply {
-                                        status = jObjError.getString("status").toInt()
-                                        errors = Errors().apply {
-                                            message = getMessage
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        data.value = campaignsResponse;
-                    }
-
-
-                    override fun onFailure(call: Call<GetAddressResponse>?, t: Throwable?) {
-                        Log.e("LoginResponse","Unable to submit email and password to API")
-                        campaignsResponse.apply{
-                            status = null
-                            errors = null
-                        }
-                        data.value = campaignsResponse
-                    }
-                }
-        )
-        return data
-    }
-
-    // DonationRepo - create
-    override fun createDonation(id: Int,item: Any): Any {
-        val getItem: CreateDonationRequest = item as CreateDonationRequest
-        val data = MutableLiveData<CreateDonationResponse>()
-        api.createDonation(id,getItem).enqueue(
-                object: Callback<CreateDonationResponse> {
-                    val donationResponse = CreateDonationResponse()
-                    override fun onResponse(call: Call<CreateDonationResponse>?, response: Response<CreateDonationResponse>?) {
-                        Log.e("createDonation","Successful: Response code is "+ response!!.code().toString())
-                        if(response!!.isSuccessful){
-                            data.value = response.body()
-
-                        }else{
-                            Log.e("createDonation","Error: Response code is "+ response!!.code().toString())
-                            when(response.code()){
-                                500 -> {
-                                    donationResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "Server error. Please contact adminstrator"
-                                        }
-                                    }
-                                }
-                                404 -> {
-                                    donationResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "No address created by you"
-                                        }
-                                    }
-                                }
-                                else -> {
-                                    val jObjError = JSONObject(response.errorBody().string())
-
-                                    //Log.e("createDonation",jObjError.toString())
-                                    val getMessage = jObjError.optJSONObject("errors")?.optString("message")
-
-                                    donationResponse.apply {
-                                        status = jObjError.getString("status").toInt()
-                                        errors = Errors().apply {
-                                            message = getMessage
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        data.value = donationResponse;
-                    }
-
-
-                    override fun onFailure(call: Call<CreateDonationResponse>?, t: Throwable?) {
-                        Log.e("LoginResponse","Unable to submit email and password to API")
-                        donationResponse.apply{
-                            status = 0
-                            errors = null
-                        }
-                        data.value = donationResponse
-                    }
-                }
-        )
-        return data
-    }
-
-    // DonationRepo - getAll
-    override fun showAllUserDonations(): Any {
-        val data = MutableLiveData<GetAllDonationForUserResponse>()
-        api.getUserDonations().enqueue(
-                object: Callback<GetAllDonationForUserResponse> {
-                    val userDonationsResponse = GetAllDonationForUserResponse()
-                    override fun onResponse(call: Call<GetAllDonationForUserResponse>?, response: Response<GetAllDonationForUserResponse>?) {
-
-                        Log.e("CampaignRepo","Resposne code is "+ response!!.code().toString())
-                        if(response!!.isSuccessful){
-                            Log.e("CampaignRepo","successful call")
-                            data.value = response.body()
-
-                        }else{
-                            //Log.e("CampaignRepo","failed: "+response.errorBody().string())
-                            when(response.code()){
-                                500 -> {
-                                    userDonationsResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "Server error. Please contact adminstrator"
-                                        }
-                                    }
-                                }
-                                404 -> {
-                                    userDonationsResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "No created donations created by you"
-                                        }
-                                    }
-                                }
-                                else -> {
-                                    val jObjError = JSONObject(response.errorBody().string())
-                                    
-                                    val getMessage = jObjError.optJSONObject("errors")?.optString("message")
-
-                                    userDonationsResponse.apply {
-                                        status = jObjError.getString("status").toInt()
-                                        errors = Errors().apply {
-                                            message = getMessage
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        data.value = userDonationsResponse;
-                    }
-
-
-                    override fun onFailure(call: Call<GetAllDonationForUserResponse>?, t: Throwable?) {
-                        Log.e("LoginResponse","Unable to submit email and password to API")
-                        userDonationsResponse.apply{
-                            status = null
-                            errors = null
-                        }
-                        data.value = userDonationsResponse
-                    }
-                }
-        )
-        return data
-    }
-
     override fun getOrgNameByUEN(item: Any): Any{
         val uen : String = item.toString()
         val data = MutableLiveData<GetOrgNameUENResponse>()
@@ -681,7 +424,7 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
-    override fun createCampaign(item: Any): Any {
+    override fun create(item: Any): Any {
         val getItem: CreateCampaignRequest = item as CreateCampaignRequest
         val data = MutableLiveData<CreateCampaignResponse>()
         api.createCampaign(getItem).enqueue(
@@ -744,9 +487,8 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
-    // Campaign?
-    override fun getListOfDonors(item: Any): Any {
-        Log.e("getListOfDonors","item is "+item.toString().toInt())
+    override fun showDonors(item: Any): Any {
+        Log.e("showDonors","item is "+item.toString().toInt())
         val campaignId = item.toString().toInt()
         val data = MutableLiveData<GetListOfDonationsByCIDResponse>()
         api.getListOfDonationsByCID(campaignId).enqueue(
@@ -811,7 +553,6 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
-    // Campaign?
     override fun getDonationByDID(item: Any): Any {
         val donationId = item.toString().toInt()
         val data = MutableLiveData<GetDonationByDonationIDResponse>()
@@ -877,7 +618,6 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         return data
     }
 
-    // Campaign?
     override fun changeStatusByDID(id: Int,item: Any): Any {
         val getItem = item as ChangeStatusDonationRequest
         val data = MutableLiveData<ChangeStatusDonationResponse>()
@@ -943,72 +683,5 @@ class CampaignRepo(email: String, token: String) : CampaignInterface {
         )
         return data
     }
-
-    // DonationRepo
-    override fun getDonationsCount(item: Any): Any {
-        val getItem = item.toString()
-        val data = MutableLiveData<GetDonationsCountResponse>()
-        api.getNoOfDonation(getItem).enqueue(
-                object: Callback<GetDonationsCountResponse> {
-                    val getDonationCountResponse = GetDonationsCountResponse()
-                    override fun onResponse(call: Call<GetDonationsCountResponse>?, response: Response<GetDonationsCountResponse>?) {
-
-                        Log.e("CampaignRepo","Resposne code is "+ response!!.code().toString())
-                        if(response!!.isSuccessful){
-                            Log.e("CampaignRepo","successful call")
-                            Log.e("CampaignRepo",response.body().toString())
-                            data.value = response.body()
-
-                        }else{
-                            //Log.e("CampaignRepo","failed: "+response.errorBody().string())
-                            when(response.code()){
-                                500 -> {
-                                    getDonationCountResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "Server error. Please contact adminstrator"
-                                        }
-                                    }
-                                }
-                                404 -> {
-                                    getDonationCountResponse.apply{
-                                        status = 0
-                                        errors = Errors().apply{
-                                            message = "No donors list for this campaign in database"
-                                        }
-                                    }
-                                }
-                                else -> {
-                                    val jObjError = JSONObject(response.errorBody().string())
-
-                                    val getMessage = jObjError.optJSONObject("errors")?.optString("message")
-
-                                    getDonationCountResponse.apply {
-                                        status = jObjError.getString("status").toInt()
-                                        errors = Errors().apply {
-                                            message = getMessage
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        data.value = getDonationCountResponse;
-                    }
-
-
-                    override fun onFailure(call: Call<GetDonationsCountResponse>?, t: Throwable?) {
-                        Log.e("LoginResponse","Unable to submit email and password to API")
-                        getDonationCountResponse.apply{
-                            status = null
-                            errors = null
-                        }
-                        data.value = getDonationCountResponse
-                    }
-                }
-        )
-        return data
-    }
-
 
 }

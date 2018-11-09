@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.harrisonwjy.charitree.R
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
+import com.example.harrisonwjy.charitree.repo.DonationRepo
 import com.example.harrisonwjy.charitree.viewmodel.DonationViewModel
 import kotlinx.android.synthetic.main.fragment_tree.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -42,9 +43,8 @@ class TreeFragment : Fragment() {
         val token: String = prefs.getString("token", "")//"No name defined" is the default value.
         val email: String = prefs.getString("email","")
 
-        donationViewModel.getDonationCount(CampaignRepo(email,token),"Completed").observe(this,android.arch.lifecycle.Observer{
+        donationViewModel.getDonationCount(DonationRepo(email,token),"Completed").observe(this,android.arch.lifecycle.Observer{
             if(it?.status == 1){
-                Log.e("TreeFragment","Donation count successful")
                 donationCountTextView.text = "Your donation count is at "+ it.count.toString()
             }
         })

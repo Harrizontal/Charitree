@@ -38,17 +38,11 @@ class CampaignsFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view =  inflater.inflate(R.layout.fragment_campaigns, container, false)
-        //var data = arrayOf("page1", "page2","page3","page4")
-        // Inflate the layout for this fragment
 
         viewPager = view.findViewById(R.id.viewPager)
         viewPager.offscreenPageLimit = 4
         viewPager.clipToPadding = false
         viewPager.pageMargin = 25
-        //val obj_adapter = ItemPagerAdapter(childFragmentManager,data)
-        //viewPager.adapter=obj_adapter
-
-
 
         // get token
         val prefs = getActivity()!!.getSharedPreferences("PREFERENCE", Context.MODE_PRIVATE)
@@ -66,19 +60,9 @@ class CampaignsFragment : Fragment() {
             }
         })
 
-//        val swiperefresh = view.findViewById<SwipeRefreshLayout>(R.id.swiperefresh)
-//        swiperefresh.setOnRefreshListener{
-//
-//        }
-
-
         return view
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     fun setViewPagerToFirst(){
         viewPager.setCurrentItem(0)

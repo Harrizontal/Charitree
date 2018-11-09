@@ -1,19 +1,16 @@
 package com.example.harrisonwjy.charitree.repo.interfaces
 
-interface CampaignInterface : IRegister, IAuthentication {
+interface CampaignInterface : RepositoryInterface {
 
+    fun register(item: Any): Any
+    fun verify(item: Any): Any
     fun showAll(): Any
     fun showAllByCMSession(): Any
-    fun showAddress(): Any
-    fun createAddress(item: Any): Any
-    fun createDonation(id: Int,item: Any): Any
-    fun showAllUserDonations() : Any
     fun getOrgNameByUEN(item: Any): Any
     fun getItems(): Any
-    fun createCampaign(item: Any): Any
-    fun getListOfDonors(item: Any): Any
+    fun create(item: Any): Any
+    fun showDonors(item: Any): Any
     fun getDonationByDID(item: Any): Any
     fun changeStatusByDID(id: Int,item: Any): Any
-    fun getDonationsCount(item: Any): Any
 
 }

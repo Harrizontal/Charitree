@@ -12,17 +12,13 @@ import android.widget.EditText
 import com.example.harrisonwjy.charitree.helper.SingleActionDialogBox
 import com.example.harrisonwjy.charitree.model.Address
 import com.example.harrisonwjy.charitree.model.request.GetAddressRequest
+import com.example.harrisonwjy.charitree.repo.AddressRepo
 import com.example.harrisonwjy.charitree.repo.CampaignRepo
 import com.example.harrisonwjy.charitree.viewmodel.CampaignViewModel
+import com.example.harrisonwjy.charitree.viewmodel.DonationViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
-//fun Context.MainActivity(user: User): Intent {
-//    return Intent(this, MainActivity()::class.java).apply {
-//        Log.e("MainActivity","user.id is " + user.id)
-//        putExtra("INTENT_USER_ID", user.id)
-//    }
-//}
 fun Context.CreateAddressActivity(): Intent {
     return Intent(this, CreateAddressActivity::class.java).apply {
     }
@@ -31,6 +27,7 @@ fun Context.CreateAddressActivity(): Intent {
 class CreateAddressActivity : AppCompatActivity() {
 
     private val campaignViewModel : CampaignViewModel by viewModel()
+    private val donationViewModel : DonationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +60,7 @@ class CreateAddressActivity : AppCompatActivity() {
             val email: String = prefs.getString("email","")
 
 
-            campaignViewModel.createAddress(CampaignRepo(email,token),request).observe(this,android.arch.lifecycle.Observer {
+            donationViewModel.createAddress(AddressRepo(email,token),request).observe(this,android.arch.lifecycle.Observer {
                 //Log.e("LoginFragment","LoginFragment received "+ it?.user_token + " " + it?.status)
 
                 // If user_token contains something
@@ -77,12 +74,6 @@ class CreateAddressActivity : AppCompatActivity() {
             })
         }
     }
-        //setSupportActionBar(findViewById(R.id.my_toolbar))
-        //getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
-
-        // onboarding
-
-
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
