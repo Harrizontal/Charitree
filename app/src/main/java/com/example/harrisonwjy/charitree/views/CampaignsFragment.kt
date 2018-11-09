@@ -31,7 +31,7 @@ class CampaignsFragment : Fragment() {
 
 
     private lateinit var viewPager: ViewPager
-    val campaignViewModel : CampaignViewModel by viewModel()
+    private val campaignViewModel : CampaignViewModel by viewModel()
 
 
 

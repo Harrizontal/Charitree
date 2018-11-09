@@ -37,7 +37,7 @@ fun Context.CampaignManagerActivity(user: User): Intent {
 }
 
 private val INTENT_USER_ID = "user_token"
-lateinit var mAdapter: BottomBarAdapter
+private lateinit var mAdapter: BottomBarAdapter
 
 class CampaignManagerActivity : AppCompatActivity() {
 

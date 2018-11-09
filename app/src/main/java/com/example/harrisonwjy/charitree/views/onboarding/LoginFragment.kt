@@ -19,7 +19,7 @@ import com.example.harrisonwjy.charitree.repo.TradAuthenticationRepo
 
 class LoginFragment : Fragment(),Validation, HttpException {
     // TODO: Rename and change types of parameters
-    val myViewModel: UserViewModel by viewModel()
+    private val myViewModel: UserViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

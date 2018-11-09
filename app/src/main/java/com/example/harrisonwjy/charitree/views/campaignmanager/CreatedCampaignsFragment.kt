@@ -25,7 +25,7 @@ class CreatedCampaignsFragment : Fragment() , IOnFocusListenable {
 
 
     private lateinit var viewPager: ViewPager
-    val campaignViewModel : CampaignViewModel by viewModel()
+    private val campaignViewModel : CampaignViewModel by viewModel()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<CreatedCampaignRecyclerAdapter.ViewHolder>? = null
 

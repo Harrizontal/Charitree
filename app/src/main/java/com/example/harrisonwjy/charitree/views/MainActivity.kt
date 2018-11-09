@@ -33,9 +33,8 @@ private val INTENT_USER_ID = "user_token"
 
 class MainActivity : AppCompatActivity() {
 
-    val myViewModel: UserViewModel by viewModel()
+    private val myViewModel: UserViewModel by viewModel()
     private lateinit var viewPager: LockableViewPager
-    var clickAgain: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +60,7 @@ class MainActivity : AppCompatActivity() {
 
         viewPager.setSwipeable(false)
 
-        navigation.setOnNavigationItemSelectedListener(test)
+        navigation.setOnNavigationItemSelectedListener(navigationListener)
 
     }
 
@@ -86,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private val test = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+    private val navigationListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
             var selectedFragment: Fragment? = null
             var fragmentTag: String? = null
             when (item.itemId) {

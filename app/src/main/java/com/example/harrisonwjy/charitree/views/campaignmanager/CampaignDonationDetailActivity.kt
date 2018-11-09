@@ -30,7 +30,6 @@ class CampaignDonationDetailActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
-
         val donationId = intent.getIntExtra("donationId",0)
 
         // put inside viewmodel

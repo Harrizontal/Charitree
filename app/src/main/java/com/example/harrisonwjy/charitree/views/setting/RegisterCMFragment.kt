@@ -32,7 +32,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class RegisterCMFragment : Fragment(),Validation,HttpException {
 
-    val campaignManagerViewModel: CampaignManagerViewModel by viewModel()
+    private val campaignManagerViewModel: CampaignManagerViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

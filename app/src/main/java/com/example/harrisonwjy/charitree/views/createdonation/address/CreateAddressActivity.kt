@@ -30,7 +30,7 @@ fun Context.CreateAddressActivity(): Intent {
 
 class CreateAddressActivity : AppCompatActivity() {
 
-    val campaignViewModel : CampaignViewModel by viewModel()
+    private val campaignViewModel : CampaignViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

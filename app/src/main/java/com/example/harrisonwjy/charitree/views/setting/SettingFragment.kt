@@ -34,7 +34,7 @@ import com.example.harrisonwjy.charitree.views.MainActivity
  */
 class SettingFragment : Fragment() {
 
-    val campaignManagerViewModel: CampaignManagerViewModel by viewModel()
+    private val campaignManagerViewModel: CampaignManagerViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

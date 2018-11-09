@@ -7,7 +7,7 @@ import com.example.harrisonwjy.charitree.model.CampaignManager
 import com.example.harrisonwjy.charitree.model.Errors
 import com.example.harrisonwjy.charitree.model.request.*
 import com.example.harrisonwjy.charitree.model.response.*
-import com.example.harrisonwjy.charitree.repo.interfaces.ICampaign
+import com.example.harrisonwjy.charitree.repo.interfaces.CampaignInterface
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import retrofit2.Call
@@ -20,7 +20,7 @@ import org.json.JSONObject
 import java.io.IOException
 
 
-class CampaignRepo(email: String, token: String) : ICampaign {
+class CampaignRepo(email: String, token: String) : CampaignInterface {
 
 
     private val api: CharitreeApi
@@ -316,6 +316,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // AddressRepo - get
     override fun showAddress(): Any {
         val data = MutableLiveData<GetAddressResponse>()
         api.getAddresses().enqueue(
@@ -379,6 +380,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // AddressRepo - create
     override fun createAddress(item: Any): Any {
 
         val getItem: GetAddressRequest = item as GetAddressRequest
@@ -443,6 +445,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // DonationRepo - create
     override fun createDonation(id: Int,item: Any): Any {
         val getItem: CreateDonationRequest = item as CreateDonationRequest
         val data = MutableLiveData<CreateDonationResponse>()
@@ -506,6 +509,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // DonationRepo - getAll
     override fun showAllUserDonations(): Any {
         val data = MutableLiveData<GetAllDonationForUserResponse>()
         api.getUserDonations().enqueue(
@@ -740,6 +744,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // Campaign?
     override fun getListOfDonors(item: Any): Any {
         Log.e("getListOfDonors","item is "+item.toString().toInt())
         val campaignId = item.toString().toInt()
@@ -806,6 +811,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // Campaign?
     override fun getDonationByDID(item: Any): Any {
         val donationId = item.toString().toInt()
         val data = MutableLiveData<GetDonationByDonationIDResponse>()
@@ -871,6 +877,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // Campaign?
     override fun changeStatusByDID(id: Int,item: Any): Any {
         val getItem = item as ChangeStatusDonationRequest
         val data = MutableLiveData<ChangeStatusDonationResponse>()
@@ -937,6 +944,7 @@ class CampaignRepo(email: String, token: String) : ICampaign {
         return data
     }
 
+    // DonationRepo
     override fun getDonationsCount(item: Any): Any {
         val getItem = item.toString()
         val data = MutableLiveData<GetDonationsCountResponse>()

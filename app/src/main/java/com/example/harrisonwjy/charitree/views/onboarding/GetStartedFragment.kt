@@ -13,7 +13,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class GetStartedFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    val myViewModel: UserViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

@@ -1,6 +1,6 @@
 package com.example.harrisonwjy.charitree.repo.interfaces
 
-interface ICampaign : IRegister, IAuthentication {
+interface CampaignInterface : IRegister, IAuthentication {
 
     fun showAll(): Any
     fun showAllByCMSession(): Any

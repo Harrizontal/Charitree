@@ -6,22 +6,22 @@ import com.example.harrisonwjy.charitree.model.request.RegisterCMRequest
 import com.example.harrisonwjy.charitree.model.response.CMRegisterResponse
 import com.example.harrisonwjy.charitree.model.response.CMVerifyResponse
 import com.example.harrisonwjy.charitree.model.response.GetOrgNameUENResponse
-import com.example.harrisonwjy.charitree.repo.interfaces.ICampaign
+import com.example.harrisonwjy.charitree.repo.interfaces.CampaignInterface
 
 
 class CampaignManagerViewModel : ViewModel() {
 
 
-    fun register(repo: ICampaign, request: RegisterCMRequest): LiveData<CMRegisterResponse>{
+    fun register(repo: CampaignInterface, request: RegisterCMRequest): LiveData<CMRegisterResponse>{
         return repo.register(request) as LiveData<CMRegisterResponse>
     }
 
 
-    fun getCampaignManagerAccess(repo: ICampaign, request: RegisterCMRequest) : LiveData<CMVerifyResponse>? {
+    fun getCampaignManagerAccess(repo: CampaignInterface, request: RegisterCMRequest) : LiveData<CMVerifyResponse>? {
         return repo.verify(request) as LiveData<CMVerifyResponse>
     }
 
-    fun getOrgNameByUEN(repo: ICampaign, uen: String) : LiveData<GetOrgNameUENResponse>{
+    fun getOrgNameByUEN(repo: CampaignInterface, uen: String) : LiveData<GetOrgNameUENResponse>{
         return repo.getOrgNameByUEN(uen) as LiveData<GetOrgNameUENResponse>
     }
 

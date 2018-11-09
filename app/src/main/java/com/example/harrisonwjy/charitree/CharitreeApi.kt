@@ -129,11 +129,9 @@ interface CharitreeApi {
 
     companion object {
         // Local server
-        val API_URL = "http://10.0.2.2/public/"
+        //val API_URL = "http://10.0.2.2/public/"
         // School IP address
-        //val API_URL = "http://172.21.148.170/Charitree/public/"
-        // Tobias IP address
-        //val API_URL = "http://10.27.145.99/public/"
+        val API_URL = "http://172.21.148.170/Charitree/public/"
     }
 
 

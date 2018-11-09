@@ -26,7 +26,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class TreeFragment : Fragment() {
 
-    val donationViewModel : DonationViewModel by viewModel()
+    private val donationViewModel : DonationViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

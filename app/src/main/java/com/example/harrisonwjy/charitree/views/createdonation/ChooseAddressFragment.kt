@@ -42,7 +42,7 @@ class ChooseAddressFragment : Fragment(), IOnFocusListenable {
     private lateinit var dateTimeAdapter: BottomBarAdapter
     private lateinit var selectionList: RecyclerView
     private var savedState: Bundle? = null
-    val campaignViewModel : CampaignViewModel by viewModel()
+    private val campaignViewModel : CampaignViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

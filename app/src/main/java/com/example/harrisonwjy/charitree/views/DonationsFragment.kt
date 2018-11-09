@@ -41,7 +41,7 @@ class DonationsFragment : Fragment(), IOnFocusListenable {
 
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<MyDonationAdapter.ViewHolder>? = null
-    val donationViewModel : DonationViewModel by viewModel()
+    private val donationViewModel : DonationViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_donor_list.*
 import org.koin.android.viewmodel.ext.android.viewModel
 class DonorListActivity : AppCompatActivity() {
 
-    val campaignViewModel : CampaignViewModel by viewModel()
+    private val campaignViewModel : CampaignViewModel by viewModel()
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<DonorListAdapter.ViewHolder>? = null
 
