@@ -22,6 +22,12 @@ Under Android studio, select File and Open the extracted file
 
 Let gradle build and you are able to run
 
+UI and Flow
+---------------
+Sketch: https://sketch.cloud/s/Lnj7d
+Invision app: https://invis.io/2EP3QB157TD#/318178627_Launchscreen
+
+
 Scope of the mobile application
 ---------------
 
